@@ -67,7 +67,7 @@ Frontend-logik. Vi venter på, at DOM'en loader og derefter læser vi party-kode
 Logikken starter også et *polling loop*, hvor vi en gang i sekundet spørger webserveren om hvad festen lytter til -- og opdaterer HTML'en med svaret.
 
 `styles.css`\
-Meget kedelig styling. Næsten-hvidt på næsten-sort. Monospace. Suk. Man skulle tro, jeg havde arbejdet på codelabby.com.
+Meget kedelig styling. Næsten-hvidt på næsten-sort. Monospace. Suk. Man skulle tro, nogen havde været i praktik på codelabby.com.
 
 `favicon.ico`\
 Ikon til at vise i browser-tab'en.
