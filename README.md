@@ -1,6 +1,6 @@
 # next-track.com
 
-Dette projekt udgør en *walking skeleton* af projektet next-track.com
+Dette projekt udgør et *walking skeleton* af projektet next-track.com
 
 Her følger en oversigt over projektets indhold:
 
@@ -55,7 +55,7 @@ Den kender I. Skelettet definerer ét slutpunkt, `/api/party/:partyId/currentTra
 Simulerer integration med nærmeste højttaler. Koden definerer én funktion, `play`. I kan se i `server.js`, hvordan den bruges.
 Det er ikke meningen, at I skal ændre noget i `player.js`.
 
-**TODO**: Der skal nok være andre slutpunkter også, efterhånden som jeres frontend bliver mere interaktiv. Og I skal nok også gemme flere ting i databasen, så vi fx ikke glemmer, hvad der bliver spillet til festerne, bare fordi vi genstarter webserveren. Og så vi kan opsamle nyttig information om brugerne og de dele af deres interaktion med app'en, som er med til at bestemme *next track*.
+**TODO**: Yay, super. Men der skal jo nok være andre slutpunkter også, efterhånden som jeres frontend bliver mere interaktiv. Og I får jo nok også brug for at gemme flere ting i databasen, så vi fx ikke glemmer, hvad der bliver spillet til festerne, bare fordi vi genstarter webserveren. Og så I kan opsamle nyttig information om brugerne og de dele af deres interaktion med app'en, som er med til at bestemme *next track*.
 
 ## frontend/
 `index.html`\
@@ -67,7 +67,7 @@ Frontend-logik. Vi venter på, at DOM'en loader og derefter læser vi party-kode
 Logikken starter også et *polling loop*, hvor vi en gang i sekundet spørger webserveren om hvad festen lytter til -- og opdaterer HTML'en med svaret.
 
 `styles.css`\
-Meget kedelig styling. Hvidt på sort. Monospace. Man skulle tro, jeg havde arbejdet på codelabby.com.
+Meget kedelig styling. Næsten-hvidt på næsten-sort. Monospace. Suk. Man skulle tro, jeg havde arbejdet på codelabby.com.
 
 `favicon.ico`\
 Ikon til at vise i browser-tab'en.
