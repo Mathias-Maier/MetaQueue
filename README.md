@@ -55,7 +55,7 @@ Den kender I. Skelettet definerer ét slutpunkt, `/api/party/:partyId/currentTra
 Simulerer integration med nærmeste højttaler. Koden definerer én funktion, `play`. I kan se i `server.js`, hvordan den bruges.
 Det er ikke meningen, at I skal ændre noget i `player.js`.
 
-**TODO**: Der skal nok være andre slutpunkter også, efterhånden som jeres frontend bliver mere interaktiv. Og I skal nok også gemme flere ting i databasen, så vi ikke glemmer, hvad der bliver spillet til festerne, bare fordi vi genstarter webserveren.
+**TODO**: Der skal nok være andre slutpunkter også, efterhånden som jeres frontend bliver mere interaktiv. Og I skal nok også gemme flere ting i databasen, så vi fx ikke glemmer, hvad der bliver spillet til festerne, bare fordi vi genstarter webserveren. Og så vi kan opsamle nyttig information om brugerne og de dele af deres interaktion med app'en, som er med til at bestemme *next track*.
 
 ### frontend/
 `index.html`\
