@@ -55,7 +55,7 @@ Serveren vedligeholder en ordbog, `currentTracks`, hvor nøgler er party-koder o
 
 Når frontenden beder serveren om at fortælle, hvad der bliver spillet til en bestemt fest, slår den op i `currentTracks`. Hvis den ikke finder noget, vælger den et track tilfældigt og opretter et nyt opslag i ordbogen. Så kalder den funktionen `play` i `player.js`. Den funktion simulerer afspilning.
 
-Når serveren sætter et nyt track til at spille, giver den `play`-funktionen en callback-funktion med, som `play` kalder, når sange er slut. Callback'en fjerner så det relevante opslag i `currentTracks`.
+Når serveren sætter et nyt track til at spille, giver den `play`-funktionen en callback-funktion med, som `play` kalder, når sangen er slut. Callback'en fjerner så det relevante opslag i `currentTracks`.
 
 Hvis festen fortsætter, spørger frontenden igen, og serveren vælger et nyt, tilfældigt track. On and on it goes.
 
