@@ -19,7 +19,7 @@
 }
 
 body {
-    background: #eefeff
+    background: #f0feff
 }
 
 .qr {
@@ -32,7 +32,7 @@ body {
     width: 250px;
     height: 250px;
     display: block;
-    background: #fff;
+    background: #f0feff;
     padding: 5px;
     border-radius: 4px;
 }
