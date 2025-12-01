@@ -1,0 +1,38 @@
+.logo {
+    font-family: 'Lilita One', sans-serif; 
+    font-size: 72px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: #ffffff; 
+    text-transform: uppercase;
+
+    /* Pink outline */
+    -webkit-text-stroke: 3px #e94c85;
+
+    /* 3D shadow */
+    text-shadow: 
+        3px 3px 0 #e94c85,
+        6px 6px 0 #d84075,
+        9px 9px 0 #c73767;
+
+    display: inline-block;
+}
+
+body {
+    background: #eefeff
+}
+
+.qr {
+    position: absolute;
+    right: 60px;
+    top: 140px;
+}
+
+.qr-code {
+    width: 250px;
+    height: 250px;
+    display: block;
+    background: #fff;
+    padding: 5px;
+    border-radius: 4px;
+}
