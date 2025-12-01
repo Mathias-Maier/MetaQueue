@@ -18,7 +18,7 @@ body {
   align-items: center;
 }
 
-.app {
+.headline {
   width: 100%;
   max-width: 1200px;
   padding: 60px;
@@ -78,13 +78,6 @@ body {
   font-size: 180px;
   color: #e46b8c;
   line-height: 1;
-}
-
-.slogan {
-  margin-top: 20px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  color: #f194c2;
 }
 
 .left {
