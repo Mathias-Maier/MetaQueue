@@ -11,7 +11,7 @@ h1 {
 
 body {
   margin: 0;
-  background: #f4fbfb;
+  background: #f0feff;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -28,7 +28,6 @@ body {
   align-items: center;
 }
 
-/* LOGO */
 .logo {
   grid-column: 1 / -1;
   text-align: center;
@@ -41,7 +40,6 @@ body {
   margin-bottom: 40px;
 }
 
-/* LEFT SIDE */
 .left {
   display: flex;
   flex-direction: column;
@@ -72,7 +70,6 @@ body {
   color: #333;
 }
 
-/* RIGHT SIDE */
 .right {
   text-align: center;
 }
@@ -88,4 +85,9 @@ body {
   font-weight: 800;
   letter-spacing: 2px;
   color: #f194c2;
+}
+
+.left {
+  cursor: pointer;
+  transition: transform 0.2s;
 }
