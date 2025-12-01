@@ -1,0 +1,501 @@
+Track_id,Title,Artist,Genre_id,Duration_ms
+1,Lose Yourself,Eminem,1,326000
+2,Billie Jean,Michael Jackson,2,294000
+3,Smells Like Teen Spirit,Nirvana,3,245000
+4,Juicy,The Notorious B.I.G.,1,280000
+5,Hey Jude,The Beatles,5,300000
+6,No Diggity,Blackstreet,4,260000
+7,Wonderwall,Oasis,3,240000
+8,Empire State of Mind,Jay-Z & Alicia Keys,1,290000
+9,Thriller,Michael Jackson,2,300000
+10,All of Me,John Legend,4,270000
+11,Bohemian Rhapsody,Queen,3,354000
+12,Shape of You,Ed Sheeran,2,233000
+13,California Love,2Pac & Dr. Dre,1,295000
+14,Hotel California,Eagles,5,320000
+15,Hotline Bling,Drake,2,267000
+16,Stairway to Heaven,Led Zeppelin,5,482000
+17,HUMBLE.,Kendrick Lamar,1,215000
+18,Let It Be,The Beatles,5,243000
+19,God’s Plan,Drake,1,271000
+20,Rolling in the Deep,Adele,2,228000
+21,In Da Club,50 Cent,1,250000
+22,Fix You,Coldplay,3,300000
+23,Old Town Road,Lil Nas X,2,157000
+24,Superstition,Stevie Wonder,4,260000
+25,Shallow,Lady Gaga & Bradley Cooper,2,215000
+26,Seven Nation Army,The White Stripes,3,231000
+27,No Woman No Cry,Bob Marley,5,276000
+28,Stronger,Kanye West,1,312000
+29,Yesterday,The Beatles,5,125000
+30,Mr. Brightside,The Killers,3,222000
+31,Rock With You,Michael Jackson,4,240000
+32,Blinding Lights,The Weeknd,2,200000
+33,Don’t Stop Believin’,Journey,3,256000
+34,Respect,Aretha Franklin,4,150000
+35,Shake It Off,Taylor Swift,2,242000
+36,All Star,Smash Mouth,3,200000
+37,99 Problems,Jay-Z,1,245000
+38,Like a Rolling Stone,Bob Dylan,5,370000
+39,Single Ladies,Beyoncé,2,195000
+40,Radioactive,Imagine Dragons,3,250000
+41,Poker Face,Lady Gaga,2,230000
+42,My Name Is,Eminem,1,270000
+43,Clocks,Coldplay,3,305000
+44,Beat It,Michael Jackson,2,258000
+45,No Scrubs,TLC,4,214000
+46,Back in Black,AC/DC,3,255000
+47,All Along the Watchtower,Jimi Hendrix,5,240000
+48,Lose Control,Missy Elliott,1,230000
+49,Firework,Katy Perry,2,220000
+50,Take Me to Church,Hozier,3,240000
+51,What’s Going On,Marvin Gaye,4,210000
+52,Imagine,John Lennon,5,183000
+53,Stan,Eminem,1,270000
+54,Roar,Katy Perry,2,230000
+55,Paradise,Coldplay,3,250000
+56,No Tears Left to Cry,Ariana Grande,2,220000
+57,Juice,Lizzo,1,210000
+58,Thinking Out Loud,Ed Sheeran,2,281000
+59,Under Pressure,Queen & David Bowie,3,240000
+60,Lean On Me,Bill Withers,4,215000
+61,Bridge Over Troubled Water,Simon & Garfunkel,5,300000
+62,Without Me,Eminem,1,290000
+63,Sorry,Justin Bieber,2,200000
+64,Yellow,Coldplay,3,270000
+65,Say My Name,Destiny’s Child,4,240000
+66,Believer,Imagine Dragons,3,204000
+67,All I Want for Christmas Is You,Mariah Carey,2,245000
+68,Lose My Breath,Destiny’s Child,4,230000
+69,Paint It Black,The Rolling Stones,5,220000
+70,Mockingbird,Eminem,1,250000
+71,Love Yourself,Justin Bieber,2,230000
+72,Viva La Vida,Coldplay,3,240000
+73,End of the Road,Boyz II Men,4,260000
+74,Let’s Stay Together,Al Green,5,210000
+75,The Real Slim Shady,Eminem,1,280000
+76,Someone Like You,Adele,2,285000
+77,Holiday,Green Day,3,260000
+78,Say It Right,Nelly Furtado,4,230000
+79,Thunder,Imagine Dragons,3,210000
+80,All Night Long,Lionel Richie,4,260000
+81,Boogie Wonderland,Earth, Wind & Fire,4,250000
+82,Respect Yourself,The Staple Singers,4,240000
+83,Man in the Mirror,Michael Jackson,2,260000
+84,Love Me Do,The Beatles,5,180000
+85,Lose Control (Missy Elliott),Missy Elliott,1,220000
+86,Shape of My Heart,Sting,3,250000
+87,No Ordinary Love,Sade,4,270000
+88,Sweet Child O’ Mine,Guns N’ Roses,3,356000
+89,All Apologies,Nirvana,3,230000
+90,Love on Top,Beyoncé,2,260000
+91,Bounce It,Juicy J,1,240000
+92,Angie,The Rolling Stones,5,260000
+93,No One,Alicia Keys,4,270000
+94,All the Small Things,Blink-182,3,230000
+95,Love Story,Taylor Swift,2,230000
+96,Lose Control (Ashanti),Ashanti,1,240000
+97,Nothing Else Matters,Metallica,8,388000
+98,Enter Sandman,Metallica,8,331000
+99,Master of Puppets,Metallica,8,515000
+100,Fade to Black,Metallica,8,417000
+101,Juicy J – Bounce It,Juicy J,1,240000
+102,Stronger,Kanye West,1,312000
+103,Hotline Bling,Drake,2,267000
+104,Sorry,Justin Bieber,2,200000
+105,Firework,Katy Perry,2,220000
+106,Rolling in the Deep,Adele,2,228000
+107,Shake It Off,Taylor Swift,2,242000
+108,All I Want for Christmas Is You,Mariah Carey,2,245000
+109,Blinding Lights,The Weeknd,2,200000
+110,Poker Face,Lady Gaga,2,230000
+111,Smells Like Teen Spirit,Nirvana,3,245000
+112,Mr. Brightside,The Killers,3,222000
+113,Seven Nation Army,The White Stripes,3,231000
+114,Holiday,Green Day,3,260000
+115,Thunder,Imagine Dragons,3,210000
+116,Radioactive,Imagine Dragons,3,250000
+117,Clocks,Coldplay,3,305000
+118,Yellow,Coldplay,3,270000
+119,Viva La Vida,Coldplay,3,240000
+120,Fix You,Coldplay,3,300000
+121,All the Small Things,Blink-182,3,230000
+122,Sweet Child O’ Mine,Guns N’ Roses,3,356000
+123,Paradise City,Guns N’ Roses,3,356000
+124,Back in Black,AC/DC,3,255000
+125,Highway to Hell,AC/DC,3,210000
+126,Bohemian Like You,The Dandy Warhols,3,220000
+127,Take Me Out,Franz Ferdinand,3,240000
+128,Do I Wanna Know?,Arctic Monkeys,3,272000
+129,I Bet You Look Good on the Dancefloor,Arctic Monkeys,3,210000
+130,Reptilia,The Strokes,3,230000
+131,Last Nite,The Strokes,3,220000
+132,No Scrubs,TLC,4,214000
+133,Say My Name,Destiny’s Child,4,240000
+134,End of the Road,Boyz II Men,4,260000
+135,Lose My Breath,Destiny’s Child,4,230000
+136,No Ordinary Love,Sade,4,270000
+137,Superstition,Stevie Wonder,4,260000
+138,Lean On Me,Bill Withers,4,215000
+139,Respect,Aretha Franklin,4,150000
+140,What’s Going On,Marvin Gaye,4,210000
+141,All Night Long,Lionel Richie,4,260000
+142,Boogie Wonderland,Earth, Wind & Fire,4,250000
+143,Respect Yourself,The Staple Singers,4,240000
+144,Let’s Stay Together,Al Green,5,210000
+145,Like a Rolling Stone,Bob Dylan,5,370000
+146,Angie,The Rolling Stones,5,260000
+147,Paint It Black,The Rolling Stones,5,220000
+148,Sympathy for the Devil,The Rolling Stones,5,370000
+149,Hotel California,Eagles,5,320000
+150,Take It Easy,Eagles,5,250000
+151,Yesterday,The Beatles,5,125000
+152,Hey Jude,The Beatles,5,300000
+153,Let It Be,The Beatles,5,243000
+154,Love Me Do,The Beatles,5,180000
+155,Imagine,John Lennon,5,183000
+156,Bridge Over Troubled Water,Simon & Garfunkel,5,300000
+157,The Sound of Silence,Simon & Garfunkel,5,185000
+158,American Pie,Don McLean,5,360000
+159,No Woman No Cry,Bob Marley,5,276000
+160,Three Little Birds,Bob Marley,5,180000
+161,One Love,Bob Marley,5,210000
+162,Redemption Song,Bob Marley,5,230000
+163,Stir It Up,Bob Marley,5,220000
+164,Could You Be Loved,Bob Marley,5,240000
+165,Is This Love,Bob Marley,5,230000
+166,Jammin’,Bob Marley,5,230000
+167,Nothing Else Matters,Metallica,8,388000
+168,Enter Sandman,Metallica,8,331000
+169,Master of Puppets,Metallica,8,515000
+170,Fade to Black,Metallica,8,417000
+171,One,Metallica,8,448000
+172,Seek & Destroy,Metallica,8,420000
+173,The Unforgiven,Metallica,8,386000
+174,Battery,Metallica,8,312000
+175,Blackened,Metallica,8,360000
+176,Orion,Metallica,8,510000
+177,Paranoid,Black Sabbath,8,290000
+178,Iron Man,Black Sabbath,8,360000
+179,War Pigs,Black Sabbath,8,470000
+180,Children of the Grave,Black Sabbath,8,350000
+181,Heaven and Hell,Black Sabbath,8,420000
+182,Hallowed Be Thy Name,Iron Maiden,8,430000
+183,The Trooper,Iron Maiden,8,250000
+184,Fear of the Dark,Iron Maiden,8,430000
+185,Aces High,Iron Maiden,8,270000
+186,Run to the Hills,Iron Maiden,8,230000
+187,Breaking the Law,Judas Priest,8,210000
+188,Living After Midnight,Judas Priest,8,230000
+189,You’ve Got Another Thing Comin’,Judas Priest,8,250000
+190,Painkiller,Judas Priest,8,420000
+191,Electric Eye,Judas Priest,8,230000
+192,Smoke on the Water,Deep Purple,8,340000
+193,Highway Star,Deep Purple,8,370000
+194,Child in Time,Deep Purple,8,600000
+195,Space Truckin’,Deep Purple,8,320000
+196,Perfect Strangers,Deep Purple,8,310000
+197,Whole Lotta Love,Led Zeppelin,8,330000
+198,Kashmir,Led Zeppelin,8,520000
+199,Immigrant Song,Led Zeppelin,8,170000
+200,Black Dog,Led Zeppelin,8,300000
+201,Juicy,JAY-Z,1,280000
+202,Mo Money Mo Problems,The Notorious B.I.G.,1,250000
+203,Stan,Eminem,1,270000
+204,Ms. Jackson,Outkast,1,240000
+205,All of the Lights,Kanye West,1,300000
+206,Lose Control,Missy Elliott,1,230000
+207,Alright,Kendrick Lamar,1,210000
+208,Drop It Like It’s Hot,Snoop Dogg,1,260000
+209,Big Pimpin’,JAY-Z,1,250000
+210,Hypnotize,The Notorious B.I.G.,1,240000
+211,Firework,Katy Perry,2,220000
+212,Teenage Dream,Katy Perry,2,230000
+213,Roar,Katy Perry,2,230000
+214,Dark Horse,Katy Perry,2,230000
+215,Love Story,Taylor Swift,2,230000
+216,You Belong With Me,Taylor Swift,2,230000
+217,Style,Taylor Swift,2,230000
+218,Shake It Off,Taylor Swift,2,242000
+219,Blank Space,Taylor Swift,2,230000
+220,Delicate,Taylor Swift,2,230000
+221,Clocks,Coldplay,3,305000
+222,Paradise,Coldplay,3,250000
+223,Speed of Sound,Coldplay,3,270000
+224,The Scientist,Coldplay,3,300000
+225,Fix You,Coldplay,3,300000
+226,Adventure of a Lifetime,Coldplay,3,250000
+227,Viva La Vida,Coldplay,3,240000
+228,Yellow,Coldplay,3,270000
+229,Something Just Like This,Coldplay & The Chainsmokers,3,250000
+230,Magic,Coldplay,3,240000
+231,No Scrubs,TLC,4,214000
+232,Waterfalls,TLC,4,230000
+233,Say My Name,Destiny’s Child,4,240000
+234,Survivor,Destiny’s Child,4,230000
+235,Independent Women,Destiny’s Child,4,230000
+236,End of the Road,Boyz II Men,4,260000
+237,I’ll Make Love to You,Boyz II Men,4,250000
+238,On Bended Knee,Boyz II Men,4,260000
+239,It’s So Hard to Say Goodbye,Boyz II Men,4,230000
+240,Motownphilly,Boyz II Men,4,230000
+241,Imagine,John Lennon,5,183000
+242,Jealous Guy,John Lennon,5,230000
+243,Instant Karma!,John Lennon,5,230000
+244,Working Class Hero,John Lennon,5,230000
+245,Watching the Wheels,John Lennon,5,230000
+246,Bridge Over Troubled Water,Simon & Garfunkel,5,300000
+247,The Sound of Silence,Simon & Garfunkel,5,185000
+248,Scarborough Fair,Simon & Garfunkel,5,230000
+249,Homeward Bound,Simon & Garfunkel,5,230000
+250,I Am a Rock,Simon & Garfunkel,5,230000
+251,Three Little Birds,Bob Marley,5,180000
+252,One Love,Bob Marley,5,210000
+253,Redemption Song,Bob Marley,5,230000
+254,Stir It Up,Bob Marley,5,220000
+255,Could You Be Loved,Bob Marley,5,240000
+256,Is This Love,Bob Marley,5,230000
+257,Jammin’,Bob Marley,5,230000
+258,Buffalo Soldier,Bob Marley,5,230000
+259,Exodus,Bob Marley,5,230000
+260,Waiting in Vain,Bob Marley,5,230000
+261,Enter Sandman,Metallica,8,331000
+262,Nothing Else Matters,Metallica,8,388000
+263,Master of Puppets,Metallica,8,515000
+264,Fade to Black,Metallica,8,417000
+265,One,Metallica,8,448000
+266,Seek & Destroy,Metallica,8,420000
+267,The Unforgiven,Metallica,8,386000
+268,Battery,Metallica,8,312000
+269,Blackened,Metallica,8,360000
+270,Orion,Metallica,8,510000
+271,Paranoid,Black Sabbath,8,290000
+272,Iron Man,Black Sabbath,8,360000
+273,War Pigs,Black Sabbath,8,470000
+274,Children of the Grave,Black Sabbath,8,350000
+275,Heaven and Hell,Black Sabbath,8,420000
+276,Hallowed Be Thy Name,Iron Maiden,8,430000
+277,The Trooper,Iron Maiden,8,250000
+278,Fear of the Dark,Iron Maiden,8,430000
+279,Aces High,Iron Maiden,8,270000
+280,Run to the Hills,Iron Maiden,8,230000
+281,Breaking the Law,Judas Priest,8,210000
+282,Living After Midnight,Judas Priest,8,230000
+283,You’ve Got Another Thing Comin’,Judas Priest,8,250000
+284,Painkiller,Judas Priest,8,420000
+285,Electric Eye,Judas Priest,8,230000
+286,Smoke on the Water,Deep Purple,8,340000
+287,Highway Star,Deep Purple,8,370000
+288,Child in Time,Deep Purple,8,600000
+289,Space Truckin’,Deep Purple,8,320000
+290,Perfect Strangers,Deep Purple,8,310000
+291,Whole Lotta Love,Led Zeppelin,8,330000
+292,Kashmir,Led Zeppelin,8,520000
+293,Immigrant Song,Led Zeppelin,8,170000
+294,Black Dog,Led Zeppelin,8,300000
+295,Stairway to Heaven,Led Zeppelin,8,482000
+296,Dazed and Confused,Led Zeppelin,8,360000
+297,Good Times Bad Times,Led Zeppelin,8,210000
+298,Ramble On,Led Zeppelin,8,230000
+299,Heartbreaker,Led Zeppelin,8,230000
+300,Rock and Roll,Led Zeppelin,8,230000
+301,Juicy,Doja Cat,1,210000
+302,Money Trees,Kendrick Lamar,1,250000
+303,All Falls Down,Kanye West,1,270000
+304,Gin and Juice,Snoop Dogg,1,260000
+305,It Was a Good Day,Ice Cube,1,240000
+306,Still D.R.E.,Dr. Dre,1,270000
+307,Nuthin’ But a G Thang,Dr. Dre & Snoop Dogg,1,250000
+308,Ms. Jackson,Outkast,1,240000
+309,Hey Ya!,Outkast,1,230000
+310,Work,Rihanna ft. Drake,1,220000
+311,Love Me Like You Do,Ellie Goulding,2,250000
+312,Chandelier,Sia,2,230000
+313,Elastic Heart,Sia,2,230000
+314,Cheap Thrills,Sia,2,230000
+315,Diamonds,Rihanna,2,230000
+316,Umbrella,Rihanna,2,230000
+317,We Found Love,Rihanna,2,230000
+318,Only Girl (In the World),Rihanna,2,230000
+319,Don’t Stop the Music,Rihanna,2,230000
+320,Rude Boy,Rihanna,2,230000
+321,Mr. Blue Sky,ELO,3,300000
+322,Don’t Look Back in Anger,Oasis,3,260000
+323,Champagne Supernova,Oasis,3,300000
+324,Live Forever,Oasis,3,250000
+325,Stop Crying Your Heart Out,Oasis,3,270000
+326,Supersonic,Oasis,3,240000
+327,Song 2,Blur,3,180000
+328,Coffee & TV,Blur,3,300000
+329,Parklife,Blur,3,230000
+330,Girls & Boys,Blur,3,240000
+331,No Diggity,Blackstreet,4,260000
+332,Water Runs Dry,Boyz II Men,4,230000
+333,End of Time,Beyoncé,4,230000
+334,Halo,Beyoncé,4,230000
+335,Irreplaceable,Beyoncé,4,230000
+336,Crazy in Love,Beyoncé,4,230000
+337,If I Were a Boy,Beyoncé,4,230000
+338,Love on Top,Beyoncé,4,260000
+339,Run the World (Girls),Beyoncé,4,230000
+340,Drunk in Love,Beyoncé,4,230000
+341,American Pie,Don McLean,5,360000
+342,The Boxer,Simon & Garfunkel,5,300000
+343,Cecilia,Simon & Garfunkel,5,230000
+344,Bridge Over Troubled Water,Simon & Garfunkel,5,300000
+345,Sound of Silence,Simon & Garfunkel,5,185000
+346,Imagine,John Lennon,5,183000
+347,Jealous Guy,John Lennon,5,230000
+348,Instant Karma!,John Lennon,5,230000
+349,Working Class Hero,John Lennon,5,230000
+350,Watching the Wheels,John Lennon,5,230000
+351,Exodus,Bob Marley,5,230000
+352,Waiting in Vain,Bob Marley,5,230000
+353,Sun Is Shining,Bob Marley,5,230000
+354,Concrete Jungle,Bob Marley,5,230000
+355,Kaya,Bob Marley,5,230000
+356,Roots Rock Reggae,Bob Marley,5,230000
+357,So Much Trouble in the World,Bob Marley,5,230000
+358,Could You Be Loved,Bob Marley,5,240000
+359,Is This Love,Bob Marley,5,230000
+360,Jammin’,Bob Marley,5,230000
+361,Enter Sandman,Metallica,8,331000
+362,Nothing Else Matters,Metallica,8,388000
+363,Master of Puppets,Metallica,8,515000
+364,Fade to Black,Metallica,8,417000
+365,One,Metallica,8,448000
+366,Seek & Destroy,Metallica,8,420000
+367,The Unforgiven,Metallica,8,386000
+368,Battery,Metallica,8,312000
+369,Blackened,Metallica,8,360000
+370,Orion,Metallica,8,510000
+371,Paranoid,Black Sabbath,8,290000
+372,Iron Man,Black Sabbath,8,360000
+373,War Pigs,Black Sabbath,8,470000
+374,Children of the Grave,Black Sabbath,8,350000
+375,Heaven and Hell,Black Sabbath,8,420000
+376,Hallowed Be Thy Name,Iron Maiden,8,430000
+377,The Trooper,Iron Maiden,8,250000
+378,Fear of the Dark,Iron Maiden,8,430000
+379,Aces High,Iron Maiden,8,270000
+380,Run to the Hills,Iron Maiden,8,230000
+381,Breaking the Law,Judas Priest,8,210000
+382,Living After Midnight,Judas Priest,8,230000
+383,You’ve Got Another Thing Comin’,Judas Priest,8,250000
+384,Painkiller,Judas Priest,8,420000
+385,Electric Eye,Judas Priest,8,230000
+386,Smoke on the Water,Deep Purple,8,340000
+387,Highway Star,Deep Purple,8,370000
+388,Child in Time,Deep Purple,8,600000
+389,Space Truckin’,Deep Purple,8,320000
+390,Perfect Strangers,Deep Purple,8,310000
+391,Whole Lotta Love,Led Zeppelin,8,330000
+392,Kashmir,Led Zeppelin,8,520000
+393,Immigrant Song,Led Zeppelin,8,170000
+394,Black Dog,Led Zeppelin,8,300000
+395,Stairway to Heaven,Led Zeppelin,8,482000
+396,Dazed and Confused,Led Zeppelin,8,360000
+397,Good Times Bad Times,Led Zeppelin,8,210000
+398,Ramble On,Led Zeppelin,8,230000
+399,Heartbreaker,Led Zeppelin,8,230000
+400,Rock and Roll,Led Zeppelin,8,230000
+401,Juicy,Ice-T,1,240000
+402,Regulate,Warren G & Nate Dogg,1,250000
+403,California Love,2Pac & Dr. Dre,1,295000
+404,Changes,2Pac,1,270000
+405,Keep Ya Head Up,2Pac,1,260000
+406,Dear Mama,2Pac,1,280000
+407,Hit ‘Em Up,2Pac,1,300000
+408,Ambitionz Az a Ridah,2Pac,1,290000
+409,Me Against the World,2Pac,1,280000
+410,Ghetto Gospel,2Pac,1,270000
+411,Firework,Katy Perry,2,220000
+412,Teenage Dream,Katy Perry,2,230000
+413,Part of Me,Katy Perry,2,230000
+414,Wide Awake,Katy Perry,2,230000
+415,Unconditionally,Katy Perry,2,230000
+416,Love Me Like You Do,Ellie Goulding,2,250000
+417,Burn,Ellie Goulding,2,230000
+418,Anything Could Happen,Ellie Goulding,2,230000
+419,On My Mind,Ellie Goulding,2,230000
+420,How Long Will I Love You,Ellie Goulding,2,230000
+421,Mr. Brightside,The Killers,3,222000
+422,Somebody Told Me,The Killers,3,230000
+423,When You Were Young,The Killers,3,230000
+424,Human,The Killers,3,230000
+425,Spaceman,The Killers,3,230000
+426,Smile Like You Mean It,The Killers,3,230000
+427,Runaways,The Killers,3,230000
+428,Shot at the Night,The Killers,3,230000
+429,Just Another Girl,The Killers,3,230000
+430,The Man,The Killers,3,230000
+431,No Scrubs,TLC,4,214000
+432,Waterfalls,TLC,4,230000
+433,Creep,TLC,4,230000
+434,Unpretty,TLC,4,230000
+435,Diggin’ on You,TLC,4,230000
+436,Survivor,Destiny’s Child,4,230000
+437,Bootylicious,Destiny’s Child,4,230000
+438,Independent Women,Destiny’s Child,4,230000
+439,Girl,Destiny’s Child,4,230000
+440,Emotion,Destiny’s Child,4,230000
+441,Imagine,John Lennon,5,183000
+442,Jealous Guy,John Lennon,5,230000
+443,Instant Karma!,John Lennon,5,230000
+444,Working Class Hero,John Lennon,5,230000
+445,Watching the Wheels,John Lennon,5,230000
+446,American Pie,Don McLean,5,360000
+447,Castles in the Air,Don McLean,5,230000
+448,And I Love You So,Don McLean,5,230000
+449,Vincent,Don McLean,5,230000
+450,Crying,Don McLean,5,230000
+451,Three Little Birds,Bob Marley,5,180000
+452,One Love,Bob Marley,5,210000
+453,Redemption Song,Bob Marley,5,230000
+454,Stir It Up,Bob Marley,5,220000
+455,Could You Be Loved,Bob Marley,5,240000
+456,Is This Love,Bob Marley,5,230000
+457,Jammin’,Bob Marley,5,230000
+458,Buffalo Soldier,Bob Marley,5,230000
+459,Exodus,Bob Marley,5,230000
+460,Waiting in Vain,Bob Marley,5,230000
+461,Enter Sandman,Metallica,8,331000
+462,Nothing Else Matters,Metallica,8,388000
+463,Master of Puppets,Metallica,8,515000
+464,Fade to Black,Metallica,8,417000
+465,One,Metallica,8,448000
+466,Seek & Destroy,Metallica,8,420000
+467,The Unforgiven,Metallica,8,386000
+468,Battery,Metallica,8,312000
+469,Blackened,Metallica,8,360000
+470,Orion,Metallica,8,510000
+471,Paranoid,Black Sabbath,8,290000
+472,Iron Man,Black Sabbath,8,360000
+473,War Pigs,Black Sabbath,8,470000
+474,Children of the Grave,Black Sabbath,8,350000
+475,Heaven and Hell,Black Sabbath,8,420000
+476,Hallowed Be Thy Name,Iron Maiden,8,430000
+477,The Trooper,Iron Maiden,8,250000
+478,Fear of the Dark,Iron Maiden,8,430000
+479,Aces High,Iron Maiden,8,270000
+480,Run to the Hills,Iron Maiden,8,230000
+481,Breaking the Law,Judas Priest,8,210000
+482,Living After Midnight,Judas Priest,8,230000
+483,You’ve Got Another Thing Comin’,Judas Priest,8,250000
+484,Painkiller,Judas Priest,8,420000
+485,Electric Eye,Judas Priest,8,230000
+486,Smoke on the Water,Deep Purple,8,340000
+487,Highway Star,Deep Purple,8,370000
+488,Child in Time,Deep Purple,8,600000
+489,Space Truckin’,Deep Purple,8,320000
+490,Perfect Strangers,Deep Purple,8,310000
+491,Whole Lotta Love,Led Zeppelin,8,330000
+492,Kashmir,Led Zeppelin,8,520000
+493,Immigrant Song,Led Zeppelin,8,170000
+494,Black Dog,Led Zeppelin,8,300000
+495,Stairway to Heaven,Led Zeppelin,8,482000
+496,Dazed and Confused,Led Zeppelin,8,360000
+497,Good Times Bad Times,Led Zeppelin,8,210000
+498,Ramble On,Led Zeppelin,8,230000
+499,Heartbreaker,Led Zeppelin,8,230000
+500,Rock and Roll,Led Zeppelin,8,230000
