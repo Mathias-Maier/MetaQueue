@@ -43,8 +43,8 @@ function onServerReady() {
 
 async function loadTracks() {
     const dbResult = await db.query(`
-        select track_id, title, artist, duration
-        from   tracks
+        select title
+        from   songs
     `);
     return dbResult.rows;
 }
