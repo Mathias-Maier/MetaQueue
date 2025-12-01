@@ -14,7 +14,7 @@ await db.query(`
     create table genres (
 		name				text,
         genre_id 			bigint primary key,
-	    text 				text
+	    info 				text
     )
 `);
 
@@ -23,7 +23,7 @@ await db.query(`
         track_id 		bigint primary key,
 	    title 			text not null,
 	    artist 			text not null,
-		genre_id 		bigint references genre,
+		genre_id 		bigint references genres(genre_id),
 	    duration_ms 	bigint not null
     )
 `);
@@ -31,10 +31,18 @@ console.log('Tables recreated.');
 
 console.log('Importing data from CSV files...');
 await upload(db, 'db/genres.csv', `
-	copy tracks (track_id, title, artist, duration)
-	from stdin
-	with csv header`);
+	copy genres (name, genre_id, info)
+	from stdin with csv
+	delimiter ','`);
 console.log('Data imported.');
+
+await upload(db, 'db/songs.csv', `
+	copy songs (track_id, title, artist, genre_id, duration_ms)
+	from stdin
+	with csv header
+	delimiter ','`);
+console.log('Data imported.');
+
 
 await db.end();
 

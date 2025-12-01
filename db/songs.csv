@@ -1,4 +1,4 @@
-Track_id,Title,Artist,Genre_id,Duration_ms
+track_id,title,artist,genre_id,duration_ms
 1,Lose Yourself,Eminem,1,326000
 2,Billie Jean,Michael Jackson,2,294000
 3,Smells Like Teen Spirit,Nirvana,3,245000
@@ -79,7 +79,7 @@ Track_id,Title,Artist,Genre_id,Duration_ms
 78,Say It Right,Nelly Furtado,4,230000
 79,Thunder,Imagine Dragons,3,210000
 80,All Night Long,Lionel Richie,4,260000
-81,Boogie Wonderland,Earth, Wind & Fire,4,250000
+81,Boogie Wonderland,"Earth, Wind & Fire",4,250000
 82,Respect Yourself,The Staple Singers,4,240000
 83,Man in the Mirror,Michael Jackson,2,260000
 84,Love Me Do,The Beatles,5,180000
@@ -140,7 +140,7 @@ Track_id,Title,Artist,Genre_id,Duration_ms
 139,Respect,Aretha Franklin,4,150000
 140,What’s Going On,Marvin Gaye,4,210000
 141,All Night Long,Lionel Richie,4,260000
-142,Boogie Wonderland,Earth, Wind & Fire,4,250000
+142,Boogie Wonderland,"Earth, Wind & Fire",4,250000
 143,Respect Yourself,The Staple Singers,4,240000
 144,Let’s Stay Together,Al Green,5,210000
 145,Like a Rolling Stone,Bob Dylan,5,370000
@@ -207,7 +207,7 @@ Track_id,Title,Artist,Genre_id,Duration_ms
 206,Lose Control,Missy Elliott,1,230000
 207,Alright,Kendrick Lamar,1,210000
 208,Drop It Like It’s Hot,Snoop Dogg,1,260000
-209,Big Pimpin’,JAY-Z,1,250000
+209,Big Pimpin',JAY-Z,1,250000
 210,Hypnotize,The Notorious B.I.G.,1,240000
 211,Firework,Katy Perry,2,220000
 212,Teenage Dream,Katy Perry,2,230000
