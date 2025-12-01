@@ -1,6 +1,91 @@
 body {
-    background-color: #333;
-    color: #ccc;
-    font-family: monospace;
-    font-size: 16px;
+  background-color: #f0feff;
+  color: #ccc;
+  font-family: monospace;
+  font-size: 16px;
+}
+
+h1 {
+  font-family: bungee "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f4fbfb;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app {
+  width: 100%;
+  max-width: 1200px;
+  padding: 60px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+/* LOGO */
+.logo {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 84px;
+  font-weight: 900;
+  letter-spacing: 6px;
+  color: white;
+  -webkit-text-stroke: 4px #e46b8c;
+  text-shadow: 10px 10px 0 #e46b8c;
+  margin-bottom: 40px;
+}
+
+/* LEFT SIDE */
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.card {
+  background: #eef3f3;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card h2 {
+  margin: 0 0 20px 0;
+  font-size: 36px;
+  font-weight: 900;
+  color: black;
+}
+
+.input {
+  background: #dfe6e6;
+  padding: 18px;
+  text-align: center;
+  border-radius: 6px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #333;
+}
+
+/* RIGHT SIDE */
+.right {
+  text-align: center;
+}
+
+.music-icon {
+  font-size: 180px;
+  color: #e46b8c;
+  line-height: 1;
+}
+
+.slogan {
+  margin-top: 20px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #f194c2;
 }
