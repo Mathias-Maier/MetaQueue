@@ -36,3 +36,14 @@ body {
     padding: 5px;
     border-radius: 4px;
 }
+
+.corner-logo {
+    position: fixed;
+    right: 35px;
+    bottom: 25px;
+    width: 60px;
+    height: auto;
+    opacity: 0,9;
+    pointer-events: none;
+}
+
