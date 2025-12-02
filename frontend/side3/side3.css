@@ -50,6 +50,9 @@ body {
   pointer-events: none;
 }
 
-.genre-grid {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+.genre-grid button {
+  padding: 30px 28px;
+  font-size: 16px; /* STØRRE TEKST */
+  border-radius: 10px;
+  border: none;
 }
