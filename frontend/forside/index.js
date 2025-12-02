@@ -16,7 +16,7 @@ async function createParty() {
   if (data.partyCode) {
     alert('Party created! Your code: ' + data.partyCode);
     localStorage.setItem('partyCode', data.partyCode);
-    window.location.href = '/party.html'; // Navigate to Party Page
+    window.location.href = '../frontend/indexSide2.html'; // Navigate to Party Page
   } else {
     alert('Error creating party');
   }
@@ -35,7 +35,7 @@ async function joinParty() {
   } else {
     alert('Joined party: ' + data.partyName);
     localStorage.setItem('partyCode', partyCode);
-    window.location.href = '/party.html'; // Navigate to Party Page
+    window.location.href = '../frontend/indexSide2.html'; // Navigate to Party Page
   }
 }
 
