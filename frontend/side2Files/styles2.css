@@ -94,10 +94,10 @@ body {
     left: 50%;
     transform: translate(-50%, 50%);
     background: white;
-    padding: 30px 40px;
-    width: 90%;
+    padding: 400px 650px;
+    width: 85vw;
     max-width: 600px;
-    max-height: 80vh;
+    max-height: 90vh;
     overflow-y: auto;
     border-radius: 18px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.25);
@@ -120,4 +120,21 @@ body {
     border: none;
     background: #e7e7e7;
     cursor: pointer;
+}
+
+.popup .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #555;
+    transition: color 0.2s ease;
+}
+
+.popup .close-btn:hover {
+    color: #000;
 }
