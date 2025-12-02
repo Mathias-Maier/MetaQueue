@@ -50,9 +50,17 @@ body {
   pointer-events: none;
 }
 
+.genre-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
 .genre-grid button {
-  padding: 30px 28px;
-  font-size: 16px; /* STØRRE TEKST */
-  border-radius: 10px;
-  border: none;
+    padding: 20px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    width: 100%;
+    height: 60px;
 }
