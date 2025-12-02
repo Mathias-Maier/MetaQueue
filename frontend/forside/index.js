@@ -1,5 +1,3 @@
-// index.js
-
 // --- CREATE PARTY ---
 async function createParty() {
   const partyName = document.getElementById('createPartyName').value;
@@ -14,9 +12,9 @@ async function createParty() {
   const data = await res.json();
 
   if (data.partyCode) {
-    alert('Party created! Your code: ' + data.partyCode);
     localStorage.setItem('partyCode', data.partyCode);
-    window.location.href = '../frontend/indexSide2.html'; // Navigate to Party Page
+    localStorage.setItem('partyName', data.partyName);
+    window.location.href = 'indexSide2.html'; // Navigate to Party Page
   } else {
     alert('Error creating party');
   }
@@ -27,15 +25,16 @@ async function joinParty() {
   const partyCode = document.getElementById('joinPartyCode').value.toUpperCase();
   if (!partyCode) return alert("Please enter a party code!");
 
-  const res = await fetch(/api/party/${partyCode});
+  // FIXED: Template literal
+  const res = await fetch(`/api/party/${partyCode}`);
   const data = await res.json();
 
   if (data.error) {
     alert(data.error);
   } else {
-    alert('Joined party: ' + data.partyName);
-    localStorage.setItem('partyCode', partyCode);
-    window.location.href = '../frontend/indexSide2.html'; // Navigate to Party Page
+    localStorage.setItem('partyCode', data.partyCode);
+    localStorage.setItem('partyName', data.partyName);
+    window.location.href = 'indexSide2.html'; // Navigate to Party Page
   }
 }
 
