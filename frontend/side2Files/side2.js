@@ -16,3 +16,13 @@ function closePopup() {
     },350);
 }
 
+window.addEventListener('DOMContentLoaded', () => {
+  const partyName = localStorage.getItem('partyName');
+  const welcomeDiv = document.getElementById('partyWelcome');
+
+  if (welcomeDiv) {
+    welcomeDiv.textContent = partyName
+      ? `WELCOME TO PARTY: ${partyName}`
+      : 'WELCOME TO PARTY';
+  }
+});
