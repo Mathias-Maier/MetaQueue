@@ -31,4 +31,3 @@ function trackElapsedTimes() {
 }
 
 trackElapsedTimes();
-
