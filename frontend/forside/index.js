@@ -5,21 +5,25 @@ async function createParty() {
   const partyName = document.getElementById('createPartyName').value;
   if (!partyName) return alert("Please enter a party name!");
 
-const res = await fetch('http://localhost:3003/api/party', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ partyName })
-});
+  try {
+    const res = await fetch('/api/party', { // <- relative path
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ partyName })
+    });
 
+    const data = await res.json();
 
-  const data = await res.json();
-
-  if (data.partyCode) {
-    localStorage.setItem('partyCode', data.partyCode);
-    localStorage.setItem('partyName', data.partyName);
-    window.location.href = 'indexSide2.html'; // Redirect to Party Page
-  } else {
-    alert('Error creating party');
+    if (data.partyCode) {
+      localStorage.setItem('partyCode', data.partyCode);
+      localStorage.setItem('partyName', data.partyName);
+      window.location.href = 'indexSide2.html'; // Redirect to Party Page
+    } else {
+      alert('Error creating party');
+    }
+  } catch (err) {
+    console.error(err);
+    alert('Failed to create party. Check server.');
   }
 }
 
@@ -28,16 +32,20 @@ async function joinParty() {
   const partyCode = document.getElementById('joinPartyCode').value.toUpperCase();
   if (!partyCode) return alert("Please enter a party code!");
 
+  try {
+    const res = await fetch(`/api/party/${partyCode}`); // <- relative path
+    const data = await res.json();
 
-  const res = await fetch(`http://localhost:3003/api/party/${partyCode}`);
-  const data = await res.json();
-
-  if (data.error) {
-    alert(data.error);
-  } else {
-    localStorage.setItem('partyCode', data.partyCode);
-    localStorage.setItem('partyName', data.partyName);
-    window.location.href = 'indexSide2.html'; // Redirect to Party Page
+    if (data.error) {
+      alert(data.error);
+    } else {
+      localStorage.setItem('partyCode', data.partyCode);
+      localStorage.setItem('partyName', data.partyName);
+      window.location.href = 'indexSide2.html'; // Redirect to Party Page
+    }
+  } catch (err) {
+    console.error(err);
+    alert('Failed to join party. Check server.');
   }
 }
 

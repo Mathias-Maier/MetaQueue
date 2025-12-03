@@ -20,6 +20,7 @@ server.use(express.json());
 server.use(onEachRequest);
 
 // --- Party endpoints ---
+// Create party
 server.post('/api/party', (req, res) => {
   const { partyName } = req.body;
   if (!partyName) return res.status(400).json({ error: 'Party name required' });
@@ -30,6 +31,7 @@ server.post('/api/party', (req, res) => {
   res.json({ partyCode, partyName });
 });
 
+// Join party
 server.get('/api/party/:partyCode', (req, res) => {
   const { partyCode } = req.params;
   const party = parties.get(partyCode.toUpperCase());
@@ -44,9 +46,8 @@ server.get('/api/party/:partyCode/currentTrack', onGetCurrentTrackAtParty);
 
 // Fallback for frontend routing
 server.get(/\/[a-zA-Z0-9-_/]+/, onFallback);
-server.get('/', onFallback);
 
-// Start server
+// --- Start server ---
 server.listen(port, onServerReady);
 
 // --- Functions ---
@@ -55,8 +56,9 @@ function onEachRequest(req, res, next) {
   next();
 }
 
+// Serve requested file if exists, else fallback to index.html
 async function onFallback(req, res) {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'forside', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
 }
 
 function onServerReady() {
@@ -85,7 +87,9 @@ function pickNextTrackFor(partyCode) {
   currentTracks.set(partyCode, trackIndex);
 
   const track = tracks[trackIndex];
-  play(partyCode, track.track_id, track.duration_ms, Date.now(), () => currentTracks.delete(partyCode));
+  play(partyCode, track.track_id, track.duration_ms, Date.now(), () =>
+    currentTracks.delete(partyCode)
+  );
 
   return trackIndex;
 }
