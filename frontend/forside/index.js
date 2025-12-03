@@ -17,7 +17,7 @@ async function createParty() {
     if (data.partyCode) {
       localStorage.setItem('partyCode', data.partyCode);
       localStorage.setItem('partyName', data.partyName);
-      window.location.href = 'indexSide2.html'; // Redirect to Party Page
+      window.location.href = 'side2Files/Side2.html'; // Redirect to Party Page
     } else {
       alert('Error creating party');
     }
@@ -41,7 +41,7 @@ async function joinParty() {
     } else {
       localStorage.setItem('partyCode', data.partyCode);
       localStorage.setItem('partyName', data.partyName);
-      window.location.href = 'indexSide2.html'; // Redirect to Party Page
+      window.location.href = 'side2Files/Side2.html'; // Redirect to Party Page
     }
   } catch (err) {
     console.error(err);
