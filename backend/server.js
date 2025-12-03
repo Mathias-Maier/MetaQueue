@@ -44,6 +44,7 @@ server.get('/api/party/:partyCode/currentTrack', onGetCurrentTrackAtParty);
 
 // Fallback for frontend routing
 server.get(/\/[a-zA-Z0-9-_/]+/, onFallback);
+server.get('/', onFallback);
 
 // Start server
 server.listen(port, onServerReady);
@@ -55,7 +56,7 @@ function onEachRequest(req, res, next) {
 }
 
 async function onFallback(req, res) {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'forside', 'index.html'));
 }
 
 function onServerReady() {
