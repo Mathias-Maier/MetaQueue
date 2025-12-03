@@ -6,7 +6,6 @@ body {
 }
 
 .logo {
-  grid-column: 1 / -1;
   text-align: center;
   font-size: 84px;
   font-weight: 900;
@@ -23,48 +22,98 @@ body {
   box-sizing: border-box;
 }
 
+/* Three-column layout */
 .container {
   display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  padding: 0 40px;
 }
+
+/* boxes layout */
 .box-1 {
-  flex: 2;
-  height: 100px;
-  margin-left: 20px;
-}
-.box-2 {
-  flex: 3;
-  height: 100px;
-}
-.box-3 {
   flex: 1;
-  height: 100px;
-}
-
-.logoLille {
-  position: fixed;
-  right: 35px;
-  bottom: 25px;
-  width: 60px;
-  height: auto;
-  opacity: 0, 9;
-  pointer-events: none;
-}
-
-.genre-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 20px;
 }
 
-.genre-grid button {
-  padding: 20px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: none;
+.box-2 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.box-3 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.box-2 h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.box-3 h3 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Genre grid - 2 columns */
+.genre-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* Genre clickable boxes */
+.genre-box {
+  cursor: pointer;
+  display: block;
+}
+
+.genre-box input {
+  display: none;
+}
+
+.genre-btn {
+  display: block;
   width: 100%;
   height: 60px;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  background: #f1f1f1;
+  font-size: 16px;
+  border: none;
   cursor: pointer;
   transition: 0.2s;
+  line-height: 20px;
+}
+
+.genre-box:hover .genre-btn {
+  background: #ddd;
+}
+
+/* When checkbox is checked */
+.genre-box input:checked + .genre-btn {
+  background: #e46b8c;
+  color: white;
 }
 
 html,
@@ -75,44 +124,53 @@ body {
   height: 100%;
 }
 
-.box-1,
-.box-2,
-.box-3 {
-  height: 100px;
-}
-
-.box-1,
-.box-2,
-.box-3 {
-  height: auto;
-}
-
-.genre-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-}
-
-.genre-box {
-  cursor: pointer;
-}
-
-.genre-box input {
-  display: none;
-}
-
-.genre-btn {
-  display: block;
-  padding: 26px;
-  text-align: center;
-  border-radius: 20px;
+.search-box {
+  display: flex;
+  align-items: center;
   background: #f1f1f1;
-  font-size: 18px;
-  font-weight: 500;
+  padding: 15px;
+  border-radius: 10px;
+  gap: 10px;
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  outline: none;
+}
+
+.selection-btn {
+  padding: 20px;
+  text-align: center;
+  background: #f1f1f1;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
   transition: 0.2s;
 }
 
-.genre-box input:checked + .genre-btn {
+.selection-btn:hover {
   background: #e46b8c;
   color: white;
+}
+
+.logoLille {
+  position: fixed;
+  right: 35px;
+  bottom: 25px;
+  width: 60px;
+  height: auto;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.close-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 32px;
+  cursor: pointer;
+  color: #333;
 }
