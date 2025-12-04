@@ -146,3 +146,16 @@ body {
 .popup .close-btn:hover {
     color: #000;
 }
+
+.party-code-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.party-code {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    letter-spacing: 3px;
+    display: none;
+}

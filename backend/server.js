@@ -16,13 +16,25 @@ server.use(express.static('frontend', {index:'forside/index.html'}));
 server.use(express.json());
 server.use(onEachRequest);
 
+// --- Generate unique party code ---
+function generatePartyCode() {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let code = '';
+  for (let i = 0; i < 6; i++) {
+    code += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  // Check if code already exists, regenerate if needed
+  if (parties.has(code)) return generatePartyCode();
+  return code;
+}
+
 // --- Party endpoints ---
 // Create party
 server.post('/api/party', (req, res) => {
   const { partyName } = req.body;
   if (!partyName) return res.status(400).json({ error: 'Party name required' });
 
-  const partyCode = Math.random().toString(36).substring(2, 6).toUpperCase();
+  const partyCode = generatePartyCode();
   parties.set(partyCode, { name: partyName, createdAt: new Date() });
 
   res.json({ partyCode, partyName });
