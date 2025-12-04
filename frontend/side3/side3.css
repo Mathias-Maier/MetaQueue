@@ -166,3 +166,11 @@ body {
   pointer-events: none;
 }
 
+.close-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 32px;
+  cursor: pointer;
+  color: #333;
+}

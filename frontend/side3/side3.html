@@ -7,7 +7,8 @@
     <title>Document</title>
   </head>
   <body>
-    
+    <div class="close-btn">✕</div>
+
     <div class="logo">WHAT'S THE VIBE?</div>
     <div class="container">
       <!-- LEFT COLUMN: Genre -->
@@ -15,44 +16,54 @@
         <div class="section-title">GENRE:</div>
         <div class="genre-grid">
           <label class="genre-box">
-            <input type="checkbox" name="genre" value="hip-hop">
+            <input type="checkbox" name="genre" value="hip-hop" />
             <span class="genre-btn">HIP-HOP</span>
           </label>
           <label class="genre-box">
-            <input type="checkbox" name="genre" value="jazz">
+            <input type="checkbox" name="genre" value="jazz" />
             <span class="genre-btn">JAZZ</span>
           </label>
           <label class="genre-box">
-            <input type="checkbox" name="genre" value="pop">
+            <input type="checkbox" name="genre" value="pop" />
             <span class="genre-btn">POP</span>
           </label>
           <label class="genre-box">
-            <input type="checkbox" name="genre" value="rock">
+            <input type="checkbox" name="genre" value="rock" />
             <span class="genre-btn">ROCK</span>
           </label>
           <label class="genre-box">
-            <input type="checkbox" name="genre" value="rnb">
+            <input type="checkbox" name="genre" value="rnb" />
             <span class="genre-btn">RnB</span>
           </label>
           <label class="genre-box">
-            <input type="checkbox" name="genre" value="indie">
+            <input type="checkbox" name="genre" value="indie" />
             <span class="genre-btn">INDIE</span>
           </label>
           <label class="genre-box">
-            <input type="checkbox" name="genre" value="metal">
+            <input type="checkbox" name="genre" value="metal" />
             <span class="genre-btn">METAL</span>
           </label>
           <label class="genre-box">
-            <input type="checkbox" name="genre" value="classic">
+            <input type="checkbox" name="genre" value="classic" />
             <span class="genre-btn">CLASSIC</span>
           </label>
         </div>
       </div>
       <!-- MIDDLE COLUMN: Search -->
+
       <div class="box-2">
         <h2>WHO DO YOU LIKE LISTENING TO?</h2>
+
         <div class="search-box">
-          <input type="text" placeholder="" />
+          <input list="artists" placeholder="Søg her..." />
+
+          <datalist id="artists">
+            <option value="Adele"></option>
+            <option value="Drake"></option>
+            <option value="Ed Sheeran"></option>
+            <option value="Kanye West"></option>
+            <option value="Taylor Swift"></option>
+          </datalist>
         </div>
       </div>
       <!-- RIGHT COLUMN: Your Selection -->
@@ -62,11 +73,6 @@
         <div class="selection-btn">ARTISTS</div>
       </div>
     </div>
-    <img
-      src="logo til side 3.png"
-      class="logoLille"
-      alt="logo"
-      height="100"
-    />
+    <img src="logo til side 3.png" class="logoLille" alt="logo" height="100" />
   </body>
 </html>
