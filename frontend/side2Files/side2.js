@@ -74,3 +74,57 @@ window.addEventListener('DOMContentLoaded', async () => {
         }
     }
 });
+
+
+const genreVotes = {
+    pop: 12,
+    rock: 56,
+    edm: 29,
+    hiphop: 2,
+    rap: 15
+}
+
+const totalVotes = Object.values(genreVotes).reduce((sum,val) => sum + val, 0);
+
+const genreData = [
+    Math.round((genreVotes.pop / totalVotes) * 100),
+    Math.round((genreVotes.rock / totalVotes) * 100),
+    Math.round((genreVotes.edm / totalVotes) * 100),
+    Math.round((genreVotes.hiphop / totalVotes) * 100),
+    Math.round((genreVotes.rap / totalVotes) * 100)
+];
+
+const genreLabels = ['Pop', 'Rock', 'EDM', 'HipHop', 'Rap'];
+
+const genreColors = [
+    '#00A8E8',
+    '#3366cc',
+    '#FFAA00',
+    '#8BC34A',
+    '#888888'
+];
+
+function loadGenreChart() {
+    const ctx = document.getElementById('genreChart');
+
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: genreLabels,
+            datasets: [{
+                data: genreData,
+                backgroundColor: genreColors,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+}
+
+window.addEventListener("load", loadGenreChart);

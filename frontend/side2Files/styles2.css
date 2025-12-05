@@ -190,3 +190,10 @@ body {
     min-width: 40px;
     text-align: center;
 }
+
+#genre-chart-wrapper {
+    width: 250px;
+    position: absolute;
+    right: 720px;
+    bottom: 100px;
+}
