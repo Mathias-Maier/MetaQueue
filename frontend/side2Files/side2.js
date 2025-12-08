@@ -76,88 +76,55 @@ window.addEventListener('DOMContentLoaded', async () => {
 });
 
 
-
-// Initialize pie chart
-let genreChart = null;
-
-async function updatePieChart() {
-    const partyCode = localStorage.getItem('partyCode');
-    if (!partyCode) return;
-
-    try {
-        const res = await fetch(`/api/party/${partyCode}/preferences`);
-        const data = await res.json();
-
-        if (!data.genres || data.genres.length === 0) {
-            // No data yet
-            return;
-        }
-
-        // Genre names mapping
-        const genreNames = {
-            1: 'Hip-Hop',
-            2: 'Pop',
-            3: 'Rock',
-            4: 'RnB',
-            5: 'Classics',
-            6: 'Jazz',
-            7: 'Indie',
-            8: 'Metal'
-        };
-
-        // Prepare chart data
-        const labels = data.genres.map(g => genreNames[g.genre_id] || 'Unknown');
-        const counts = data.genres.map(g => parseInt(g.count));
-
-        const ctx = document.getElementById('genreChart');
-        if (!ctx) return;
-
-        // Destroy existing chart
-        if (genreChart) {
-            genreChart.destroy();
-        }
-
-        // Create new chart
-        genreChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: labels,
-                datasets: [{
-                    data: counts,
-                    backgroundColor: [
-                        '#FF6384',
-                        '#36A2EB',
-                        '#FFCE56',
-                        '#4BC0C0',
-                        '#9966FF',
-                        '#FF9F40',
-                        '#FF6384',
-                        '#C9CBCF'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
-    } catch (err) {
-        console.error('Error updating pie chart:', err);
-    }
+const genreVotes = {
+    pop: 21,
+    rock: 99,
+    edm: 18,
+    hiphop: 5,
+    rap: 44
 }
 
-// Listen for updates from iframe
-window.addEventListener('message', (event) => {
-    if (event.data.type === 'selectionsUpdated') {
-        updatePieChart();
-    }
-});
+const totalVotes = Object.values(genreVotes).reduce((sum,val) => sum + val, 0);
 
-// Update chart on load and every 5 seconds
-updatePieChart();
-setInterval(updatePieChart, 5000);
+const genreData = [
+    Math.round((genreVotes.pop / totalVotes) * 100),
+    Math.round((genreVotes.rock / totalVotes) * 100),
+    Math.round((genreVotes.edm / totalVotes) * 100),
+    Math.round((genreVotes.hiphop / totalVotes) * 100),
+    Math.round((genreVotes.rap / totalVotes) * 100)
+];
+
+const genreLabels = ['Pop', 'Rock', 'EDM', 'HipHop', 'Rap'];
+
+const genreColors = [
+    '#00A8E8',
+    '#3366cc',
+    '#FFAA00',
+    '#8BC34A',
+    '#888888'
+];
+
+function loadGenreChart() {
+    const ctx = document.getElementById('genreChart');
+
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: genreLabels,
+            datasets: [{
+                data: genreData,
+                backgroundColor: genreColors,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+}
+
+window.addEventListener("load", loadGenreChart);
