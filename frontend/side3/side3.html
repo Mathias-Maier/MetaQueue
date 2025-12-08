@@ -53,16 +53,10 @@
         <h2>WHO DO YOU LIKE LISTENING TO?</h2>
 
         <div class="search-box">
-          <input list="artists" placeholder="Søg her..." />
-
-          <datalist id="artists">
-            <option value="Adele"></option>
-            <option value="Drake"></option>
-            <option value="Ed Sheeran"></option>
-            <option value="Kanye West"></option>
-            <option value="Taylor Swift"></option>
-          </datalist>
+          <input id="searchInput" placeholder="Søg her..." autocomplete="off" />
+          <ul id="suggestions"></ul>
         </div>
+
       </div>
       
       <!-- RIGHT COLUMN: Your Selection -->
@@ -73,5 +67,6 @@
       </div>
     </div>
     <img src="logo til side 3.png" class="logoLille" alt="logo" height="100" />
+    <script src="side3.js"></script>
   </body>
 </html>
