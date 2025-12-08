@@ -6,7 +6,7 @@ import { connect } from '../db/connect.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const db = await connect();
-const parties = new Map(); // maps partyCode to { name: partyName, createdAt: Date, members: Set }
+const parties = new Map(); // maps partyCode to { name: partyName, createdAt: Date }
 
 const port = process.env.PORT || 3003;
 const server = express();
@@ -35,13 +35,9 @@ server.post('/api/party', (req, res) => {
   if (!partyName) return res.status(400).json({ error: 'Party name required' });
 
   const partyCode = generatePartyCode();
-  parties.set(partyCode, { 
-    name: partyName, 
-    createdAt: new Date(),
-    members: new Set()
-  });
+  parties.set(partyCode, { name: partyName, createdAt: new Date() });
 
-  res.json({ partyCode, partyName, memberCount: 0 });
+  res.json({ partyCode, partyName });
 });
 
 // Join party
@@ -51,33 +47,24 @@ server.get('/api/party/:partyCode', (req, res) => {
 
   if (!party) return res.status(404).json({ error: 'Party not found' });
 
-  res.json({ 
-    partyCode, 
-    partyName: party.name,
-    memberCount: party.members.size 
-  });
+  res.json({ partyCode, partyName: party.name });
 });
 
-// Add member to party
-server.post('/api/party/:partyCode/join', (req, res) => {
-  const { partyCode } = req.params;
-  const { memberId } = req.body;
-  const party = parties.get(partyCode.toUpperCase());
+// --- Artist suggestion endpoint ---
+server.get('/api/suggestions', async (req, res) => {
+  const query = req.query.query;
+  if (!query || query.length < 2) return res.json([]);
 
-  if (!party) return res.status(404).json({ error: 'Party not found' });
-
-  party.members.add(memberId);
-  res.json({ memberCount: party.members.size });
-});
-
-// Get party member count
-server.get('/api/party/:partyCode/count', (req, res) => {
-  const { partyCode } = req.params;
-  const party = parties.get(partyCode.toUpperCase());
-
-  if (!party) return res.status(404).json({ error: 'Party not found' });
-
-  res.json({ memberCount: party.members.size });
+  try {
+    const result = await db.query(
+      'SELECT DISTINCT artist FROM songs WHERE artist ILIKE $1 LIMIT 10',
+      [`%${query}%`]
+    );
+    res.json(result.rows.map(row => row.artist));
+  } catch (err) {
+    console.error('Error fetching suggestions:', err);
+    res.status(500).json({ error: 'Database error' });
+  }
 });
 
 // --- Start server ---
