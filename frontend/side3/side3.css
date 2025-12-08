@@ -208,3 +208,40 @@ body {
   cursor: pointer;
   color: #333;
 }
+
+.selection-section {
+  margin: 15px 0;
+  text-align: left;
+}
+
+.selection-section strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+.selection-tag {
+  display: inline-block;
+  background-color: #ff69b4;
+  color: white;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 15px;
+  font-size: 12px;
+  position: relative;
+}
+
+.remove-tag {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  margin-left: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.remove-tag:hover {
+  color: #ff0000;
+}

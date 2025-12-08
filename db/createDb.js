@@ -6,7 +6,7 @@ console.log('Recreating database...');
 const db = await connect();
 
 console.log('Dropping tables...');
-await db.query('drop table if exists genres, songs');
+await db.query('drop table if exists user_selections, party_preferences, genres, songs');
 console.log('All tables dropped.');
 
 console.log('Recreating tables...');
@@ -25,6 +25,26 @@ await db.query(`
 	    artist 			text not null,
 		genre_id 		bigint references genres(genre_id),
 	    duration_ms 	bigint not null
+    )
+`);
+
+await db.query(`
+    create table user_selections (
+        selection_id    serial primary key,
+        party_code      text not null,
+        member_id       text not null,
+        genre_id        bigint references genres(genre_id),
+        artist          text,
+        created_at      timestamp default now()
+    )
+`);
+
+await db.query(`
+    create table party_preferences (
+        party_code      text primary key,
+        genre_counts    jsonb,
+        artist_counts   jsonb,
+        updated_at      timestamp default now()
     )
 `);
 console.log('Tables recreated.');

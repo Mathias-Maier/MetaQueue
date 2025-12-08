@@ -35,9 +35,13 @@ server.post('/api/party', (req, res) => {
   if (!partyName) return res.status(400).json({ error: 'Party name required' });
 
   const partyCode = generatePartyCode();
-  parties.set(partyCode, { name: partyName, createdAt: new Date() });
+  parties.set(partyCode, { 
+    name: partyName, 
+    createdAt: new Date(),
+    members: new Set()
+  });
 
-  res.json({ partyCode, partyName });
+  res.json({ partyCode, partyName, memberCount: 0 });
 });
 
 // Join party
@@ -47,8 +51,37 @@ server.get('/api/party/:partyCode', (req, res) => {
 
   if (!party) return res.status(404).json({ error: 'Party not found' });
 
-  res.json({ partyCode, partyName: party.name });
+  res.json({ 
+    partyCode, 
+    partyName: party.name,
+    memberCount: party.members ? party.members.size : 0
+  });
 });
+
+// Add member to party
+server.post('/api/party/:partyCode/join', (req, res) => {
+  const { partyCode } = req.params;
+  const { memberId } = req.body;
+  const party = parties.get(partyCode.toUpperCase());
+
+  if (!party) return res.status(404).json({ error: 'Party not found' });
+
+  if (!party.members) party.members = new Set();
+  party.members.add(memberId);
+  
+  res.json({ memberCount: party.members.size });
+});
+
+// Get party member count
+server.get('/api/party/:partyCode/count', (req, res) => {
+  const { partyCode } = req.params;
+  const party = parties.get(partyCode.toUpperCase());
+
+  if (!party) return res.status(404).json({ error: 'Party not found' });
+
+  res.json({ memberCount: party.members ? party.members.size : 0 });
+});
+
 
 // --- Artist suggestion endpoint ---
 server.get('/api/suggestions', async (req, res) => {
@@ -64,6 +97,60 @@ server.get('/api/suggestions', async (req, res) => {
   } catch (err) {
     console.error('Error fetching suggestions:', err);
     res.status(500).json({ error: 'Database error' });
+  }
+});
+// Save user selections (genres and artists)
+server.post('/api/party/:partyCode/selections', async (req, res) => {
+  const { partyCode } = req.params;
+  const { memberId, genres, artists } = req.body;
+
+  try {
+    // Delete old selections for this user
+    await db.query(
+      'DELETE FROM user_selections WHERE party_code = $1 AND member_id = $2',
+      [partyCode.toUpperCase(), memberId]
+    );
+
+    // Insert new genre selections
+    for (const genreId of genres) {
+      await db.query(
+        'INSERT INTO user_selections (party_code, member_id, genre_id) VALUES ($1, $2, $3)',
+        [partyCode.toUpperCase(), memberId, genreId]
+      );
+    }
+
+    // Insert new artist selections
+    for (const artist of artists) {
+      await db.query(
+        'INSERT INTO user_selections (party_code, member_id, artist) VALUES ($1, $2, $3)',
+        [partyCode.toUpperCase(), memberId, artist]
+      );
+    }
+
+    res.json({ success: true, message: 'Selections saved' });
+  } catch (err) {
+    console.error('Error saving selections:', err);
+    res.status(500).json({ error: 'Failed to save selections' });
+  }
+});
+
+// Get party preferences (for pie chart)
+server.get('/api/party/:partyCode/preferences', async (req, res) => {
+  const { partyCode } = req.params;
+
+  try {
+    const result = await db.query(
+      `SELECT genre_id, COUNT(*) as count 
+       FROM user_selections 
+       WHERE party_code = $1 AND genre_id IS NOT NULL 
+       GROUP BY genre_id`,
+      [partyCode.toUpperCase()]
+    );
+
+    res.json({ genres: result.rows });
+  } catch (err) {
+    console.error('Error fetching preferences:', err);
+    res.status(500).json({ error: 'Failed to fetch preferences' });
   }
 });
 
