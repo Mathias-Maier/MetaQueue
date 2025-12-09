@@ -17,7 +17,7 @@ track_id,title,artist,genre_id,duration_ms
 16,Stairway to Heaven,Led Zeppelin,8,482000
 17,HUMBLE.,Kendrick Lamar,1,215000
 18,Let It Be,The Beatles,5,243000
-19,God’s Plan,Drake,1,271000
+19,God's Plan,Drake,1,271000
 20,Rolling in the Deep,Adele,2,228000
 21,In Da Club,50 Cent,1,250000
 22,Fix You,Coldplay,3,300000
@@ -31,7 +31,7 @@ track_id,title,artist,genre_id,duration_ms
 30,Mr. Brightside,The Killers,3,222000
 31,Rock With You,Michael Jackson,2,240000
 32,Blinding Lights,The Weeknd,2,200000
-33,Don’t Stop Believin’,Journey,3,256000
+33,Don't Stop Believin',Journey,3,256000
 34,Respect,Aretha Franklin,4,150000
 35,Shake It Off,Taylor Swift,2,242000
 36,All Star,Smash Mouth,3,200000
@@ -49,7 +49,7 @@ track_id,title,artist,genre_id,duration_ms
 48,Lose Control,Missy Elliott,1,230000
 49,Firework,Katy Perry,2,220000
 50,Take Me to Church,Hozier,3,240000
-51,What’s Going On,Marvin Gaye,4,210000
+51,What's Going On,Marvin Gaye,4,210000
 52,Imagine,John Lennon,5,183000
 53,Stan,Eminem,1,270000
 54,Roar,Katy Perry,2,230000
@@ -63,16 +63,16 @@ track_id,title,artist,genre_id,duration_ms
 62,Without Me,Eminem,1,290000
 63,Sorry,Justin Bieber,2,200000
 64,Yellow,Coldplay,3,270000
-65,Say My Name,Destiny’s Child,4,240000
+65,Say My Name,Destiny's Child,4,240000
 66,Believer,Imagine Dragons,3,204000
 67,All I Want for Christmas Is You,Mariah Carey,2,245000
-68,Lose My Breath,Destiny’s Child,4,230000
+68,Lose My Breath,Destiny's Child,4,230000
 69,Paint It Black,The Rolling Stones,3,220000
 70,Mockingbird,Eminem,1,250000
 71,Love Yourself,Justin Bieber,2,230000
 72,Viva La Vida,Coldplay,3,240000
 73,End of the Road,Boyz II Men,4,260000
-74,Let’s Stay Together,Al Green,4,210000
+74,Let's Stay Together,Al Green,4,210000
 75,The Real Slim Shady,Eminem,1,280000
 76,Someone Like You,Adele,2,285000
 77,Holiday,Green Day,3,260000
@@ -85,7 +85,7 @@ track_id,title,artist,genre_id,duration_ms
 84,Love Me Do,The Beatles,5,180000
 85,Shape of My Heart,Sting,3,250000
 86,No Ordinary Love,Sade,4,270000
-87,Sweet Child O’ Mine,Guns N’ Roses,3,356000
+87,Sweet Child O' Mine,Guns N' Roses,3,356000
 88,All Apologies,Nirvana,3,230000
 89,Love on Top,Beyoncé,2,260000
 90,Bounce It,Juicy J,1,240000
@@ -115,13 +115,13 @@ track_id,title,artist,genre_id,duration_ms
 114,Run to the Hills,Iron Maiden,8,230000
 115,Breaking the Law,Judas Priest,8,210000
 116,Living After Midnight,Judas Priest,8,230000
-117,You’ve Got Another Thing Comin’,Judas Priest,8,250000
+117,You've Got Another Thing Comin',Judas Priest,8,250000
 118,Painkiller,Judas Priest,8,420000
 119,Electric Eye,Judas Priest,8,230000
 120,Smoke on the Water,Deep Purple,8,340000
 121,Highway Star,Deep Purple,8,370000
 122,Child in Time,Deep Purple,8,600000
-123,Space Truckin’,Deep Purple,8,320000
+123,Space Truckin',Deep Purple,8,320000
 124,Perfect Strangers,Deep Purple,8,310000
 125,Whole Lotta Love,Led Zeppelin,8,330000
 126,Kashmir,Led Zeppelin,8,520000
@@ -136,7 +136,7 @@ track_id,title,artist,genre_id,duration_ms
 135,Ms. Jackson,Outkast,1,240000
 136,All of the Lights,Kanye West,1,300000
 137,Alright,Kendrick Lamar,1,210000
-138,Drop It Like It’s Hot,Snoop Dogg,1,260000
+138,Drop It Like It's Hot,Snoop Dogg,1,260000
 139,Big Pimpin',JAY-Z,1,250000
 140,Hypnotize,The Notorious B.I.G.,1,240000
 141,Die With A Smile,Lady Gaga & Bruno Mars,2,240000
@@ -186,13 +186,13 @@ track_id,title,artist,genre_id,duration_ms
 185,LaLaLa,Stray Kids,7,230000
 186,Maniac,Stray Kids,7,230000
 187,Case 143,Stray Kids,7,230000
-188,God’s Menu,Stray Kids,7,230000
+188,God's Menu,Stray Kids,7,230000
 189,Thunderous,Stray Kids,7,230000
 190,Super,SEVENTEEN,7,230000
 191,Hot,SEVENTEEN,7,230000
 192,Rock With You,SEVENTEEN,7,230000
 193,Ready To Love,SEVENTEEN,7,230000
-194,Don’t Wanna Cry,SEVENTEEN,7,230000
+194,Don't Wanna Cry,SEVENTEEN,7,230000
 195,Kill Bill,SZA,4,230000
 196,Snooze,SZA,4,230000
 197,Low,SZA,4,230000
@@ -231,7 +231,7 @@ track_id,title,artist,genre_id,duration_ms
 230,America Has A Problem,Beyoncé,4,230000
 231,Church Girl,Beyoncé,4,230000
 232,Plastic Off The Sofa,Beyoncé,4,230000
-233,Virgo’s Groove,Beyoncé,4,230000
+233,Virgo's Groove,Beyoncé,4,230000
 234,CUFF IT (Remix),Beyoncé ft. Shatta Wale,4,230000
 235,Flowers,Miley Cyrus,2,230000
 236,Jaded,Miley Cyrus,2,230000
@@ -243,7 +243,7 @@ track_id,title,artist,genre_id,duration_ms
 242,Traitor,Olivia Rodrigo,2,230000
 243,Brutal,Olivia Rodrigo,2,220000
 244,Get Him Back!,Olivia Rodrigo,2,230000
-245,Can’t Catch Me Now,Olivia Rodrigo,2,230000
+245,Can't Catch Me Now,Olivia Rodrigo,2,230000
 246,As It Was,Harry Styles,2,230000
 247,Watermelon Sugar,Harry Styles,2,230000
 248,Adore You,Harry Styles,2,230000
@@ -253,7 +253,7 @@ track_id,title,artist,genre_id,duration_ms
 252,Daylight,Harry Styles,2,230000
 253,Satellite,Harry Styles,2,230000
 254,Levitating,Dua Lipa,2,230000
-255,Don’t Start Now,Dua Lipa,2,230000
+255,Don't Start Now,Dua Lipa,2,230000
 256,Physical,Dua Lipa,2,230000
 257,Hallucinate,Dua Lipa,2,230000
 258,New Rules,Dua Lipa,2,230000
@@ -284,7 +284,7 @@ track_id,title,artist,genre_id,duration_ms
 283,Love Me Harder,Ariana Grande & The Weeknd,2,230000
 284,Save Your Tears,The Weeknd,2,230000
 285,In The Night,The Weeknd,2,230000
-286,Can’t Feel My Face,The Weeknd,2,230000
+286,Can't Feel My Face,The Weeknd,2,230000
 287,The Hills,The Weeknd,2,230000
 288,Starboy,The Weeknd ft. Daft Punk,2,230000
 289,I Feel It Coming,The Weeknd ft. Daft Punk,2,230000
@@ -311,8 +311,8 @@ track_id,title,artist,genre_id,duration_ms
 310,Alle Går Rundt Og Forelsker Sig,Peter Belli,5,230000
 311,Dansevise,Grethe & Jørgen Ingmann,5,230000
 312,To Lys På Et Bord,Bjørn Tidmand,5,230000
-313,Kvinde Min,Gasolin’,3,230000
-314,Det Bedste Til Mig Og Mine Venner,Gasolin’,3,230000
+313,Kvinde Min,Gasolin',3,230000
+314,Det Bedste Til Mig Og Mine Venner,Gasolin',3,230000
 315,This Is My Life,Kim Larsen,3,230000
 316,Midt Om Natten,Kim Larsen,3,230000
 317,Papirklip,Kim Larsen,3,230000
