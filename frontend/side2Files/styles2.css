@@ -69,8 +69,38 @@ body {
 }
 
 #song-info {
-    font-size: 22px;
-    margin-bottom: 12px;
+    font-size: 35px;
+    transition: opacity 0.4s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    line-height: 1.2;
+    margin-top: 15px;
+    padding: 6px 10px;
+    font-family: 'Inter', 'Helvetica Neue', sans-serif;
+}
+
+.artist {
+    font-weight: 400;
+    font-size: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #666;
+    margin-top: 5px;
+    text-shadow: 0px 2px 6px rgba(0,0,0,0.7);
+}
+
+.title {
+    font-weight: 700;
+    font-size: 32px;
+    letter-spacing: -0.5px;
+    color: #222;
+    opacity: 0.9;
+}
+
+.artist, .title {
+    animation: fadeIn 0.6s ease;
 }
 
 #progress-bar {
@@ -93,7 +123,6 @@ body {
     justify-content: space-between;
     font-size: 14px;
 }
-
 
 
 
