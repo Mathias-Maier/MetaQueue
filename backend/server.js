@@ -3,12 +3,17 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { connect } from '../db/connect.js';
 
+// Finder mappe-stien hvor denne fil er placeret
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+//Database = Connection to the permanent database (keeps data even after restart)
+//Map = Temporary storage in computer's memory (data disappears when server restarts)
 const db = await connect();
 const parties = new Map(); // maps partyCode to { name: partyName, createdAt: Date }
 
+// This line determines which port number the server will run on
 const port = process.env.PORT || 3003;
+//This creates our web server
 const server = express();
 
 // --- Middleware ---

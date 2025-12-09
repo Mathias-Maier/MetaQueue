@@ -1,38 +1,4 @@
-const searchInput = document.getElementById("searchInput");
-const suggestionsList = document.getElementById("suggestions");
 
-searchInput.addEventListener("input", async () => {
-  const query = searchInput.value.trim();
-  if (query.length < 2) {
-    suggestionsList.innerHTML = "";
-    return;
-  }
-
-  try {
-    const response = await fetch(`http://localhost:3003/api/suggestions?query=${encodeURIComponent(query)}`);
-    const artists = await response.json();
-
-    suggestionsList.innerHTML = "";
-
-    if (artists.length === 0) {
-      const li = document.createElement("li");
-      li.textContent = "No matches found";
-      suggestionsList.appendChild(li);
-    } else {
-      artists.forEach(artist => {
-        const li = document.createElement("li");
-        li.textContent = artist;
-        li.addEventListener("click", () => {
-          searchInput.value = artist;
-          suggestionsList.innerHTML = "";
-        });
-        suggestionsList.appendChild(li);
-      });
-    }
-  } catch (err) {
-    console.error("Error fetching suggestions:", err);
-  }
-});
 // Get party info from parent window
 const partyCode = window.parent.localStorage.getItem('partyCode');
 const memberId = window.parent.localStorage.getItem('memberId');
@@ -72,45 +38,73 @@ document.querySelectorAll('input[name="genre"]').forEach(checkbox => {
   });
 });
 
-// Handle artist search with autocomplete
-const artistInput = document.querySelector('input[list="artists"]');
-const artistDatalist = document.getElementById('artists');
+// Handle artist search with live results
+const artistSearch = document.getElementById('artistSearch');
+const artistResults = document.getElementById('artistResults');
 
-// Fetch artist suggestions as user types
-artistInput.addEventListener('input', async (e) => {
-  const query = e.target.value;
-  
-  if (query.length < 2) return;
-  
-  try {
-    const res = await fetch(`/api/suggestions?query=${encodeURIComponent(query)}`);
-    const artists = await res.json();
-    
-    // Update datalist
-    artistDatalist.innerHTML = '';
-    artists.forEach(artist => {
-      const option = document.createElement('option');
-      option.value = artist;
-      artistDatalist.appendChild(option);
-    });
-  } catch (err) {
-    console.error('Error fetching suggestions:', err);
-  }
-});
+let searchTimeout;
 
-// Add artist when user selects from list
-artistInput.addEventListener('change', (e) => {
-  const artist = e.target.value.trim();
+artistSearch.addEventListener('input', async (e) => {
+  const query = e.target.value.trim();
   
-  if (artist && !selectedArtists.includes(artist)) {
-    selectedArtists.push(artist);
-    updateSelectionDisplay();
-    saveSelections();
+  // Clear previous timeout
+  clearTimeout(searchTimeout);
+  
+  if (query.length < 2) {
+    artistResults.innerHTML = '';
+    artistResults.style.display = 'none';
+    return;
   }
   
-  e.target.value = ''; // Clear input
+  // Debounce search
+  searchTimeout = setTimeout(async () => {
+    try {
+      const res = await fetch(`/api/suggestions?query=${encodeURIComponent(query)}`);
+      const artists = await res.json();
+      
+      if (artists.length === 0) {
+        artistResults.innerHTML = '<div class="no-results">No artists found</div>';
+        artistResults.style.display = 'block';
+        return;
+      }
+      
+      // Display results
+      artistResults.innerHTML = '';
+      artists.forEach(artist => {
+        const artistDiv = document.createElement('div');
+        artistDiv.className = 'artist-result-item';
+        artistDiv.textContent = artist;
+        
+        artistDiv.addEventListener('click', () => {
+          if (!selectedArtists.includes(artist)) {
+            selectedArtists.push(artist);
+            updateSelectionDisplay();
+            saveSelections();
+          }
+          
+          // Clear search
+          artistSearch.value = '';
+          artistResults.innerHTML = '';
+          artistResults.style.display = 'none';
+        });
+        
+        artistResults.appendChild(artistDiv);
+      });
+      
+      artistResults.style.display = 'block';
+      
+    } catch (err) {
+      console.error('Error fetching suggestions:', err);
+    }
+  }, 300); // Wait 300ms after user stops typing
 });
 
+// Hide results when clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.search-box')) {
+    artistResults.style.display = 'none';
+  }
+});
 // Update the selection display on the right
 function updateSelectionDisplay() {
   const box3 = document.querySelector('.box-3');
