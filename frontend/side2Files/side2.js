@@ -1,3 +1,4 @@
+// Pop-upvindue kode start
 function openPopup() {
     document.getElementById("popup-overlay").style.display = "block";
     const popup = document.getElementById("popup");
@@ -15,6 +16,8 @@ function closePopup() {
         document.getElementById("popup-overlay").style.display = "none";
     }, 350);
 }
+//Pop-upvindue kode slut
+
 
 window.addEventListener('DOMContentLoaded', async () => {
     const partyName = localStorage.getItem('partyName');
@@ -165,7 +168,7 @@ window.addEventListener('message', (event) => {
 updatePieChart();
 setInterval(updatePieChart, 5000);
 
-
+// Player bare kode start
 let songs = [];
 let currentIndex = 0;
 let interval = null;
@@ -226,6 +229,7 @@ function formatTime(sec) {
 window.addEventListener('DOMContentLoaded', () => {
     loadSongs(); // starter playeren automatisk når siden er loaded
 });
+<<<<<<< HEAD
 
 async function fetchQueue(genres, artists) {
   const partyCode = localStorage.getItem('partyCode');
@@ -270,3 +274,6 @@ function renderQueue(queue) {
 
   queueBox.appendChild(list);
 }
+=======
+// playerbar kode slut
+>>>>>>> 04812b7 (rettelser)
