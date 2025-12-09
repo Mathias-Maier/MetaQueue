@@ -200,7 +200,9 @@ function loadSong(index) {
 
         if (elapsedSec > durationSec) {
             clearInterval(interval);
-            nextSong();
+            currentIndex++;
+            if(currentIndex >= songs.lenth) currentIndex = 0;
+            loadSong(currentIndex);
             return;
         }
 

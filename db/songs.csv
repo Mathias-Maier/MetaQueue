@@ -1,5 +1,5 @@
 track_id,title,artist,genre_id,duration_ms
-1,Lose Yourself,Eminem,1,326000
+1,Back in Black,AC/DC,3,255000
 2,Billie Jean,Michael Jackson,2,294000
 3,Smells Like Teen Spirit,Nirvana,3,245000
 4,Juicy,The Notorious B.I.G.,1,280000
@@ -44,7 +44,7 @@ track_id,title,artist,genre_id,duration_ms
 43,Clocks,Coldplay,3,305000
 44,Beat It,Michael Jackson,2,258000
 45,No Scrubs,TLC,4,214000
-46,Back in Black,AC/DC,3,255000
+46,Lose Yourself,Eminem,1,326000
 47,All Along the Watchtower,Jimi Hendrix,3,240000
 48,Lose Control,Missy Elliott,1,230000
 49,Firework,Katy Perry,2,220000
