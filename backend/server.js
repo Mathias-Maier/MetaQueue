@@ -159,6 +159,21 @@ server.get('/api/party/:partyCode/preferences', async (req, res) => {
   }
 });
 
+
+// Get all songs for player
+server.get('/api/songs', async (req, res) => {
+  try {
+    const result = await db.query(
+      `SELECT artist, title, duration_ms FROM songs ORDER BY track_id`
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error fetching songs:', err);
+    res.status(500).json({ error: 'Database error' });
+  }
+});
+
 // --- Start server ---
 server.listen(port, onServerReady);
 

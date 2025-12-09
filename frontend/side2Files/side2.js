@@ -161,3 +161,63 @@ window.addEventListener('message', (event) => {
 // Update chart on load and every 5 seconds
 updatePieChart();
 setInterval(updatePieChart, 5000);
+
+
+let songs = [];
+let currentIndex = 0;
+let interval = null;
+
+async function loadSongs() {
+    const response = await fetch("http://localhost:3003/api/songs")
+    songs = await response.json();
+    loadSong(0);
+}
+
+function loadSong(index) {
+    clearInterval(interval);
+    currentIndex = index;
+
+    const song = songs[index];
+
+    document.getElementById("artist").textContent = song.artist;
+    document.getElementById("title").textContent = song.title;
+
+    const durationMs = Number(song.duration_ms);
+    const durationSec = Math.floor(durationMs / 1000);
+
+    let elapsedSec = 0;
+
+    const progressFill = document.getElementById("progress-fill");
+    const elapsedEl = document.getElementById("elapsed-time");
+    const remainingEl = document.getElementById("remaining-time");
+
+    elapsedEl.textContent = formatTime(0);
+    remainingEl.textContent = "-" + formatTime(durationSec);
+    progressFill.style.width = "0%";
+
+    interval = setInterval(()=> {
+        elapsedSec++;
+
+        if (elapsedSec > durationSec) {
+            clearInterval(interval);
+            nextSong();
+            return;
+        }
+
+        let pct = (elapsedSec/ durationSec) * 100;
+        progressFill.style.width = pct + "%";
+
+        elapsedEl.textContent = formatTime(elapsedSec);
+        remainingEl.textContent = "-" + formatTime(durationSec -elapsedSec);
+    }, 1000);
+}
+
+function formatTime(sec) {
+    let m = Math.floor(sec / 60);
+    let s = sec % 60;
+    return `${m}:${s < 10 ? "0" + s : s}`;
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    loadSongs(); // starter playeren automatisk når siden er loaded
+});
