@@ -174,6 +174,87 @@ server.get('/api/songs', async (req, res) => {
   }
 });
 
+// Generate queue based on user selections
+server.post('/api/party/:partyCode/queue', async (req, res) => {
+  const { partyCode } = req.params;
+  const { memberId, genres = [], artists = [] } = req.body;
+
+  try {
+    const result = await db.query(`SELECT track_id, title, artist, genre_id, duration_ms FROM songs`);
+    const songs = result.rows.map(song => ({
+      ...song,
+      genre_id: Number(song.genre_id) // sikrer tal
+    }));
+
+    console.log("Selected genres:", genres);
+    console.log("Selected artists:", artists);
+    console.log("First song sample:", songs[0]);
+
+    const genreResult = await db.query(`SELECT genre_id, name FROM genres`);
+    const genreMap = {};
+    genreResult.rows.forEach(row => {
+      genreMap[Number(row.genre_id)] = row.name.toUpperCase();
+    });
+
+    songs.forEach(song => {
+      song.genre = genreMap[song.genre_id] || 'Unknown';
+    });
+
+    // Filtrer sange
+    const filtered = songs.filter(song => {
+      const genreMatch = genres.length === 0 || genres.includes(song.genre_id);
+      const artistMatch = artists.length === 0 || artists.some(a =>
+        song.artist.toLowerCase().includes(a.toLowerCase())
+      );
+      return genreMatch || artistMatch; // OBS: OR i stedet for AND
+    });
+
+    let queue = [];
+
+    // Hvis der er valgt kunstnere → tilføj én sang pr. kunstner
+    if (artists.length > 0) {
+      artists.forEach(artist => {
+        const artistSongs = filtered.filter(song =>
+          song.artist.toLowerCase().includes(artist.toLowerCase())
+        );
+        if (artistSongs.length > 0) {
+          queue.push(artistSongs[Math.floor(Math.random() * artistSongs.length)]);
+        }
+      });
+    }
+
+    // Hvis der er valgt genrer → fordel resten af køen på genrer
+    if (genres.length > 0) {
+      const buckets = {};
+      genres.forEach(id => {
+        buckets[id] = filtered.filter(song => song.genre_id === id);
+      });
+
+      const remainingSlots = 20 - queue.length;
+      const perGenre = Math.max(1, Math.floor(remainingSlots / genres.length));
+
+      genres.forEach(id => {
+        const genreSongs = buckets[id] || [];
+        queue = queue.concat(getRandomSubset(genreSongs, perGenre));
+      });
+    }
+
+    // Hvis stadig tom → bare giv 5 tilfældige sange
+    if (queue.length === 0) {
+      queue = getRandomSubset(songs, 5);
+    }
+
+    res.json(queue);
+  } catch (err) {
+    console.error('Error generating queue:', err);
+    res.status(500).json({ error: 'Failed to generate queue' });
+  }
+});
+
+function getRandomSubset(arr, count) {
+  return arr.sort(() => 0.5 - Math.random()).slice(0, count);
+}
+
 // --- Start server ---
 server.listen(port, onServerReady);
 

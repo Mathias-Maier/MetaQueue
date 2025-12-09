@@ -242,3 +242,28 @@ body {
     right: 720px;
     bottom: 100px;
 }
+
+.queue-box {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+  background: #f0feff;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 85px;
+}
+
+.queue-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.queue-item {
+  margin-bottom: 8px;
+  font-size: 14px;
+}

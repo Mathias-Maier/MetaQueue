@@ -156,6 +156,9 @@ window.addEventListener('message', (event) => {
     if (event.data.type === 'selectionsUpdated') {
         updatePieChart();
     }
+    if (event.data.type === 'queueUpdated') {
+        fetchQueue(event.data.genres, event.data.artists);
+    }
 });
 
 // Update chart on load and every 5 seconds
@@ -223,3 +226,47 @@ function formatTime(sec) {
 window.addEventListener('DOMContentLoaded', () => {
     loadSongs(); // starter playeren automatisk når siden er loaded
 });
+
+async function fetchQueue(genres, artists) {
+  const partyCode = localStorage.getItem('partyCode');
+  const memberId = localStorage.getItem('memberId');
+  if (!partyCode || !memberId) return;
+
+  try {
+    const res = await fetch(`/api/party/${partyCode}/queue`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ memberId, genres, artists })
+    });
+
+    const queue = await res.json();
+    renderQueue(queue);
+  } catch (err) {
+    console.error('Error fetching queue:', err);
+  }
+}
+
+function renderQueue(queue) {
+  const queueBox = document.getElementById('queueBox');
+  queueBox.innerHTML = '<h3>QUEUE:</h3>';
+
+  if (queue.length === 0) {
+    queueBox.innerHTML += '<p>No songs found.</p>';
+    return;
+  }
+
+  const list = document.createElement('ul');
+  list.className = 'queue-list';
+
+  queue.forEach(song => {
+    const item = document.createElement('li');
+    item.className = 'queue-item';
+    item.innerHTML = `
+      <strong>${song.title}</strong><br />
+      <em>${song.artist}</em> • ${song.genre}
+    `;
+    list.appendChild(item);
+  });
+
+  queueBox.appendChild(list);
+}

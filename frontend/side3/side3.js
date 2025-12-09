@@ -9,14 +9,14 @@ let selectedArtists = [];
 
 // Genre ID mapping (matches your database)
 const genreMapping = {
-  'hip-hop': 1,
-  'pop': 2,
-  'rock': 3,
-  'rnb': 4,
-  'classic': 5,
-  'jazz': 6,
+  'Hip-Hop': 1,
+  'Pop': 2,
+  'Rock': 3,
+  'RnB': 4,
+  'Classics': 5,
+  'Jazz': 6,
   'indie': 7,
-  'metal': 8
+  'Metal': 8
 };
 
 // Handle genre checkbox changes
@@ -181,7 +181,13 @@ async function saveSelections() {
     if (data.success) {
       console.log('Selections saved!');
       // Notify parent window to update pie chart
-      window.parent.postMessage({ type: 'selectionsUpdated' }, '*');
+        window.parent.postMessage({ type: 'selectionsUpdated' }, '*');
+        // 👉 Notify parent to update queue
+        window.parent.postMessage({ type: 'queueUpdated', 
+        genres: selectedGenres,
+        artists: selectedArtists
+         }, '*');
+
     }
   } catch (err) {
     console.error('Error saving selections:', err);
