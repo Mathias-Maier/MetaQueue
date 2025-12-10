@@ -7,7 +7,6 @@
   box-sizing: border-box;
 }
 
-
 .box-1 {
   flex: 3;
   display: flex;
@@ -42,17 +41,18 @@
   text-shadow: 7px 7px 0 #e46b8c;
   margin-bottom: 40px;
   font-family: monospace;
+  font-weight: bold;
 
   display: inline-block;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100vh;
   overflow: hidden;
 }
-
 
 body {
   background: #f0feff;
@@ -94,12 +94,12 @@ body {
 }
 
 #player-container {
-    max-width: 600px;
-    width: 100%;
-    background: #f0feff;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
+  max-width: 600px;
+  width: 100%;
+  background: #f0feff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
 }
 
 #song-info {
@@ -112,7 +112,8 @@ body {
   line-height: 1.2;
   margin-top: 15px;
   padding: 6px 10px;
-  font-family: "Inter", "Helvetica Neue", sans-serif;
+  font-family: "monospace";
+  font-weight: bold;
 }
 
 .artist {
@@ -166,16 +167,17 @@ body {
 }
 
 .vibe-title {
-  font-family: sans-serif;
+  font-family: monospace;
   font-size: 28px;
-  font-weight: 900;
+  font-weight: bold;
   margin: 0 0 15px 0;
   color: #000;
   letter-spacing: 1px;
 }
 
 .genre-button {
-  font-family: sans-serif;
+  font-family: monospace;
+  font-weight: bold;
   font-size: 22px;
   padding: 14px 26px;
   background: #e7e7e7;
@@ -270,10 +272,12 @@ body {
   text-shadow: 3px 3px 0 #e46b8c;
   margin-bottom: 40px;
   font-family: monospace;
+  font-weight: bold;
 }
 
 .party-code {
   font-family: bungee "Segoe UI";
+  font-weight: bold;
   font-size: 40px;
   font-weight: bold;
   color: #ffffff;
@@ -305,11 +309,11 @@ body {
 }
 
 #genre-chart-wrapper {
-    width: clamp(150px, 15vw, 250px);
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    margin-top: 50px;
+  width: clamp(150px, 15vw, 250px);
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-top: 50px;
 }
 
 .queue-box {
@@ -324,6 +328,8 @@ body {
   border-radius: 8px;
   padding: 10px;
   margin-bottom: 85px;
+  font-family: monospace;
+  font-weight: bold;
 }
 
 .queue-list {
