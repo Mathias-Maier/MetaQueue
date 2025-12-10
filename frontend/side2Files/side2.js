@@ -1,5 +1,9 @@
 // Pop-upvindue kode start
 function openPopup() {
+  // Hide QR while popup is open
+  const qr = document.getElementById("qrCode");
+  if (qr) qr.style.display = "none";
+
   document.getElementById("popup-overlay").style.display = "block";
   const popup = document.getElementById("popup");
   popup.style.display = "block";
@@ -8,6 +12,10 @@ function openPopup() {
 }
 
 function closePopup() {
+  // Show QR again when popup closes
+  const qr = document.getElementById("qrCode");
+  if (qr) qr.style.display = "block";
+
   const popup = document.getElementById("popup");
   popup.classList.remove("show");
 
