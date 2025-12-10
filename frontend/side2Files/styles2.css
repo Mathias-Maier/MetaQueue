@@ -62,7 +62,7 @@ body {
 /* QR-kode helt øverst til højre */
 .qr {
   position: fixed;
-  top: 20px;
+  top: 140px;
   right: 20px;
   z-index: 20;
 }
