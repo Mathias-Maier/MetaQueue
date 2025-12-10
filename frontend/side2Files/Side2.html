@@ -11,69 +11,79 @@
   <body>
     <div class="logo" id="partyWelcome"></div>
 
-  <div class="party-code-container">
-  <p id="partyCodeDisplay" class="party-code"></p>
-</div>
+<div class="container">
 
-<div class="member-count-container">
-  <span class="member-icon">👥</span>
-  <span id="memberCount" class="member-count">0</span>
-</div>
+  <div class="box-1">    
+    <div class="party-code-container">
+      <p id="partyCodeDisplay" class="party-code"></p>
+    </div>
 
-    <div class="qr" >
-      <img 
-      class="qr-code"
-      src="DexterQR.png"
-      alt="QR Code"
-      />
+    <div class="member-count-container">
+      <span class="member-icon">👥</span>
+      <span id="memberCount" class="member-count">0</span>
     </div>
 
     <div class="vibe-box">
-       <p class="vibe-title"> WHAT´S THE VIBE</p>
-       <a href="#" onclick="openPopup()" class="genre-button">CHOOSE GENRE</a>
+        <p class="vibe-title"> WHAT´S THE VIBE</p>
+        <a href="#" onclick="openPopup()" class="genre-button">CHOOSE GENRE</a>
     </div>  
 
     <div id="popup-overlay" class="popup-overlay" onclick="closePopup()"></div>  
+  </div>
 
-    <div id="popup" style="border:2px solid black;" class="popup">
+  <div class="box-2">
 
-        <button class="close-btn" onclick="closePopup()">x</button>
-        <iframe src="../side3/side3.html" class="popup-frame"></iframe>
-    
-    </div>
-  
-    <div id="genre-chart-wrapper">
+      <div id="player-container">
+
+        <div id="song-info">
+          <div id="artist"></div>
+          <div id="title"></div>
+        </div>
+        
+        <div id="progress-bar">
+          <div id="progress-fill"></div>
+        </div>
+
+        <div id="time-info">
+          <span id="elapsed-time">0:00</span>
+          <span id="remaining-time">-0:00</span>
+        </div>
+      </div>
+
+      <div id="genre-chart-wrapper">
       <canvas id="genreChart"></canvas>
-    </div>
-
-
-
-    <div id="player-container">
-
-      <div id="song-info">
-        <div id="artist"></div>
-        <div id="title"></div>
       </div>
+  </div>
+
+
+  <div class="box-3">
+      <div class="qr" >
+        <img 
+        class="qr-code"
+        src="DexterQR.png"
+        alt="QR Code"
+        />
+      </div>
+
+      <div id="queueBox" style="border:2px solid black;" class="queue-box" ></div>
+  </div>
+
+
+
+    
+      <div id="popup" style="border:2px solid black;" class="popup">
+
+          <button class="close-btn" onclick="closePopup()">x</button>
+          <iframe src="../side3/side3.html" class="popup-frame"></iframe>
       
-      <div id="progress-bar">
-        <div id="progress-fill"></div>
       </div>
-
-      <div id="time-info">
-        <span id="elapsed-time">0:00</span>
-        <span id="remaining-time">-0:00</span>
-      </div>
-    </div>
-
-    <div id="queueBox" style="border:2px solid black;" class="queue-box" ></div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</div>
 
     <img src="logoMini.png" class="corner-logo"/>
-   
+
 
   <script src="side2.js" ></script>    
-
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </body>
   
 </html>
