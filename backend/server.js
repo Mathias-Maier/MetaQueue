@@ -6,18 +6,18 @@ import { connect } from '../db/connect.js';
 // Finder mappe-stien hvor denne fil er placeret
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-//Database = Connection to the permanent database (keeps data even after restart)
-//Map = Temporary storage in computer's memory (data disappears when server restarts)
+//Database
 const db = await connect();
 const parties = new Map(); // maps partyCode to { name: partyName, createdAt: Date }
 
-// This line determines which port number the server will run on
+// Port
 const port = process.env.PORT || 3003;
-//This creates our web server
+
+// Webserver
 const server = express();
 
 // --- Middleware ---
-server.use(express.static('frontend', {index:'forside/index.html'}));
+server.use(express.static('frontend', { index: 'forside/index.html' }));
 server.use(express.json());
 server.use(onEachRequest);
 
@@ -28,20 +28,18 @@ function generatePartyCode() {
   for (let i = 0; i < 6; i++) {
     code += characters.charAt(Math.floor(Math.random() * characters.length));
   }
-  // Check if code already exists, regenerate if needed
   if (parties.has(code)) return generatePartyCode();
   return code;
 }
 
 // --- Party endpoints ---
-// Create party
 server.post('/api/party', (req, res) => {
   const { partyName } = req.body;
   if (!partyName) return res.status(400).json({ error: 'Party name required' });
 
   const partyCode = generatePartyCode();
-  parties.set(partyCode, { 
-    name: partyName, 
+  parties.set(partyCode, {
+    name: partyName,
     createdAt: new Date(),
     members: new Set()
   });
@@ -49,21 +47,19 @@ server.post('/api/party', (req, res) => {
   res.json({ partyCode, partyName, memberCount: 0 });
 });
 
-// Join party
 server.get('/api/party/:partyCode', (req, res) => {
   const { partyCode } = req.params;
   const party = parties.get(partyCode.toUpperCase());
 
   if (!party) return res.status(404).json({ error: 'Party not found' });
 
-  res.json({ 
-    partyCode, 
+  res.json({
+    partyCode,
     partyName: party.name,
     memberCount: party.members ? party.members.size : 0
   });
 });
 
-// Add member to party
 server.post('/api/party/:partyCode/join', (req, res) => {
   const { partyCode } = req.params;
   const { memberId } = req.body;
@@ -73,11 +69,10 @@ server.post('/api/party/:partyCode/join', (req, res) => {
 
   if (!party.members) party.members = new Set();
   party.members.add(memberId);
-  
+
   res.json({ memberCount: party.members.size });
 });
 
-// Get party member count
 server.get('/api/party/:partyCode/count', (req, res) => {
   const { partyCode } = req.params;
   const party = parties.get(partyCode.toUpperCase());
@@ -87,8 +82,7 @@ server.get('/api/party/:partyCode/count', (req, res) => {
   res.json({ memberCount: party.members ? party.members.size : 0 });
 });
 
-
-// --- Artist suggestion endpoint ---
+// --- Artist suggestions ---
 server.get('/api/suggestions', async (req, res) => {
   const query = req.query.query;
   if (!query || query.length < 2) return res.json([]);
@@ -104,19 +98,18 @@ server.get('/api/suggestions', async (req, res) => {
     res.status(500).json({ error: 'Database error' });
   }
 });
-// Save user selections (genres and artists)
+
+// Save user selections
 server.post('/api/party/:partyCode/selections', async (req, res) => {
   const { partyCode } = req.params;
   const { memberId, genres, artists } = req.body;
 
   try {
-    // Delete old selections for this user
     await db.query(
       'DELETE FROM user_selections WHERE party_code = $1 AND member_id = $2',
       [partyCode.toUpperCase(), memberId]
     );
 
-    // Insert new genre selections
     for (const genreId of genres) {
       await db.query(
         'INSERT INTO user_selections (party_code, member_id, genre_id) VALUES ($1, $2, $3)',
@@ -124,7 +117,6 @@ server.post('/api/party/:partyCode/selections', async (req, res) => {
       );
     }
 
-    // Insert new artist selections
     for (const artist of artists) {
       await db.query(
         'INSERT INTO user_selections (party_code, member_id, artist) VALUES ($1, $2, $3)',
@@ -139,7 +131,7 @@ server.post('/api/party/:partyCode/selections', async (req, res) => {
   }
 });
 
-// Get party preferences (for pie chart)
+// Get preferences (pie chart)
 server.get('/api/party/:partyCode/preferences', async (req, res) => {
   const { partyCode } = req.params;
 
@@ -159,8 +151,7 @@ server.get('/api/party/:partyCode/preferences', async (req, res) => {
   }
 });
 
-
-// Get all songs for player
+// Get all songs
 server.get('/api/songs', async (req, res) => {
   try {
     const result = await db.query(
@@ -174,56 +165,56 @@ server.get('/api/songs', async (req, res) => {
   }
 });
 
-// Generate queue based on user selections
+// --- Generate queue ---
 server.post('/api/party/:partyCode/queue', async (req, res) => {
   const { partyCode } = req.params;
-  const { memberId, genres = [], artists = [] } = req.body;
+  const { genres = [], artists = [] } = req.body;
 
   try {
-    const result = await db.query(`SELECT track_id, title, artist, genre_id, duration_ms FROM songs`);
-    const songs = result.rows.map(song => ({
-      ...song,
-      genre_id: Number(song.genre_id) // sikrer tal
-    }));
+    const result = await db.query(
+      `SELECT track_id, title, artist, genre_id, duration_ms FROM songs`
+    );
 
-    console.log("Selected genres:", genres);
-    console.log("Selected artists:", artists);
-    console.log("First song sample:", songs[0]);
+    const songs = result.rows.map(s => ({
+      ...s,
+      genre_id: Number(s.genre_id)
+    }));
 
     const genreResult = await db.query(`SELECT genre_id, name FROM genres`);
     const genreMap = {};
     genreResult.rows.forEach(row => {
-      genreMap[Number(row.genre_id)] = row.name.toUpperCase();
+      genreMap[row.genre_id] = row.name.toUpperCase();
     });
 
     songs.forEach(song => {
-      song.genre = genreMap[song.genre_id] || 'Unknown';
+      song.genre = genreMap[song.genre_id] || 'UNKNOWN';
     });
 
-    // Filtrer sange
     const filtered = songs.filter(song => {
       const genreMatch = genres.length === 0 || genres.includes(song.genre_id);
-      const artistMatch = artists.length === 0 || artists.some(a =>
-        song.artist.toLowerCase().includes(a.toLowerCase())
-      );
-      return genreMatch || artistMatch; // OBS: OR i stedet for AND
+      const artistMatch =
+        artists.length === 0 ||
+        artists.some(a => song.artist.toLowerCase().includes(a.toLowerCase()));
+      return genreMatch || artistMatch;
     });
 
     let queue = [];
 
-    // Hvis der er valgt kunstnere → tilføj én sang pr. kunstner
+    // 1) Random song per selected artist
     if (artists.length > 0) {
       artists.forEach(artist => {
         const artistSongs = filtered.filter(song =>
           song.artist.toLowerCase().includes(artist.toLowerCase())
         );
         if (artistSongs.length > 0) {
-          queue.push(artistSongs[Math.floor(Math.random() * artistSongs.length)]);
+          queue.push(
+            artistSongs[Math.floor(Math.random() * artistSongs.length)]
+          );
         }
       });
     }
 
-    // Hvis der er valgt genrer → fordel resten af køen på genrer
+    // 2) Fill based on genres
     if (genres.length > 0) {
       const buckets = {};
       genres.forEach(id => {
@@ -234,31 +225,49 @@ server.post('/api/party/:partyCode/queue', async (req, res) => {
       const perGenre = Math.max(1, Math.floor(remainingSlots / genres.length));
 
       genres.forEach(id => {
-        const genreSongs = buckets[id] || [];
-        queue = queue.concat(getRandomSubset(genreSongs, perGenre));
+        queue = queue.concat(getRandomSubset(buckets[id] || [], perGenre));
       });
     }
 
-    // Hvis stadig tom → bare giv 5 tilfældige sange
+    // 3) Fallback
     if (queue.length === 0) {
       queue = getRandomSubset(songs, 5);
     }
 
+    // 4) Remove duplicates
+    queue = queue.filter(
+      (song, index, self) =>
+        index === self.findIndex(s => s.track_id === song.track_id)
+    );
+
+    // 5) Shuffle (Fisher–Yates)
+    queue = shuffleArray(queue);
+
     res.json(queue);
+
   } catch (err) {
-    console.error('Error generating queue:', err);
+    console.error('Queue generation error:', err);
     res.status(500).json({ error: 'Failed to generate queue' });
   }
 });
 
+// --- Helpers ---
 function getRandomSubset(arr, count) {
-  return arr.sort(() => 0.5 - Math.random()).slice(0, count);
+  return [...arr].sort(() => Math.random() - 0.5).slice(0, count);
+}
+
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
 }
 
 // --- Start server ---
 server.listen(port, onServerReady);
 
-// --- Functions ---
+// --- Logging ---
 function onEachRequest(req, res, next) {
   console.log(new Date(), req.method, req.url);
   next();
@@ -266,9 +275,4 @@ function onEachRequest(req, res, next) {
 
 function onServerReady() {
   console.log('Webserver running on port', port);
-}
-
-async function loadTracks() {
-  const dbResult = await db.query(`SELECT * FROM songs`);
-  return dbResult.rows;
 }
