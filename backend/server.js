@@ -6,7 +6,7 @@ import { connect } from '../db/connect.js';
 // Finder mappe-stien hvor denne fil er placeret
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-//Database
+// Database
 const db = await connect();
 const parties = new Map(); // maps partyCode to { name: partyName, createdAt: Date }
 
@@ -170,6 +170,11 @@ server.post('/api/party/:partyCode/queue', async (req, res) => {
   const { partyCode } = req.params;
   const { genres = [], artists = [] } = req.body;
 
+  // ✅ Only generate queue if user selected something
+  if (genres.length === 0 && artists.length === 0) {
+    return res.json({ masterQueue: [], playQueue: [] });
+  }
+
   try {
     const result = await db.query(
       `SELECT track_id, title, artist, genre_id, duration_ms FROM songs`
@@ -200,7 +205,6 @@ server.post('/api/party/:partyCode/queue', async (req, res) => {
 
     let queue = [];
 
-    // 1) Random song per selected artist
     if (artists.length > 0) {
       artists.forEach(artist => {
         const artistSongs = filtered.filter(song =>
@@ -214,7 +218,6 @@ server.post('/api/party/:partyCode/queue', async (req, res) => {
       });
     }
 
-    // 2) Fill based on genres
     if (genres.length > 0) {
       const buckets = {};
       genres.forEach(id => {
@@ -229,21 +232,23 @@ server.post('/api/party/:partyCode/queue', async (req, res) => {
       });
     }
 
-    // 3) Fallback
-    if (queue.length === 0) {
-      queue = getRandomSubset(songs, 5);
-    }
-
-    // 4) Remove duplicates
     queue = queue.filter(
       (song, index, self) =>
         index === self.findIndex(s => s.track_id === song.track_id)
     );
 
-    // 5) Shuffle (Fisher–Yates)
-    queue = shuffleArray(queue);
+    const masterQueue = queue.map(song => ({
+      id: song.track_id,
+      title: song.title,
+      artist: song.artist,
+      duration: Math.floor(song.duration_ms / 1000),
+      genre: song.genre,
+      genre_id: song.genre_id
+    }));
 
-    res.json(queue);
+    const playQueue = shuffleArray([...masterQueue]);
+
+    res.json({ masterQueue, playQueue });
 
   } catch (err) {
     console.error('Queue generation error:', err);

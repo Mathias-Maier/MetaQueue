@@ -46,7 +46,6 @@ let searchTimeout;
 artistSearch.addEventListener("input", async (e) => {
   const query = e.target.value.trim();
 
-  // Clear previous timeout
   clearTimeout(searchTimeout);
 
   if (query.length < 2) {
@@ -55,7 +54,6 @@ artistSearch.addEventListener("input", async (e) => {
     return;
   }
 
-  // Debounce search
   searchTimeout = setTimeout(async () => {
     try {
       const res = await fetch(
@@ -70,7 +68,6 @@ artistSearch.addEventListener("input", async (e) => {
         return;
       }
 
-      // Display results
       artistResults.innerHTML = "";
       artists.forEach((artist) => {
         const artistDiv = document.createElement("div");
@@ -84,7 +81,6 @@ artistSearch.addEventListener("input", async (e) => {
             saveSelections();
           }
 
-          // Clear search
           artistSearch.value = "";
           artistResults.innerHTML = "";
           artistResults.style.display = "none";
@@ -97,7 +93,7 @@ artistSearch.addEventListener("input", async (e) => {
     } catch (err) {
       console.error("Error fetching suggestions:", err);
     }
-  }, 3000); // Wait 300ms after user stops typing
+  }, 300); // Changed to 300ms debounce
 });
 
 // Hide results when clicking outside
@@ -106,14 +102,12 @@ document.addEventListener("click", (e) => {
     artistResults.style.display = "none";
   }
 });
+
 // Update the selection display on the right
 function updateSelectionDisplay() {
   const box3 = document.querySelector(".box-3");
-
-  // Clear existing content except title
   box3.innerHTML = "<h3>YOUR<br />SELECTION:</h3>";
 
-  // Add genre section
   if (selectedGenres.length > 0) {
     const genreDiv = document.createElement("div");
     genreDiv.className = "selection-section";
@@ -132,7 +126,6 @@ function updateSelectionDisplay() {
     box3.appendChild(genreDiv);
   }
 
-  // Add artist section
   if (selectedArtists.length > 0) {
     const artistDiv = document.createElement("div");
     artistDiv.className = "selection-section";
@@ -143,7 +136,6 @@ function updateSelectionDisplay() {
       tag.className = "selection-tag";
       tag.textContent = artist;
 
-      // Add remove button
       const removeBtn = document.createElement("button");
       removeBtn.textContent = "×";
       removeBtn.className = "remove-tag";
@@ -183,15 +175,9 @@ async function saveSelections() {
 
     if (data.success) {
       console.log("Selections saved!");
-      // Notify parent window to update pie chart
       window.parent.postMessage({ type: "selectionsUpdated" }, "*");
-      // 👉 Notify parent to update queue
       window.parent.postMessage(
-        {
-          type: "queueUpdated",
-          genres: selectedGenres,
-          artists: selectedArtists,
-        },
+        { type: "queueUpdated", genres: selectedGenres, artists: selectedArtists },
         "*"
       );
     }
@@ -199,3 +185,26 @@ async function saveSelections() {
     console.error("Error saving selections:", err);
   }
 }
+
+// --- NEW: Load previous selections on page load ---
+window.addEventListener("DOMContentLoaded", async () => {
+  if (!partyCode || !memberId) return;
+
+  try {
+    const res = await fetch(`/api/party/${partyCode}/selections?memberId=${memberId}`);
+    const data = await res.json();
+
+    if (data.genres) selectedGenres = data.genres;
+    if (data.artists) selectedArtists = data.artists;
+
+    updateSelectionDisplay();
+
+    // Notify parent to update queue immediately
+    window.parent.postMessage(
+      { type: "queueUpdated", genres: selectedGenres, artists: selectedArtists },
+      "*"
+    );
+  } catch (err) {
+    console.error("Error fetching saved selections:", err);
+  }
+});

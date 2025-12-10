@@ -18,6 +18,7 @@ function closePopup() {
 }
 //Pop-upvindue kode slut
 
+// --- Party setup ---
 window.addEventListener("DOMContentLoaded", async () => {
   const partyName = localStorage.getItem("partyName");
   const partyCode = localStorage.getItem("partyCode");
@@ -31,20 +32,17 @@ window.addEventListener("DOMContentLoaded", async () => {
       : "WELCOME TO PARTY";
   }
 
-  // Display the party code
   if (codeDisplay && partyCode) {
     codeDisplay.textContent = `PARTY CODE: ${partyCode}`;
     codeDisplay.style.display = "block";
   }
 
-  // Generate or get unique member ID
   let memberId = localStorage.getItem("memberId");
   if (!memberId) {
     memberId = "member_" + Math.random().toString(36).substring(2, 15);
     localStorage.setItem("memberId", memberId);
   }
 
-  // Join the party and get member count
   if (partyCode) {
     try {
       const joinRes = await fetch(`/api/party/${partyCode}/join`, {
@@ -53,12 +51,10 @@ window.addEventListener("DOMContentLoaded", async () => {
         body: JSON.stringify({ memberId }),
       });
       const joinData = await joinRes.json();
-
       if (memberCountDisplay && joinData.memberCount !== undefined) {
         memberCountDisplay.textContent = joinData.memberCount;
       }
 
-      // Update member count every 3 seconds
       setInterval(async () => {
         try {
           const countRes = await fetch(`/api/party/${partyCode}/count`);
@@ -76,9 +72,8 @@ window.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-// Initialize pie chart
+// --- Pie chart setup ---
 let genreChart = null;
-
 async function updatePieChart() {
   const partyCode = localStorage.getItem("partyCode");
   if (!partyCode) return;
@@ -86,13 +81,8 @@ async function updatePieChart() {
   try {
     const res = await fetch(`/api/party/${partyCode}/preferences`);
     const data = await res.json();
+    if (!data.genres || data.genres.length === 0) return;
 
-    if (!data.genres || data.genres.length === 0) {
-      // No data yet
-      return;
-    }
-
-    // Genre names mapping
     const genreNames = {
       1: "Hip-Hop",
       2: "Pop",
@@ -104,91 +94,78 @@ async function updatePieChart() {
       8: "Metal",
     };
 
-    // Prepare chart data
     const labels = data.genres.map((g) => genreNames[g.genre_id] || "Unknown");
     const counts = data.genres.map((g) => parseInt(g.count));
 
     const ctx = document.getElementById("genreChart");
     if (!ctx) return;
 
-    // Destroy existing chart
-    if (genreChart) {
-      genreChart.destroy();
-    }
+    if (genreChart) genreChart.destroy();
 
-    // Create new chart
     genreChart = new Chart(ctx, {
       type: "pie",
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            data: counts,
-            backgroundColor: [
-              "#ff00aaff",
-              "#0478c5ff",
-              "#f6ff00ff",
-              "#08fbfbff",
-              "#ae86ffff",
-              "#f97d00ff",
-              "#cb032eff",
-              "#01ff80ff",
-            ],
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        plugins: {
-          legend: {
-            position: "bottom",
-          },
-        },
-      },
+      data: { labels, datasets: [{ data: counts, backgroundColor: ["#ff00aaff","#0478c5ff","#f6ff00ff","#08fbfbff","#ae86ffff","#f97d00ff","#cb032eff","#01ff80ff"] }] },
+      options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: "bottom" } } },
     });
   } catch (err) {
     console.error("Error updating pie chart:", err);
   }
 }
 
-// Listen for updates from iframe
 window.addEventListener("message", (event) => {
-  if (event.data.type === "selectionsUpdated") {
-    updatePieChart();
-  }
-  if (event.data.type === "queueUpdated") {
-    fetchQueue(event.data.genres, event.data.artists);
-  }
+  if (event.data.type === "selectionsUpdated") updatePieChart();
+  if (event.data.type === "queueUpdated") loadQueue(event.data.genres, event.data.artists);
 });
 
-// Update chart on load and every 5 seconds
 updatePieChart();
 setInterval(updatePieChart, 50000);
 
-// Player bare kode start
-let songs = [];
+// --- Player setup ---
+let masterQueue = [];
+let playQueue = [];
 let currentIndex = 0;
 let interval = null;
 
-async function loadSongs() {
-  const response = await fetch("http://localhost:3003/api/songs");
-  songs = await response.json();
-  loadSong(0);
+// Load queue from backend
+async function loadQueue(genres = [], artists = []) {
+  const partyCode = localStorage.getItem("partyCode");
+  const memberId = localStorage.getItem("memberId");
+  if (!partyCode || !memberId) return;
+
+  try {
+    const res = await fetch(`/api/party/${partyCode}/queue`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ memberId, genres, artists }),
+    });
+
+    const data = await res.json();
+    masterQueue = data.masterQueue || [];
+    playQueue = data.playQueue || [];
+
+    if (playQueue.length > 0) {
+      loadSong(0);
+      renderQueue(masterQueue);
+    } else {
+      const queueBox = document.getElementById("queueBox");
+      queueBox.innerHTML = "<p>No songs selected yet. Pick a genre or artist!</p>";
+    }
+  } catch (err) {
+    console.error("Error fetching queue:", err);
+  }
 }
 
+// Play a song from playQueue
 function loadSong(index) {
   clearInterval(interval);
   currentIndex = index;
+  if (!playQueue[currentIndex]) return;
 
-  const song = songs[index];
-
+  const song = playQueue[currentIndex];
   document.getElementById("artist").textContent = song.artist;
   document.getElementById("title").textContent = song.title;
 
-  const durationMs = Number(song.duration_ms);
-  const durationSec = Math.floor(durationMs / 1000);
-
+  const durationSec = song.duration;
   let elapsedSec = 0;
 
   const progressFill = document.getElementById("progress-fill");
@@ -201,74 +178,48 @@ function loadSong(index) {
 
   interval = setInterval(() => {
     elapsedSec++;
-
     if (elapsedSec > durationSec) {
       clearInterval(interval);
       currentIndex++;
-      if (currentIndex >= songs.lenth) currentIndex = 0;
+      if (currentIndex >= playQueue.length) currentIndex = 0;
       loadSong(currentIndex);
       return;
     }
 
-    let pct = (elapsedSec / durationSec) * 100;
+    const pct = (elapsedSec / durationSec) * 100;
     progressFill.style.width = pct + "%";
-
     elapsedEl.textContent = formatTime(elapsedSec);
     remainingEl.textContent = "-" + formatTime(durationSec - elapsedSec);
   }, 1000);
 }
 
 function formatTime(sec) {
-  let m = Math.floor(sec / 60);
-  let s = sec % 60;
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
   return `${m}:${s < 10 ? "0" + s : s}`;
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-  loadSongs(); // starter playeren automatisk når siden er loaded
-});
-//Playerbar kode slut
-
-async function fetchQueue(genres, artists) {
-  const partyCode = localStorage.getItem("partyCode");
-  const memberId = localStorage.getItem("memberId");
-  if (!partyCode || !memberId) return;
-
-  try {
-    const res = await fetch(`/api/party/${partyCode}/queue`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ memberId, genres, artists }),
-    });
-
-    const queue = await res.json();
-    renderQueue(queue);
-  } catch (err) {
-    console.error("Error fetching queue:", err);
-  }
-}
-
+// Render the master queue for search/display
 function renderQueue(queue) {
   const queueBox = document.getElementById("queueBox");
   queueBox.innerHTML = "<h3>QUEUE:</h3>";
-
-  if (queue.length === 0) {
-    queueBox.innerHTML += "<p>No songs found.</p>";
-    return;
+  if (!queue.length) { 
+    queueBox.innerHTML += "<p>No songs found.</p>"; 
+    return; 
   }
 
   const list = document.createElement("ul");
   list.className = "queue-list";
 
-  queue.forEach((song) => {
+  queue.forEach(song => {
     const item = document.createElement("li");
     item.className = "queue-item";
-    item.innerHTML = `
-      <strong>${song.title}</strong><br />
-      <em>${song.artist}</em> • ${song.genre}
-    `;
+    item.innerHTML = `<strong>${song.title}</strong><br /><em>${song.artist}</em> • ${song.genre}`;
     list.appendChild(item);
   });
 
   queueBox.appendChild(list);
 }
+
+// ✅ Removed automatic loadQueue() on DOMContentLoaded
+// Queue now only loads when side3.js sends the queueUpdated message
