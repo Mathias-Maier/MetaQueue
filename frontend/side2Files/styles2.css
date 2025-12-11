@@ -42,12 +42,9 @@
   margin-bottom: 40px;
   font-family: monospace;
   font-weight: bold;
-<<<<<<< HEAD
   padding: 14px 26px;
 
-=======
   margin-left: 25px;
->>>>>>> 5c21725 (partycode)
   display: inline-block;
 }
 
@@ -66,7 +63,7 @@ body {
 /* QR-kode helt øverst til højre */
 .qr {
   position: fixed;
-  top: 140px;
+  top: 100px;
   right: 20px;
   z-index: 20;
 }
@@ -273,7 +270,7 @@ body {
   letter-spacing: 6px;
   color: white;
   -webkit-text-stroke: 2px #e46b8c;
-  text-shadow: 3px 3px 0 #e46b8c; 
+  text-shadow: 3px 3px 0 #e46b8c;
   font-family: monospace;
   font-weight: bold;
   position: relative;
