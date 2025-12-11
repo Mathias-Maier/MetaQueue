@@ -73,6 +73,19 @@ window.addEventListener("DOMContentLoaded", async () => {
           console.error("Error fetching member count:", err);
         }
       }, 3000);
+
+      // Try to load previous selections (so queue visible without opening popup)
+      try {
+        const selRes = await fetch(`/api/party/${partyCode}/selections?memberId=${memberId}`);
+        const selData = await selRes.json();
+        const genres = selData.genres || [];
+        const artists = selData.artists || [];
+        // load queue with saved selections (server expects POST)
+        await loadQueue(genres, artists);
+      } catch (err) {
+        console.error("Error loading saved selections / queue:", err);
+      }
+
     } catch (err) {
       console.error("Error joining party:", err);
     }
@@ -142,7 +155,12 @@ async function updatePieChart() {
 
 window.addEventListener("message", (event) => {
   if (event.data.type === "selectionsUpdated") updatePieChart();
-  if (event.data.type === "queueUpdated") loadQueue(); // ✅ UPDATED
+  // When side3 sends genres/artists, forward them to loadQueue (server expects POST)
+  if (event.data.type === "queueUpdated") {
+    const genres = event.data.genres || [];
+    const artists = event.data.artists || [];
+    loadQueue(genres, artists);
+  }
 });
 
 updatePieChart();
@@ -155,13 +173,16 @@ let currentIndex = 0;
 let interval = null;
 
 // ✅ SHARED queue loading
-async function loadQueue() {
+// now accepts optional genres and artists and POSTS to the server
+async function loadQueue(genres = [], artists = []) {
   const partyCode = localStorage.getItem("partyCode");
   if (!partyCode) return;
 
   try {
     const res = await fetch(`/api/party/${partyCode}/queue`, {
-      method: "GET",
+      method: "POST", // server expects POST
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ genres, artists }),
     });
 
     const data = await res.json();
@@ -174,8 +195,10 @@ async function loadQueue() {
       renderQueue(masterQueue);
     } else {
       const queueBox = document.getElementById("queueBox");
-      queueBox.innerHTML =
-        "<p>No songs selected yet. Pick a genre or artist!</p>";
+      if (queueBox) {
+        queueBox.innerHTML =
+          "<p>No songs selected yet. Pick a genre or artist!</p>";
+      }
     }
   } catch (err) {
     console.error("Error fetching shared queue:", err);
