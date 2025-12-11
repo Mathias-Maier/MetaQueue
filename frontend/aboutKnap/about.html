@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About MetaQueue - The Ultimate Music Experience</title>
+<style>
+/* GLOBAL STYLING */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0feff;
+    color: #222;
+    overflow-x: hidden;
+}
+
+/* GO BACK BUTTON */
+.go-back-btn {
+    display: inline-block;
+    padding: 14px 28px;
+    font-size: 1.1em;
+    font-weight: bold;
+    font-family: monospace;
+    background: linear-gradient(45deg, #f0feff);
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    transition: all 0.25s ease;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+
+
+/* Puls animation */
+@keyframes pulse {
+    0%, 100% { transform: scale(1);}
+    50% { transform: scale(1.05);}
+}
+
+/* CONTAINER */
+.about-container {
+    max-width: 1000px;
+    margin: 100px auto 60px auto;
+    padding: 40px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 25px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    overflow: hidden;
+    position: relative;
+    animation: fadeIn 2s ease forwards;
+}
+
+/* HEADINGS */
+.about-container h1 {
+    font-size: 3em;
+    text-align: center;
+    color: #1a73e8;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #1a73e8, #55c0f3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: slideIn 2s ease forwards;
+}
+
+.about-container h2 {
+    font-size: 2em;
+    margin-top: 40px;
+    margin-bottom: 15px;
+    color: #333;
+    border-bottom: 3px solid #1a73e8;
+    display: inline-block;
+    padding-bottom: 5px;
+    animation: fadeUp 2s ease forwards;
+}
+
+/* PARAGRAPHS */
+.about-container p {
+    font-size: 1.1em;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    text-align: justify;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 2s ease forwards;
+    animation-delay: 0.5s;
+}
+
+/* HIGHLIGHTED TEXT */
+.highlight {
+    color: #1a73e8;
+    font-weight: bold;
+    -webkit-text-stroke: 0.5px black;
+}
+
+/* ACTION BUTTONS */
+.explore-btn {
+    display: inline-block;
+    padding: 14px 28px;
+    margin-top: 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    font-family: monospace;
+    background: linear-gradient(45deg, #ff7e5f, #feb47b);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.explore-btn:hover {
+    transform: scale(1.1) translateY(-2px);
+    background: linear-gradient(45deg, #ff4b2b, #ffb199);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes slideIn {
+    0% {transform: translateX(-100%);}
+    100% {transform: translateX(0);}
+}
+
+@keyframes fadeUp {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+    .about-container {
+        margin: 80px 20px 40px 20px;
+        padding: 30px;
+    }
+
+    .about-container h1 {
+        font-size: 2.5em;
+    }
+
+    .about-container h2 {
+        font-size: 1.6em;
+    }
+
+    .about-container p {
+        font-size: 1em;
+    }
+
+    .go-back-btn, .explore-btn {
+        padding: 12px 22px;
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-container {
+        padding: 20px;
+        margin: 60px 15px 20px 15px;
+    }
+
+    .about-container h1 {
+        font-size: 2em;
+    }
+
+    .about-container h2 {
+        font-size: 1.4em;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- GO BACK KNAP -->
+<button class="go-back-btn" style="border:2px solid #000000;" onclick="history.back()">◀️ GO BACK</button>
+
+<div class="about-container">
+    <h1>MetaQueue – The Ultimate Music Experience</h1>
+
+    <p>MetaQueue is not just a music platform – it is a global revolution in the way we experience and share music. With integrations to <span class="highlight">Spotify</span>, <span class="highlight">Apple Music</span>, and <span class="highlight">YouSee Music</span>, MetaQueue offers an interactive platform where users can create dynamic <span class="highlight">music parties</span>, invite friends and global participants, and collectively decide which music dominates the event.</p>
+
+    <p>Our <span class="highlight">democratic voting system</span> allows participants to decide everything – from genres and specific artists to individual songs. The algorithm updates the queue in real-time based on participants’ choices, creating a dynamic and social experience that brings millions of users together across continents.</p>
+
+    <h2>Extreme Success & Global Impact</h2>
+
+    <p>Since its launch, MetaQueue has experienced exponential growth and now generates <span class="highlight">double-digit billion-dollar revenue annually</span>. Our partnerships with leading streaming services and record labels have given us a global presence, and millions of tracks are available directly through the platform. MetaQueue has become a symbol of innovation, social interactivity, and luxury music experiences.</p>
+
+    <p>We have heavily invested in <span class="highlight">AI-powered music analysis</span> and advanced recommendation systems, ensuring that every party always plays the perfect music tailored to participants’ preferences. Our platform creates new revenue streams for artists, labels, and event organizers, redefining what a music experience can be in the 21st century.</p>
+
+    <h2>The Future is MetaQueue</h2>
+
+    <p>MetaQueue is more than a music app; it is a <span class="highlight">social experience economy</span>. We connect music lovers around the world, foster creativity and collaboration, and give every voice real influence over the party. The future is live, interactive, and driven by the participants themselves.</p>
+</div>
+
+
+</body>
+</html>
