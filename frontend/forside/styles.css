@@ -4,6 +4,11 @@ body {
   font-family: monospace;
   font-weight: bold;
   font-size: 16px;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 h1 {
@@ -11,42 +16,42 @@ h1 {
   font-weight: bold;
 }
 
-body {
-  margin: 0;
-  background: #f0feff;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
+/* Center the two columns vertically within the grid */
 .headline {
   width: 100%;
   max-width: 1200px;
-  padding: 60px;
+  padding: 20px 30px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: center;
+  gap: 30px;
+  align-items: center; /* center .left and .right vertically */
 }
+
+
+
 
 .logo {
   grid-column: 1 / -1;
   text-align: center;
-  font-size: 84px;
+  font-size: 72px; /* slightly reduced */
   font-weight: 900;
   letter-spacing: 6px;
   color: white;
-  -webkit-text-stroke: 4px #e46b8c;
-  text-shadow: 10px 10px 0 #e46b8c;
-  margin-bottom: 40px;
+  -webkit-text-stroke: 3px #e46b8c;
+  text-shadow: 6px 6px 0 #e46b8c;
+  margin-bottom: 10px; /* much tighter spacing */
 }
 
+
+
+/* Center content inside the left column */
 .left {
   display: flex;
   flex-direction: column;
   gap: 40px;
+  justify-content: center; /* drops the boxes down to center-align with the image */
 }
+
 
 .card {
   background: #eef3f3;
@@ -72,9 +77,24 @@ body {
   color: #333;
 }
 
+/* Center the image inside the right column */
 .right {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* vertical centering to match the boxes */
 }
+
+
+
+
+/* Keep the image responsive but not overpowering */
+.right img {
+  max-width: 100%;
+  height: auto;
+  max-height: 60vh; /* adjust if needed (55–65vh) */
+}
+
+
 
 .music-icon {
   font-size: 180px;
@@ -82,7 +102,57 @@ body {
   line-height: 1;
 }
 
-.left {
-  cursor: pointer;
-  transition: transform 0.2s;
+/* 📱 Mobile responsiveness */
+@media (max-width: 768px) {
+  .headline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    gap: 20px;
+  }
+
+  .logo {
+    font-size: 48px;
+    -webkit-text-stroke: 2px #e46b8c;
+    text-shadow: 5px 5px 0 #e46b8c;
+    margin-bottom: 20px;
+  }
+
+  .card h2 {
+    font-size: 24px;
+  }
+
+  input,
+  button {
+    font-size: 16px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .headline {
+    padding: 30px;
+  }
+
+  .logo {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .headline {
+    padding: 15px 20px;
+  }
+
+  .logo {
+    font-size: 64px;
+    margin-bottom: 5px;
+  }
+}
+
+@media (max-width: 1366px) {
+  .logo { font-size: 64px; margin-bottom: 8px; }
+  .headline { gap: 24px; }
+  .right img { max-height: 55vh; }
 }
