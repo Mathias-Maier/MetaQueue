@@ -297,6 +297,11 @@ body {
   color: #ffffff;
   letter-spacing: 3px;
   display: none;
+  text-shadow: 
+  -1px -1px 0 black, 
+  1px -1px 0 black, 
+  -1px 1px 0 black, 
+  1px 1px 0 black;
 }
 
 .member-count-container {
