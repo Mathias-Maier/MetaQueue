@@ -80,7 +80,7 @@ window.addEventListener("DOMContentLoaded", async () => {
         const selData = await selRes.json();
         const genres = selData.genres || [];
         const artists = selData.artists || [];
-        // load queue with saved selections (server expects POST)
+        // load queue with saved selections (this will POST and store on server)
         await loadQueue(genres, artists);
       } catch (err) {
         console.error("Error loading saved selections / queue:", err);
@@ -155,11 +155,11 @@ async function updatePieChart() {
 
 window.addEventListener("message", (event) => {
   if (event.data.type === "selectionsUpdated") updatePieChart();
-  // When side3 sends genres/artists, forward them to loadQueue (server expects POST)
+  // When side3 sends genres/artists, forward them to loadQueue (server expects POST to regenerate)
   if (event.data.type === "queueUpdated") {
     const genres = event.data.genres || [];
     const artists = event.data.artists || [];
-    loadQueue(genres, artists);
+    loadQueue(genres, artists); // POST generate & store shared queue
   }
 });
 
@@ -171,21 +171,40 @@ let masterQueue = [];
 let playQueue = [];
 let currentIndex = 0;
 let interval = null;
+// track last known queue version to avoid unnecessary re-renders
+let lastQueueUpdatedAt = null;
 
-// ✅ SHARED queue loading
-// now accepts optional genres and artists and POSTS to the server
+// loadQueue: if genres/artists provided -> POST to regenerate & store on server
+// otherwise -> GET to retrieve stored shared queue
 async function loadQueue(genres = [], artists = []) {
   const partyCode = localStorage.getItem("partyCode");
   if (!partyCode) return;
 
   try {
-    const res = await fetch(`/api/party/${partyCode}/queue`, {
-      method: "POST", // server expects POST
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ genres, artists }),
-    });
+    let res, data;
+    if ((genres && genres.length > 0) || (artists && artists.length > 0)) {
+      // regenerate and store on server (shared)
+      res = await fetch(`/api/party/${partyCode}/queue`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ genres, artists }),
+      });
+      data = await res.json();
+    } else {
+      // fetch the currently stored shared queue
+      res = await fetch(`/api/party/${partyCode}/queue`);
+      data = await res.json();
+    }
 
-    const data = await res.json();
+    // If no data or no playQueue, show message
+    const updatedAt = data.updatedAt ? new Date(data.updatedAt).toISOString() : null;
+
+    // Only update UI if queue changed
+    if (updatedAt && updatedAt === lastQueueUpdatedAt) {
+      return;
+    }
+
+    lastQueueUpdatedAt = updatedAt;
 
     masterQueue = data.masterQueue || [];
     playQueue = data.playQueue || [];
@@ -205,6 +224,11 @@ async function loadQueue(genres = [], artists = []) {
   }
 }
 
+// Start polling for updates from server every 4 seconds (so all clients stay in sync)
+setInterval(() => {
+  loadQueue(); // GET stored queue and update UI when changed
+}, 4000);
+
 // Play a song from playQueue
 function loadSong(index) {
   clearInterval(interval);
@@ -212,8 +236,10 @@ function loadSong(index) {
   if (!playQueue[currentIndex]) return;
 
   const song = playQueue[currentIndex];
-  document.getElementById("artist").textContent = song.artist;
-  document.getElementById("title").textContent = song.title;
+  const artistEl = document.getElementById("artist");
+  const titleEl = document.getElementById("title");
+  if (artistEl) artistEl.textContent = song.artist;
+  if (titleEl) titleEl.textContent = song.title;
 
   const durationSec = song.duration;
   let elapsedSec = 0;
@@ -222,9 +248,9 @@ function loadSong(index) {
   const elapsedEl = document.getElementById("elapsed-time");
   const remainingEl = document.getElementById("remaining-time");
 
-  elapsedEl.textContent = formatTime(0);
-  remainingEl.textContent = "-" + formatTime(durationSec);
-  progressFill.style.width = "0%";
+  if (elapsedEl) elapsedEl.textContent = formatTime(0);
+  if (remainingEl) remainingEl.textContent = "-" + formatTime(durationSec);
+  if (progressFill) progressFill.style.width = "0%";
 
   interval = setInterval(() => {
     elapsedSec++;
@@ -237,9 +263,9 @@ function loadSong(index) {
     }
 
     const pct = (elapsedSec / durationSec) * 100;
-    progressFill.style.width = pct + "%";
-    elapsedEl.textContent = formatTime(elapsedSec);
-    remainingEl.textContent = "-" + formatTime(durationSec - elapsedSec);
+    if (progressFill) progressFill.style.width = pct + "%";
+    if (elapsedEl) elapsedEl.textContent = formatTime(elapsedSec);
+    if (remainingEl) remainingEl.textContent = "-" + formatTime(durationSec - elapsedSec);
   }, 1000);
 }
 
@@ -252,6 +278,7 @@ function formatTime(sec) {
 // Render the master queue for search/display
 function renderQueue(queue) {
   const queueBox = document.getElementById("queueBox");
+  if (!queueBox) return;
   queueBox.innerHTML = "<h3>QUEUE:</h3>";
 
   if (!queue.length) {

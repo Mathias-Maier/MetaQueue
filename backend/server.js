@@ -198,11 +198,20 @@ server.get('/api/songs', async (req, res) => {
 });
 
 // --- Generate queue ---
+// POST: generate a new queue (store it server-side so it's shared)
+// GET: return stored queue for the party (shared shuffle)
 server.post('/api/party/:partyCode/queue', async (req, res) => {
   const { partyCode } = req.params;
   const { genres = [], artists = [] } = req.body;
 
   if (genres.length === 0 && artists.length === 0) {
+    // reset stored queue for this party to empty
+    const party = parties.get(partyCode.toUpperCase());
+    if (party) {
+      party.masterQueue = [];
+      party.playQueue = [];
+      party.queueUpdatedAt = new Date();
+    }
     return res.json({ masterQueue: [], playQueue: [] });
   }
 
@@ -279,12 +288,33 @@ server.post('/api/party/:partyCode/queue', async (req, res) => {
 
     const playQueue = shuffleArray([...masterQueue]);
 
-    res.json({ masterQueue, playQueue });
+    // store generated queue on the party so all clients can fetch it
+    const party = parties.get(partyCode.toUpperCase());
+    if (party) {
+      party.masterQueue = masterQueue;
+      party.playQueue = playQueue;
+      party.queueUpdatedAt = new Date();
+    }
+
+    res.json({ masterQueue, playQueue, updatedAt: party ? party.queueUpdatedAt : new Date() });
 
   } catch (err) {
     console.error('Queue generation error:', err);
     res.status(500).json({ error: 'Failed to generate queue' });
   }
+});
+
+// GET stored queue (shared shuffle)
+server.get('/api/party/:partyCode/queue', (req, res) => {
+  const { partyCode } = req.params;
+  const party = parties.get(partyCode.toUpperCase());
+  if (!party) return res.status(404).json({ error: 'Party not found' });
+
+  const masterQueue = party.masterQueue || [];
+  const playQueue = party.playQueue || [];
+  const updatedAt = party.queueUpdatedAt || null;
+
+  res.json({ masterQueue, playQueue, updatedAt });
 });
 
 // --- Helpers ---
