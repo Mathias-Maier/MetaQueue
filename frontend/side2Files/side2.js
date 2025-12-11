@@ -1,6 +1,5 @@
 // Pop-upvindue kode start
 function openPopup() {
-  // Hide QR while popup is open
   const qr = document.getElementById("qrCode");
   if (qr) qr.style.display = "none";
 
@@ -12,7 +11,6 @@ function openPopup() {
 }
 
 function closePopup() {
-  // Show QR again when popup closes
   const qr = document.getElementById("qrCode");
   if (qr) qr.style.display = "block";
 
@@ -24,7 +22,7 @@ function closePopup() {
     document.getElementById("popup-overlay").style.display = "none";
   }, 350);
 }
-//Pop-upvindue kode slut
+// Pop-upvindue kode slut
 
 // --- Party setup ---
 window.addEventListener("DOMContentLoaded", async () => {
@@ -59,6 +57,7 @@ window.addEventListener("DOMContentLoaded", async () => {
         body: JSON.stringify({ memberId }),
       });
       const joinData = await joinRes.json();
+
       if (memberCountDisplay && joinData.memberCount !== undefined) {
         memberCountDisplay.textContent = joinData.memberCount;
       }
@@ -112,8 +111,29 @@ async function updatePieChart() {
 
     genreChart = new Chart(ctx, {
       type: "pie",
-      data: { labels, datasets: [{ data: counts, backgroundColor: ["#ff00aaff","#0478c5ff","#f6ff00ff","#08fbfbff","#ae86ffff","#f97d00ff","#cb032eff","#01ff80ff"] }] },
-      options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: "bottom" } } },
+      data: {
+        labels,
+        datasets: [
+          {
+            data: counts,
+            backgroundColor: [
+              "#ff00aaff",
+              "#0478c5ff",
+              "#f6ff00ff",
+              "#08fbfbff",
+              "#ae86ffff",
+              "#f97d00ff",
+              "#cb032eff",
+              "#01ff80ff",
+            ],
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: { legend: { position: "bottom" } },
+      },
     });
   } catch (err) {
     console.error("Error updating pie chart:", err);
@@ -122,7 +142,7 @@ async function updatePieChart() {
 
 window.addEventListener("message", (event) => {
   if (event.data.type === "selectionsUpdated") updatePieChart();
-  if (event.data.type === "queueUpdated") loadQueue(event.data.genres, event.data.artists);
+  if (event.data.type === "queueUpdated") loadQueue(); // ✅ UPDATED
 });
 
 updatePieChart();
@@ -134,20 +154,18 @@ let playQueue = [];
 let currentIndex = 0;
 let interval = null;
 
-// Load queue from backend
-async function loadQueue(genres = [], artists = []) {
+// ✅ SHARED queue loading
+async function loadQueue() {
   const partyCode = localStorage.getItem("partyCode");
-  const memberId = localStorage.getItem("memberId");
-  if (!partyCode || !memberId) return;
+  if (!partyCode) return;
 
   try {
     const res = await fetch(`/api/party/${partyCode}/queue`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ memberId, genres, artists }),
+      method: "GET",
     });
 
     const data = await res.json();
+
     masterQueue = data.masterQueue || [];
     playQueue = data.playQueue || [];
 
@@ -156,10 +174,11 @@ async function loadQueue(genres = [], artists = []) {
       renderQueue(masterQueue);
     } else {
       const queueBox = document.getElementById("queueBox");
-      queueBox.innerHTML = "<p>No songs selected yet. Pick a genre or artist!</p>";
+      queueBox.innerHTML =
+        "<p>No songs selected yet. Pick a genre or artist!</p>";
     }
   } catch (err) {
-    console.error("Error fetching queue:", err);
+    console.error("Error fetching shared queue:", err);
   }
 }
 
@@ -211,15 +230,16 @@ function formatTime(sec) {
 function renderQueue(queue) {
   const queueBox = document.getElementById("queueBox");
   queueBox.innerHTML = "<h3>QUEUE:</h3>";
-  if (!queue.length) { 
-    queueBox.innerHTML += "<p>No songs found.</p>"; 
-    return; 
+
+  if (!queue.length) {
+    queueBox.innerHTML += "<p>No songs found.</p>";
+    return;
   }
 
   const list = document.createElement("ul");
   list.className = "queue-list";
 
-  queue.forEach(song => {
+  queue.forEach((song) => {
     const item = document.createElement("li");
     item.className = "queue-item";
     item.innerHTML = `<strong>${song.title}</strong><br /><em>${song.artist}</em> • ${song.genre}`;
@@ -229,5 +249,4 @@ function renderQueue(queue) {
   queueBox.appendChild(list);
 }
 
-// ✅ Removed automatic loadQueue() on DOMContentLoaded
-// Queue now only loads when side3.js sends the queueUpdated message
+// (removed auto-loadQueue on DOM load)

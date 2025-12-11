@@ -99,7 +99,7 @@ server.get('/api/suggestions', async (req, res) => {
   }
 });
 
-// Save user selections
+// --- Save user selections ---
 server.post('/api/party/:partyCode/selections', async (req, res) => {
   const { partyCode } = req.params;
   const { memberId, genres, artists } = req.body;
@@ -131,7 +131,39 @@ server.post('/api/party/:partyCode/selections', async (req, res) => {
   }
 });
 
-// Get preferences (pie chart)
+
+// ✅ --- NEW ENDPOINT: Load previous selections ---
+server.get('/api/party/:partyCode/selections', async (req, res) => {
+  const { partyCode } = req.params;
+  const { memberId } = req.query;
+
+  try {
+    const result = await db.query(
+      `
+      SELECT genre_id, artist 
+      FROM user_selections 
+      WHERE party_code = $1 AND member_id = $2
+      `,
+      [partyCode.toUpperCase(), memberId]
+    );
+
+    const genres = [];
+    const artists = [];
+
+    result.rows.forEach(row => {
+      if (row.genre_id) genres.push(row.genre_id);
+      if (row.artist) artists.push(row.artist);
+    });
+
+    res.json({ genres, artists });
+  } catch (err) {
+    console.error("Error fetching previous selections:", err);
+    res.status(500).json({ error: "Failed to load selections" });
+  }
+});
+
+
+// --- Get preferences (pie chart) ---
 server.get('/api/party/:partyCode/preferences', async (req, res) => {
   const { partyCode } = req.params;
 
@@ -151,7 +183,7 @@ server.get('/api/party/:partyCode/preferences', async (req, res) => {
   }
 });
 
-// Get all songs
+// --- Get all songs ---
 server.get('/api/songs', async (req, res) => {
   try {
     const result = await db.query(
@@ -170,7 +202,6 @@ server.post('/api/party/:partyCode/queue', async (req, res) => {
   const { partyCode } = req.params;
   const { genres = [], artists = [] } = req.body;
 
-  // ✅ Only generate queue if user selected something
   if (genres.length === 0 && artists.length === 0) {
     return res.json({ masterQueue: [], playQueue: [] });
   }
