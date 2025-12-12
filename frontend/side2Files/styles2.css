@@ -382,47 +382,221 @@ body {
 
 
 
-/* 📱 MOBILE FIX – påvirker IKKE din desktop-version */
+/* ================================
+   🖥️ DESKTOP — skjul mobil queue-knap
+   ================================ */
+@media (min-width: 769px) {
+  .queue-toggle-btn {
+    display: none !important;
+  }
+}
+
+/* ================================
+   🌍 DESKTOP DEFAULT
+   ================================ */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden; /* ingen scroll på desktop */
+}
+
+body {
+  background: #f0feff;
+}
+
+/* ================================
+   📱 MOBIL-OPTIMERING — PARTY CODE NED, LOGO NEDERST
+   ================================ */
 @media (max-width: 768px) {
 
-    /* Eksempler – jeg tilpasser gerne efter din kode */
-    body {
-        padding: 0 10px;
-        overflow-x: hidden;
-    }
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto; /* scroll kun på mobil */
+  }
 
-    /* Hvis dine containere er for brede */
-    .container,
-    .wrapper,
-    .section {
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        padding: 10px;
-    }
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
 
-    /* Hvis tekst er for stor */
-    h1 { font-size: 1.8em; }
-    h2 { font-size: 1.4em; }
-    p  { font-size: 1em; line-height: 1.5; }
+  .box-1,
+  .box-2,
+  .box-3 {
+    width: 100%;
+    flex: none;
+    display: block;
+  }
 
-    /* Hvis knapper er for store */
-    button {
-        width: 100%;
-        padding: 14px;
-        font-size: 1em;
-    }
+  /* Fjern overskriften "WELCOME TO PARTY" */
+  .logo {
+    display: none !important;
+  }
 
-    /* Hvis billeder er for store */
-    img {
-        width: 100%;
-        height: auto;
-    }
+  .go-back-btn,
+  .go-forward-btn {
+    position: relative;
+    display: inline-block;
+    margin: 0 10px;
+    padding: 8px 14px;
+    font-size: 13px;
+  }
 
-    /* Hvis der er fixed elementer der fylder for meget */
-    .navbar,
-    .header,
-    .footer {
-        padding: 10px;
-    }
+  .go-back-btn { float: left; }
+  .go-forward-btn { float: right; }
+
+  /* Party code flyttes ned */
+  .party-code-container {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: clamp(18px, 4vw, 30px);
+    margin: 70px 0;
+    order: 7; /* vises efter player/vibe */
+  }
+
+  .party-code {
+    display: block;
+    font-size: clamp(18px, 4vw, 30px);
+    margin-top: 4px;
+  }
+
+  .member-count-container {
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 14px;
+    text-align: center;
+    order: 4;
+  }
+
+  .member-icon {
+    font-size: 22px;
+  }
+
+  .member-count {
+    font-size: 18px;
+    padding: 4px 12px;
+  }
+
+  /* Fjern QR på mobil */
+  .qr,
+  .qr img {
+    display: none !important;
+  }
+
+  /* Vibe box lige over player */
+  .vibe-box {
+    width: 100%;
+    text-align: center;
+    position: relative;
+    margin: 215px 0px 0px 20px;
+    order: 5;
+  }
+
+  .genre-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 18px;
+    font-size: 16px;
+  }
+
+  /* Player */
+  #player-container {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    order: 6;
+  }
+
+  #progress-bar {
+    width: 100%;
+  }
+
+  #genre-chart-wrapper {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 20px;
+  }
+
+  /* Queue-knap — kun på mobil */
+  .queue-toggle-btn {
+    position: fixed;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #e46b8c;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 10px;
+    z-index: 999999;
+    font-size: 16px;
+    font-weight: bold;
+    transition: transform 0.2s ease;
+  }
+
+  .queue-toggle-btn:active {
+    transform: translateX(-50%) scale(0.98);
+  }
+
+  /* Queue-panelet */
+  .queue-box {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-height: 40vh;
+    background: #ffffff;
+    border-radius: 14px 14px 0 0;
+    padding: 15px;
+    overflow-y: auto;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 99999;
+    border: 2px solid black;
+    font-size: 14px;
+    display: none;
+  }
+
+  .queue-box.open {
+    display: block;
+    transform: translateY(0);
+  }
+
+  .queue-box::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .queue-box::-webkit-scrollbar-thumb {
+    background-color: #e46b8c;
+    border-radius: 3px;
+  }
+
+  .queue-handle {
+    width: 60px;
+    height: 6px;
+    background: #999;
+    border-radius: 5px;
+    margin: 0 auto 10px auto;
+  }
+
+  /* Musiklogo nederst */
+  .corner-logo {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    opacity: 0.9;
+  }
 }

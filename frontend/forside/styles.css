@@ -102,16 +102,29 @@ h1 {
   line-height: 1;
 }
 
-/* 📱 Mobile responsiveness */
+
+
+
+
+/* 📱 PERFECT MOBILE OPTIMIZATION FOR YOUR DESIGN */
 @media (max-width: 768px) {
+
+  /* Stop body fra at tvinge centreret layout på mobilen */
+  body {
+    display: block;
+    padding: 20px 10px;
+  }
+
+  /* Layout går i én kolonne */
   .headline {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 30px;
+    padding: 20px;
     gap: 20px;
   }
 
+  /* Logo til mobil */
   .logo {
     font-size: 48px;
     -webkit-text-stroke: 2px #e46b8c;
@@ -119,16 +132,36 @@ h1 {
     margin-bottom: 20px;
   }
 
+  /* Cards kompakte */
+  .card {
+    padding: 20px;
+  }
+
   .card h2 {
     font-size: 24px;
   }
 
+  /* Input + knapper */
   input,
   button {
     font-size: 16px;
     padding: 12px;
   }
+
+  /* Billedet tilpasses mobil */
+  .right img {
+    max-width: 90%;
+    max-height: 40vh;
+  }
+
+  .left {
+    gap: 20px;
+  }
 }
+
+/* ——————————————————————————————— */
+/* TABLET + MID-SIZE SCREENS (eksisterende kode, beholdt som den er) */
+/* ——————————————————————————————— */
 
 @media (max-width: 1024px) {
   .headline {

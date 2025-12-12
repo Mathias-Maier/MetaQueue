@@ -300,3 +300,9 @@ function renderQueue(queue) {
 }
 
 // (removed auto-loadQueue on DOM load)
+
+// Mobile version open/close queue
+function toggleQueue() {
+  const queue = document.getElementById('queueBox');
+  queue.classList.toggle('open');
+}
