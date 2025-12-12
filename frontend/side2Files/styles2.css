@@ -378,3 +378,51 @@ body {
   margin-bottom: 8px;
   font-size: 14px;
 }
+
+
+
+
+/* 📱 MOBILE FIX – påvirker IKKE din desktop-version */
+@media (max-width: 768px) {
+
+    /* Eksempler – jeg tilpasser gerne efter din kode */
+    body {
+        padding: 0 10px;
+        overflow-x: hidden;
+    }
+
+    /* Hvis dine containere er for brede */
+    .container,
+    .wrapper,
+    .section {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 10px;
+    }
+
+    /* Hvis tekst er for stor */
+    h1 { font-size: 1.8em; }
+    h2 { font-size: 1.4em; }
+    p  { font-size: 1em; line-height: 1.5; }
+
+    /* Hvis knapper er for store */
+    button {
+        width: 100%;
+        padding: 14px;
+        font-size: 1em;
+    }
+
+    /* Hvis billeder er for store */
+    img {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Hvis der er fixed elementer der fylder for meget */
+    .navbar,
+    .header,
+    .footer {
+        padding: 10px;
+    }
+}
