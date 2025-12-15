@@ -30,15 +30,25 @@ server.use(onEachRequest);
 //Logger dato, metode og URL for hver request til debugging.
 
 
-// --- Generate unique party code ---
+// Genererer en fest-kode
+//Opretter en unik 6-tegns kode til en fest, fx A7KQ2P.
 function generatePartyCode() {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  //Listen af tegn, der kan indgå i koden: store bogstaver og tal.
   let code = '';
+  //Her gemmer vi den kode, vi bygger op ét tegn ad gangen.
   for (let i = 0; i < 6; i++) {
     code += characters.charAt(Math.floor(Math.random() * characters.length));
   }
+  //Kører 6 gange (for 6 tegn)
+//Math.random() vælger et tilfældigt tal mellem 0 og længden af characters
+//charAt() vælger det tegn, der passer til tallet
+//Tegnet tilføjes til code
   if (parties.has(code)) return generatePartyCode();
+  //parties gemmer eksisterende fester, og hvis koden allerede 
+  //findes, laves en ny unik kode.
   return code;
+  //Returnerer den færdige, unikke 6-tegns kode
 }
 
 // --- Party endpoints ---
