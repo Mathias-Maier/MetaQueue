@@ -1,25 +1,34 @@
+//// express → til at lave webserver og API
+// path / fileURLToPath → til at finde stier på computeren  
+// connect → din egen funktion, der forbinder til databasen
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { connect } from '../db/connect.js';
 
-// Finder mappe-stien hvor denne fil er placeret
+// Den fortæller serveren, hvor denne fil ligger på computeren
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Database
-const db = await connect();
-const parties = new Map(); // maps partyCode to { name: partyName, createdAt: Date }
+// Database 
+const db = await connect(); //Serveren opretter forbindelse til databasen.
+const parties = new Map(); // parties = korttids-hukommelse (RAM)
+//  gemmer festernes data midlertidigt
 
 // Port
-const port = process.env.PORT || 3003;
-
+const port = process.env.PORT || 3003; // Serveren kører på port 3003
 // Webserver
-const server = express();
+const server = express();//server er selve Express-app’en
 
-// --- Middleware ---
+// Middleware kører først, behandler eller 
+// logger requesten, og sender den så videre til det rigtige endpoint.
 server.use(express.static('frontend', { index: 'forside/index.html' }));
+// Gør frontend tilgængelig, så browseren kan åbne filer, og / loader forside/index.html.
 server.use(express.json());
+//Gør det muligt at læse JSON-data fra POST/PUT requests 
+//Uden det ville req.body være undefined
 server.use(onEachRequest);
+//Logger dato, metode og URL for hver request til debugging.
+
 
 // --- Generate unique party code ---
 function generatePartyCode() {
