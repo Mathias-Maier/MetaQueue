@@ -16,7 +16,6 @@ h1 {
   font-weight: bold;
 }
 
-/* Center the two columns vertically within the grid */
 .headline {
   width: 100%;
   max-width: 1200px;
@@ -27,22 +26,17 @@ h1 {
   align-items: center; /* center .left and .right vertically */
 }
 
-
-
-
 .logo {
   grid-column: 1 / -1;
   text-align: center;
-  font-size: 72px; /* slightly reduced */
+  font-size: 72px;
   font-weight: 900;
   letter-spacing: 6px;
   color: white;
   -webkit-text-stroke: 3px #e46b8c;
   text-shadow: 6px 6px 0 #e46b8c;
-  margin-bottom: 10px; /* much tighter spacing */
+  margin-bottom: 10px;
 }
-
-
 
 /* Center content inside the left column */
 .left {
@@ -51,7 +45,6 @@ h1 {
   gap: 40px;
   justify-content: center; /* drops the boxes down to center-align with the image */
 }
-
 
 .card {
   background: #eef3f3;
@@ -84,17 +77,12 @@ h1 {
   align-items: center; /* vertical centering to match the boxes */
 }
 
-
-
-
 /* Keep the image responsive but not overpowering */
 .right img {
   max-width: 100%;
   height: auto;
-  max-height: 60vh; /* adjust if needed (55–65vh) */
+  max-height: 60vh;
 }
-
-
 
 .music-icon {
   font-size: 180px;
@@ -102,13 +90,8 @@ h1 {
   line-height: 1;
 }
 
-
-
-
-
 /* 📱 PERFECT MOBILE OPTIMIZATION FOR YOUR DESIGN */
 @media (max-width: 768px) {
-
   /* Stop body fra at tvinge centreret layout på mobilen */
   body {
     display: block;
@@ -132,7 +115,6 @@ h1 {
     margin-bottom: 20px;
   }
 
-  /* Cards kompakte */
   .card {
     padding: 20px;
   }
@@ -141,7 +123,6 @@ h1 {
     font-size: 24px;
   }
 
-  /* Input + knapper */
   input,
   button {
     font-size: 16px;
@@ -158,10 +139,6 @@ h1 {
     gap: 20px;
   }
 }
-
-/* ——————————————————————————————— */
-/* TABLET + MID-SIZE SCREENS (eksisterende kode, beholdt som den er) */
-/* ——————————————————————————————— */
 
 @media (max-width: 1024px) {
   .headline {
@@ -185,7 +162,14 @@ h1 {
 }
 
 @media (max-width: 1366px) {
-  .logo { font-size: 64px; margin-bottom: 8px; }
-  .headline { gap: 24px; }
-  .right img { max-height: 55vh; }
+  .logo {
+    font-size: 64px;
+    margin-bottom: 8px;
+  }
+  .headline {
+    gap: 24px;
+  }
+  .right img {
+    max-height: 55vh;
+  }
 }
