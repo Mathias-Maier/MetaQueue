@@ -174,6 +174,8 @@ async function updatePieChart()
     const counts = data.genres.map((g) => parseInt(g.count));
 //Omformer genre_id til menneskeligt navn (Hip-Hop, Pop osv.)
 // Gemmer antal valg per genre
+
+//Tegn diagrammet
     const ctx = document.getElementById("genreChart");
     if (!ctx) return;
 
@@ -203,25 +205,38 @@ async function updatePieChart()
         responsive: true,
         maintainAspectRatio: true,
         plugins: { legend: { position: "bottom" } },
+        //Finder <canvas> elementet på siden
+        // Sletter tidligere diagram hvis der er et
+        // Tegner nyt cirkeldiagram med genre labels og antal
       },
     });
+    //Error handling
   } catch (err) {
     console.error("Error updating pie chart:", err);
+    //Hvis noget går galt med at hente data eller tegne diagrammet, 
+    // viser vi fejlen i konsollen
+    // Forhindrer, at hele siden crasher
   }
+  
 }
-
+//Event listener
 window.addEventListener("message", (event) => {
   if (event.data.type === "selectionsUpdated") updatePieChart();
-  // When side3 sends genres/artists, forward them to loadQueue (server expects POST to regenerate)
   if (event.data.type === "queueUpdated") {
     const genres = event.data.genres || [];
     const artists = event.data.artists || [];
-    loadQueue(genres, artists); // POST generate & store shared queue
+    loadQueue(genres, artists); 
+    //Lytter på beskeder sendt fra andre sider (fx side3)
+    // Hvis brugeren har ændret musikvalg → opdater diagrammet
+    // Hvis køen er ændret → genindlæs sangkøen med de nye valg
+
   }
 });
-
+//Tegn og opdater automatisk
 updatePieChart();
 setInterval(updatePieChart, 50000);
+////Tegner diagrammet første gang når siden loader
+// Opdaterer diagrammet automatisk hvert 50. sekund, så det altid viser aktuelle valg
 
 // --- Player setup ---
 let masterQueue = [];
