@@ -65,7 +65,7 @@
 
 .logo {
   text-align: center;
-  font-size: 70px;
+  font-size: clamp(40px, 6vw, 70px); /* scales with screen size */
   font-weight: 900;
   letter-spacing: 6px;
   color: white;
@@ -74,6 +74,10 @@
   margin-bottom: 40px;
   font-family: monospace;
   font-weight: bold;
+  max-width: 100%;
+  word-break: break-word;
+  white-space: normal;
+  line-height: 1.2;
 }
 
 html,
