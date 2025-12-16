@@ -5,93 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>https://www.partyroom/metaqueue.com</title>
 
+    <!-- Href til CSS -->
   <link rel="stylesheet" href="styles2.css">
  
 </head>
   <body>
   
+  <!-- Welcome to party..... -->
   <div class="logo" id="partyWelcome"></div>
 
+  <!-- Go Back Knap -->
   <button class="go-back-btn" onclick="history.back()">◀️ GO BACK</button>
 
+  <!-- About-side knap -->
   <button class="go-forward-btn" onclick="window.location.href='../aboutKnap/about.html'">
     ℹ️ ABOUT
   </button>
 
+
+  <!-- Open queue på mobilen -->
  <button class="queue-toggle-btn" onclick="toggleQueue()">🎶 OPEN QUEUE</button>
 
-<div class="container">
 
-  <div class="box-1">    
-    <div class="party-code-container">
-      <p id="partyCodeDisplay" class="party-code"></p>
-    </div>
+ <!-- Container til box indelling 1-2-3 -->
+  <div class="container">
 
-    <div class="member-count-container">
-      <span class="member-icon">👥</span>
-      <span id="memberCount" class="member-count">0</span>
-    </div>
-
-    <div class="vibe-box">
-        <p class="vibe-title"> WHAT'S THE VIBE</p>
-        <a href="#" onclick="openPopup()" class="genre-button">CHOOSE GENRE</a>
-    </div>  
-
-    <div id="popup-overlay" class="popup-overlay" onclick="closePopup()"></div>  
-  </div>
-
-  <div class="box-2">
-
-      <div id="player-container" style="border:2px solid #f0feff;">
-
-        <div id="song-info">
-          <div id="artist"></div>
-          <div id="title"></div>
-        </div>
-        
-        <div id="progress-bar">
-          <div id="progress-fill"></div>
-        </div>
-
-        <div id="time-info">
-          <span id="elapsed-time">0:00</span>
-          <span id="remaining-time">-0:00</span>
-        </div>
+    <!-- Venstre Box -->
+    <div class="box-1">    
+      <div class="party-code-container">
+        <p id="partyCodeDisplay" class="party-code"></p>
       </div>
 
-      <div id="genre-chart-wrapper">
-      <canvas id="genreChart"></canvas>
+      <!-- Antal personer -->
+      <div class="member-count-container">
+        <span class="member-icon">👥</span>
+        <span id="memberCount" class="member-count">0</span>
       </div>
-  </div>
 
+      <!-- Vælg genre box -->
+      <div class="vibe-box">
+          <p class="vibe-title"> WHAT'S THE VIBE</p>
+          <a href="#" onclick="openPopup()" class="genre-button">CHOOSE GENRE</a>
+      </div>  
+      <div id="popup-overlay" class="popup-overlay" onclick="closePopup()"></div>  
+      </div>
 
-  <div class="box-3">
-     <div class="qr" id="qrCode">
-  <img 
-    class="qr-code"
-    src="FinalQr.png"
-    alt="QR Code"
-  />
-</div>
+      <!-- Midterste Box -->
+    <div class="box-2">
 
+          <!-- Player bar -->
+        <div id="player-container" style="border:2px solid #f0feff;">
 
+          <!-- Sang Artist/titel -->
+          <div id="song-info">
+            <div id="artist"></div>
+            <div id="title"></div>
+          </div>
+          
+          <!-- Sang ProgressBar -->
+          <div id="progress-bar">
+            <div id="progress-fill"></div>
+          </div>
+
+          <!-- Time(song)Info -->
+          <div id="time-info">
+            <span id="elapsed-time">0:00</span>
+            <span id="remaining-time">-0:00</span>
+          </div>
+        </div>
+
+        <!-- Pie-Chart -->
+        <div id="genre-chart-wrapper">
+        <canvas id="genreChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Højre Box -->
+    <div class="box-3">
+      <div class="qr" id="qrCode">
+        <img 
+          class="qr-code"
+          src="FinalQr.png"
+          alt="QR Code">
+      </div>
+
+    <!-- Queue-list/box -->
       <div id="queueBox" style="border:2px solid black;" class="queue-box" ></div>
+    </div>
+
+    <!-- Pop-up vindue (Choose genre)-->
+        <div id="popup" style="border:2px solid black;" class="popup">
+
+            <button class="close-btn" onclick="closePopup()">x</button>
+            <iframe src="../side3/side3.html" class="popup-frame"></iframe>
+        
+        </div>
   </div>
 
+  <!-- MiniLogo -->
+  <img src="logoMini.png" class="corner-logo"/>
 
-
-    
-      <div id="popup" style="border:2px solid black;" class="popup">
-
-          <button class="close-btn" onclick="closePopup()">x</button>
-          <iframe src="../side3/side3.html" class="popup-frame"></iframe>
-      
-      </div>
-</div>
-
-    <img src="logoMini.png" class="corner-logo"/>
-
-
+  <!-- JavsScript href-->
   <script src="side2.js" ></script>    
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </body>

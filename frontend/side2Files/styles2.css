@@ -402,10 +402,11 @@ body {
   overflow: hidden; /* ingen scroll på desktop */
 }
 
-
 body {
   background: #f0feff;
 }
+
+
 
 /* ================================
    📱 MOBIL-OPTIMERING — PARTY CODE NED, LOGO NEDERST
@@ -495,7 +496,6 @@ body {
     display: none !important;
   }
 
-  /* Vibe box lige over player */
   .vibe-box {
     width: 100%;
     text-align: center;
