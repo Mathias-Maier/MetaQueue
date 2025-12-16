@@ -93,20 +93,20 @@ body {
 }
 
 #qrCode {
-    min-width: 12ch;
+    min-width: 16ch;
 }
 
 /* QR-kode helt øverst til højre */
 .qr {
   position: fixed;
-  top: 100px;
-  right: 20px;
+  top: 150px;
+  right: 17px;
   z-index: 20;
 }
 
 .qr-code {
-  width: 180px;
-  height: 180px;
+  width: 250px;
+  height: 250px;
   background: #f0feff;
   padding: 5px;
   border-radius: 4px;
