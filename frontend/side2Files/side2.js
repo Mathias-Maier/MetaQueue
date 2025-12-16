@@ -154,11 +154,7 @@ async function updatePieChart()
     const res = await fetch(`/api/party/${partyCode}/preferences`);
     const data = await res.json();
     if (!data.genres || data.genres.length === 0) return;
-    //Kalder /preferences endpoint for at få hvor mange har valgt hvilke genrer
-    // Stopper hvis der ingen data er
 
-
-    //Lav labels og counts
     const genreNames = {
       1: "Hip-Hop",
       2: "Pop",
@@ -172,10 +168,7 @@ async function updatePieChart()
 
     const labels = data.genres.map((g) => genreNames[g.genre_id] || "Unknown");
     const counts = data.genres.map((g) => parseInt(g.count));
-//Omformer genre_id til menneskeligt navn (Hip-Hop, Pop osv.)
-// Gemmer antal valg per genre
 
-//Tegn diagrammet
     const ctx = document.getElementById("genreChart");
     if (!ctx) return;
 
@@ -205,73 +198,43 @@ async function updatePieChart()
         responsive: true,
         maintainAspectRatio: true,
         plugins: { legend: { position: "bottom" } },
-        //Finder <canvas> elementet på siden
-        // Sletter tidligere diagram hvis der er et
-        // Tegner nyt cirkeldiagram med genre labels og antal
       },
     });
-    //Error handling
   } catch (err) {
     console.error("Error updating pie chart:", err);
-    //Hvis noget går galt med at hente data eller tegne diagrammet, 
-    // viser vi fejlen i konsollen
-    // Forhindrer, at hele siden crasher
   }
-  
 }
-//Event listener
+
 window.addEventListener("message", (event) => {
   if (event.data.type === "selectionsUpdated") updatePieChart();
+  // When side3 sends genres/artists, forward them to loadQueue (server expects POST to regenerate)
   if (event.data.type === "queueUpdated") {
     const genres = event.data.genres || [];
     const artists = event.data.artists || [];
-    loadQueue(genres, artists); 
-    //Lytter på beskeder sendt fra andre sider (fx side3)
-    // Hvis brugeren har ændret musikvalg → opdater diagrammet
-    // Hvis køen er ændret → genindlæs sangkøen med de nye valg
-
+    loadQueue(genres, artists); // POST generate & store shared queue
   }
 });
-//Tegn og opdater automatisk
+
 updatePieChart();
 setInterval(updatePieChart, 50000);
-////Tegner diagrammet første gang når siden loader
-// Opdaterer diagrammet automatisk hvert 50. sekund, så det altid viser aktuelle valg
 
-// Variables / Player state
+// --- Player setup ---
 let masterQueue = [];
 let playQueue = [];
 let currentIndex = 0;
 let interval = null;
+// track last known queue version to avoid unnecessary re-renders
 let lastQueueUpdatedAt = null;
-//masterQueue = fuld liste over sange, serveren har valgt
-// playQueue = blandet / shuffle version, den der faktisk spiller
-// currentIndex = hvilken sang vi er nået til
-// interval = bruges til at styre afspilning (timer)
-// lastQueueUpdatedAt = husker hvornår køen sidst blev opdateret for 
-// ikke at genloade unødigt
 
-//loadQueue funktion
-async function loadQueue(genres = [], artists = [])
-//Henter sangkøen for festen
-// Hvis genres eller artists er givet → sender POST til serveren, så server genererer ny kø
-// Hvis ikke → GET for at hente den eksisterende kø
- {
+// loadQueue: if genres/artists provided -> POST to regenerate & store on server
+// otherwise -> GET to retrieve stored shared queue
+async function loadQueue(genres = [], artists = []) {
   const partyCode = localStorage.getItem("partyCode");
   if (!partyCode) return;
-  //Henter partyCode fra browserens lokal storage.
-  // Hvis der ikke er nogen festkode → stopper funktionen.
-
 
   try {
     let res, data;
-    //Starter en try blok for at fange fejl, fx hvis serveren ikke svarer.
-    // Definerer res og data til at gemme serverens svar.
-
-    if ((genres && genres.length > 0) || (artists && artists.length > 0)) 
-      //Tjekker om brugeren har valgt nye genrer eller artister.
-    //Hvis ja  skal køen genereres på ny
-    {
+    if ((genres && genres.length > 0) || (artists && artists.length > 0)) {
       // regenerate and store on server (shared)
       res = await fetch(`/api/party/${partyCode}/queue`, {
         method: "POST",
@@ -279,64 +242,41 @@ async function loadQueue(genres = [], artists = [])
         body: JSON.stringify({ genres, artists }),
       });
       data = await res.json();
-      //Sender en POST request til serveren med de valgte genrer/artister.
-      // Serveren laver en ny kø baseret på valgene og sender den tilbage.
-      // data gemmer den nye kø.
-
     } else {
       // fetch the currently stored shared queue
       res = await fetch(`/api/party/${partyCode}/queue`);
       data = await res.json();
-      //Hvis ingen genrer/artister er valgt 
-      // henter vi bare den eksisterende kø fra serveren (GET request).
     }
 
+    // If no data or no playQueue, show message
     const updatedAt = data.updatedAt ? new Date(data.updatedAt).toISOString() : null;
-    //Henter tidspunktet, hvor køen sidst blev opdateret.
-    // Konverterer det til en standard dato-streng.
-    // Bruges til at tjekke, om køen er ændret siden sidst.
 
-    // Hvis køen ikke er ændret → stopper funktionen
-    //  (for at undgå unødvendig opdatering af UI).
-    // Ellers opdaterer vi lastQueueUpdatedAt med det nye tidspunkt.
+    // Only update UI if queue changed
     if (updatedAt && updatedAt === lastQueueUpdatedAt) {
       return;
     }
+
     lastQueueUpdatedAt = updatedAt;
 
-
-   //Gemmer køen fra serveren i browserens variabler.
-   // masterQueue = fuld liste af sange
-   // playQueue = blandet/afspilningsrækkefølge
     masterQueue = data.masterQueue || [];
     playQueue = data.playQueue || [];
 
     if (playQueue.length > 0) {
       loadSong(0);
       renderQueue(masterQueue);
-      //Hvis der er sange → start afspilning med første sang (loadSong(0))
-      // Viser hele køen i brugergrænsefladen (renderQueue)
-
     } else {
       const queueBox = document.getElementById("queueBox");
       if (queueBox) {
         queueBox.innerHTML =
           "<p>No songs selected yet. Pick a genre or artist!</p>";
-          //Hvis der ikke er sange → vis en besked i UI om at 
-          // vælge genrer eller artister.
       }
     }
   } catch (err) {
     console.error("Error fetching shared queue:", err);
-    //Fanger eventuelle fejl under fetch/processing og skriver dem til konsollen.
   }
- // Funktionen henter eller opdaterer den delte sangkø fra serveren, 
- // gemmer den lokalt, starter afspilning 
-  //hvis der er sange, og viser en besked hvis køen er tom.
 }
 
-//Tjekker serveren hver 4. sekund for at se, om sangkøen er ændret.
-// Holder alle brugere synkroniseret med den delte kø.
+// Start polling for updates from server every 4 seconds (so all clients stay in sync)
 setInterval(() => {
   loadQueue(); // GET stored queue and update UI when changed
 }, 4000);
@@ -346,25 +286,13 @@ function loadSong(index) {
   clearInterval(interval);
   currentIndex = index;
   if (!playQueue[currentIndex]) return;
-  //Starter afspilning af sangen på position index.
-  // Stopper evt. tidligere “progress timer” (interval).
-  // Gemmer, hvilken sang der spilles lige nu (currentIndex).
-  // Hvis der ikke findes nogen sang på den index → stop.
 
-
-  //Finder sangen fra køen.
-  // Viser artist og titel i HTML-elementerne.
   const song = playQueue[currentIndex];
   const artistEl = document.getElementById("artist");
   const titleEl = document.getElementById("title");
   if (artistEl) artistEl.textContent = song.artist;
   if (titleEl) titleEl.textContent = song.title;
 
-
-  //Henter sangens længde i sekunder.
-  // Starter tiden fra 0.
-  // Finder HTML-elementer til fremdriftsbjælke og tid.
-  // Initialiserer fremdriftsbjælken og viser starttid / resterende tid.
   const durationSec = song.duration;
   let elapsedSec = 0;
 
@@ -376,10 +304,6 @@ function loadSong(index) {
   if (remainingEl) remainingEl.textContent = "-" + formatTime(durationSec);
   if (progressFill) progressFill.style.width = "0%";
 
-  //Starter et interval hver 1. sekund:
-  // Øger elapsedSec med 1.
-  // Hvis sangen er færdig → går til næste sang (eller starter forfra).
-  // Opdaterer fremdriftsbjælken og viser opdateret tid (forløbet / tilbageværende).
   interval = setInterval(() => {
     elapsedSec++;
     if (elapsedSec > durationSec) {
@@ -389,6 +313,7 @@ function loadSong(index) {
       loadSong(currentIndex);
       return;
     }
+
     const pct = (elapsedSec / durationSec) * 100;
     if (progressFill) progressFill.style.width = pct + "%";
     if (elapsedEl) elapsedEl.textContent = formatTime(elapsedSec);
@@ -396,42 +321,26 @@ function loadSong(index) {
   }, 1000);
 }
 
-
-//Konverterer sekunder til minutter:sekunder format.
-// Sørger for, at sekunder altid har 2 cifre (fx 3:05).
 function formatTime(sec) {
   const m = Math.floor(sec / 60);
   const s = sec % 60;
   return `${m}:${s < 10 ? "0" + s : s}`;
 }
-//Denne kode styrer afspilning af sange fra køen: den viser titel og artist,
-//  opdaterer en fremdriftsbar og tæller tiden, 
-// og går automatisk til næste sang, mens den hele tiden 
-// holder køen opdateret fra serveren.
 
-
-// Finder HTML-elementet hvor køen skal vises (queueBox).
-// Starter med at rydde gamle elementer og vise en overskrift.
+// Render the master queue for search/display
 function renderQueue(queue) {
   const queueBox = document.getElementById("queueBox");
   if (!queueBox) return;
   queueBox.innerHTML = "<h3>QUEUE:</h3>";
 
-  //Hvis køen er tom → viser “No songs found” og stopper funktionen.
   if (!queue.length) {
     queueBox.innerHTML += "<p>No songs found.</p>";
     return;
   }
 
-  //Opretter en liste (ul) til at vise sangene.
   const list = document.createElement("ul");
   list.className = "queue-list";
 
-
-  //For hver sang i køen:
-  // Opretter et liste-element (li)
-  // Viser titel, artist og genre
-  // Tilføjer det til listen
   queue.forEach((song) => {
     const item = document.createElement("li");
     item.className = "queue-item";
@@ -440,16 +349,12 @@ function renderQueue(queue) {
   });
 
   queueBox.appendChild(list);
-  //Tilføjer hele listen med sange til queueBox i HTML.
 }
 
+// (removed auto-loadQueue on DOM load)
 
 // Mobile version open/close queue
 function toggleQueue() {
   const queue = document.getElementById('queueBox');
   queue.classList.toggle('open');
-  //Åbner eller lukker køen på mobile enheder ved at skifte CSS-klassen open.
 }
-//Denne kode viser sangkøen på siden og gør det muligt at åbne/lukke køen på mobil.
-// renderQueue laver listen med sangtitel, artist og genre.
-// toggleQueue styrer visningen af køen på små skærme.
