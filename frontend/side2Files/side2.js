@@ -238,23 +238,40 @@ setInterval(updatePieChart, 50000);
 ////Tegner diagrammet første gang når siden loader
 // Opdaterer diagrammet automatisk hvert 50. sekund, så det altid viser aktuelle valg
 
-// --- Player setup ---
+// Variables / Player state
 let masterQueue = [];
 let playQueue = [];
 let currentIndex = 0;
 let interval = null;
-// track last known queue version to avoid unnecessary re-renders
 let lastQueueUpdatedAt = null;
+//masterQueue = fuld liste over sange, serveren har valgt
+// playQueue = blandet / shuffle version, den der faktisk spiller
+// currentIndex = hvilken sang vi er nået til
+// interval = bruges til at styre afspilning (timer)
+// lastQueueUpdatedAt = husker hvornår køen sidst blev opdateret for 
+// ikke at genloade unødigt
 
-// loadQueue: if genres/artists provided -> POST to regenerate & store on server
-// otherwise -> GET to retrieve stored shared queue
-async function loadQueue(genres = [], artists = []) {
+//loadQueue funktion
+async function loadQueue(genres = [], artists = [])
+//Henter sangkøen for festen
+// Hvis genres eller artists er givet → sender POST til serveren, så server genererer ny kø
+// Hvis ikke → GET for at hente den eksisterende kø
+ {
   const partyCode = localStorage.getItem("partyCode");
   if (!partyCode) return;
+  //Henter partyCode fra browserens lokal storage.
+  // Hvis der ikke er nogen festkode → stopper funktionen.
+
 
   try {
     let res, data;
-    if ((genres && genres.length > 0) || (artists && artists.length > 0)) {
+    //Starter en try blok for at fange fejl, fx hvis serveren ikke svarer.
+    // Definerer res og data til at gemme serverens svar.
+
+    if ((genres && genres.length > 0) || (artists && artists.length > 0)) 
+      //Tjekker om brugeren har valgt nye genrer eller artister.
+    //Hvis ja  skal køen genereres på ny
+    {
       // regenerate and store on server (shared)
       res = await fetch(`/api/party/${partyCode}/queue`, {
         method: "POST",
@@ -262,38 +279,60 @@ async function loadQueue(genres = [], artists = []) {
         body: JSON.stringify({ genres, artists }),
       });
       data = await res.json();
+      //Sender en POST request til serveren med de valgte genrer/artister.
+      // Serveren laver en ny kø baseret på valgene og sender den tilbage.
+      // data gemmer den nye kø.
+
     } else {
       // fetch the currently stored shared queue
       res = await fetch(`/api/party/${partyCode}/queue`);
       data = await res.json();
+      //Hvis ingen genrer/artister er valgt 
+      // henter vi bare den eksisterende kø fra serveren (GET request).
     }
 
-    // If no data or no playQueue, show message
     const updatedAt = data.updatedAt ? new Date(data.updatedAt).toISOString() : null;
+    //Henter tidspunktet, hvor køen sidst blev opdateret.
+    // Konverterer det til en standard dato-streng.
+    // Bruges til at tjekke, om køen er ændret siden sidst.
 
-    // Only update UI if queue changed
+    // Hvis køen ikke er ændret → stopper funktionen
+    //  (for at undgå unødvendig opdatering af UI).
+    // Ellers opdaterer vi lastQueueUpdatedAt med det nye tidspunkt.
     if (updatedAt && updatedAt === lastQueueUpdatedAt) {
       return;
     }
-
     lastQueueUpdatedAt = updatedAt;
 
+
+   //Gemmer køen fra serveren i browserens variabler.
+   // masterQueue = fuld liste af sange
+   // playQueue = blandet/afspilningsrækkefølge
     masterQueue = data.masterQueue || [];
     playQueue = data.playQueue || [];
 
     if (playQueue.length > 0) {
       loadSong(0);
       renderQueue(masterQueue);
+      //Hvis der er sange → start afspilning med første sang (loadSong(0))
+      // Viser hele køen i brugergrænsefladen (renderQueue)
+
     } else {
       const queueBox = document.getElementById("queueBox");
       if (queueBox) {
         queueBox.innerHTML =
           "<p>No songs selected yet. Pick a genre or artist!</p>";
+          //Hvis der ikke er sange → vis en besked i UI om at 
+          // vælge genrer eller artister.
       }
     }
   } catch (err) {
     console.error("Error fetching shared queue:", err);
+    //Fanger eventuelle fejl under fetch/processing og skriver dem til konsollen.
   }
+ // Funktionen henter eller opdaterer den delte sangkø fra serveren, 
+ // gemmer den lokalt, starter afspilning 
+  //hvis der er sange, og viser en besked hvis køen er tom.
 }
 
 // Start polling for updates from server every 4 seconds (so all clients stay in sync)
