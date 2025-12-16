@@ -1,54 +1,81 @@
-// Pop-upvindue kode start
+// Bruges til at åbne et pop up vindue på siden.
 function openPopup() {
   const qr = document.getElementById("qrCode");
   if (qr) qr.style.display = "none";
+//Skjuler QR-koden, hvis den findes, når pop-up åbnes
 
   document.getElementById("popup-overlay").style.display = "block";
   const popup = document.getElementById("popup");
   popup.style.display = "block";
+//Viser overlay (baggrund) og selve pop-up vinduet
 
+//Tilføjer CSS-klassen show kort efter, så pop-up animeres ind
   setTimeout(() => popup.classList.add("show"), 10);
 }
 
+//Bruges til at lukke pop-up vinduet
 function closePopup() {
   const qr = document.getElementById("qrCode");
   if (qr) qr.style.display = "block";
+  //Viser QR-koden igen, når pop-up lukkes
 
   const popup = document.getElementById("popup");
   popup.classList.remove("show");
+  //Fjerner show-klassen → starter lukke-animation
 
   setTimeout(() => {
     popup.style.display = "none";
     document.getElementById("popup-overlay").style.display = "none";
   }, 350);
+  //Efter animationen (350 ms) skjules popup og overlay fuldstændigt
+
 }
+//openPopup() viser et pop-up vindue med animation, og skjuler QR-koden.
+//closePopup() skjuler pop-up vinduet igen og viser QR-koden.
 // Pop-upvindue kode slut
 
 // --- Party setup ---
-window.addEventListener("DOMContentLoaded", async () => {
+//Når siden er færdig med at loade
+window.addEventListener("DOMContentLoaded", async () =>
+  //Koden starter når HTML’en er klar
+  // Vi bruger async fordi vi laver fetch kald til serveren
+   {
+    //Hent info fra localStorage
   const partyName = localStorage.getItem("partyName");
   const partyCode = localStorage.getItem("partyCode");
+  //Gemte data fra forsiden (oprettet/tilmeldt fest)
+  // partyName = navn på festen
+  // partyCode = kode for festen
+
+  //Finder HTML-elementer hvor vi vil vise navn, kode og medlemstal
   const welcomeDiv = document.getElementById("partyWelcome");
   const codeDisplay = document.getElementById("partyCodeDisplay");
   const memberCountDisplay = document.getElementById("memberCount");
 
+//Vis festens navn og kode
   if (welcomeDiv) {
     welcomeDiv.textContent = partyName
       ? `WELCOME TO PARTY: ${partyName}`
       : "WELCOME TO PARTY";
   }
-
   if (codeDisplay && partyCode) {
     codeDisplay.textContent = `PARTY CODE: ${partyCode}`;
     codeDisplay.style.display = "block";
+    //Opdaterer HTML med festens navn og kode
   }
+  
 
+  //Opret unik memberId hvis bruger ikke har én
   let memberId = localStorage.getItem("memberId");
   if (!memberId) {
     memberId = "member_" + Math.random().toString(36).substring(2, 15);
     localStorage.setItem("memberId", memberId);
+    //Hver deltager får et unikt id
+    //Gemmes i browseren, så vi kan kende brugeren næste gang
   }
 
+
+  //Tilmeld medlemmet til festen
   if (partyCode) {
     try {
       const joinRes = await fetch(`/api/party/${partyCode}/join`, {
@@ -60,8 +87,11 @@ window.addEventListener("DOMContentLoaded", async () => {
 
       if (memberCountDisplay && joinData.memberCount !== undefined) {
         memberCountDisplay.textContent = joinData.memberCount;
+        //Sender memberId til serveren for at tilføje brugeren
+        //Serveren svarer med opdateret antal medlemmer
+        //Vises i HTML
       }
-
+       //Opdater medlemstal live
       setInterval(async () => {
         try {
           const countRes = await fetch(`/api/party/${partyCode}/count`);
@@ -73,31 +103,53 @@ window.addEventListener("DOMContentLoaded", async () => {
           console.error("Error fetching member count:", err);
         }
       }, 3000);
+      //Henter medlemstal hver 3. sekund
+      // Holder medlemstallet opdateret live på siden
 
-      // Try to load previous selections (so queue visible without opening popup)
+      // Hent tidligere gemte musikvalg
       try {
         const selRes = await fetch(`/api/party/${partyCode}/selections?memberId=${memberId}`);
         const selData = await selRes.json();
         const genres = selData.genres || [];
         const artists = selData.artists || [];
-        // load queue with saved selections (this will POST and store on server)
         await loadQueue(genres, artists);
+        //Spørger serveren hvilke genrer og artister brugeren tidligere valgte
+        // Bruges til at indlæse musikkøen, så det ser korrekt ud med det samme
+
+        //Fejl-håndtering
+        //inner catch
       } catch (err) {
         console.error("Error loading saved selections / queue:", err);
+        //Forsøger at hente tidligere gemte musikvalg fra serveren
+        // Hvis der sker en fejl (f.eks. server ikke svarer),
+        //  bliver det logget i konsollen, men det stopper ikke resten af koden
       }
-
+      // outer try catch
     } catch (err) {
       console.error("Error joining party:", err);
+      //Forsøger at tilmelde brugeren til festen på serveren
+      // Hvis det fejler, f.eks. server offline, bliver fejlen logget i konsollen
     }
   }
+  //Når siden loader, hentes festens navn og kode fra browseren. 
+  // Brugeren får et unikt memberId og tilmeldes festen på serveren. Medlemstal vises live, 
+  // og tidligere musikvalg hentes, så køen kan vises korrekt.
 });
 
-// --- Pie chart setup ---
+// Pie chart setup 
+//Variable & Function
 let genreChart = null;
-async function updatePieChart() {
+async function updatePieChart()
+//genreChart husker diagrammet, så vi kan slette/genskabe det
+// updatePieChart() henter festens musik-præferencer og opdaterer diagrammet
+ {
+  //Hent festkode
   const partyCode = localStorage.getItem("partyCode");
   if (!partyCode) return;
+  //Finder hvilken fest vi er i
+  // Hvis der ingen fest er, stopper funktionen
 
+  //Hent data fra serveren
   try {
     const res = await fetch(`/api/party/${partyCode}/preferences`);
     const data = await res.json();
