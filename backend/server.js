@@ -454,28 +454,62 @@ server.get('/api/party/:partyCode/queue', (req, res) =>
 
 // små hjælpefunktioner, der gør koden nemmere at læse og genbruge.
 //Funktion der vælger et antal tilfældige elementer fra et array
-function getRandomSubset(arr, count) {
+function getRandomSubset(arr, count)
+//En funktion der får en liste (arr) og et antal (count)
+ {
   return [...arr].sort(() => Math.random() - 0.5).slice(0, count);
-  //Blander arrayet og tager kun de første count elemente
+  //Den blander listen tilfældigt og tager kun det antal, vi har bedt om
+  //En hjælpefunktion der bruges til at udvælge et bestemt antal 
+  // tilfældige sange fra en liste.
 }
-
-function shuffleArray(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
+//Den blander rækkefølgen i en liste, så elementerne kommer i tilfældig orden (shuffle).
+function shuffleArray(arr) 
+//Funktion der tager en liste (fx sange)
+{
+  for (let i = arr.length - 1; i > 0; i--)
+    //Starter fra slutningen af listen og går baglæns
+   {
     const j = Math.floor(Math.random() * (i + 1));
+    //Vælger et tilfældigt index i listen
     [arr[i], arr[j]] = [arr[j], arr[i]];
+    //Bytter plads på to elementer i listen
+
   }
+  //Returnerer listen i tilfældig rækkefølge
   return arr;
+  //En hjælpefunktion der bruges til at lave shuffle-play 
+  // ved at blande rækkefølgen af elementer i et array.
 }
 
 // --- Start server ---
 server.listen(port, onServerReady);
+//Starter webserveren og får den til at lytte på den valgte port
+//  Når serveren er klar, kaldes onServerReady()
 
-// --- Logging ---
-function onEachRequest(req, res, next) {
+// Logging af requests
+function onEachRequest(req, res, next) 
+//Denne funktion kører ved hver request til serveren
+{
   console.log(new Date(), req.method, req.url);
+  //Logger dato, request-type (GET/POST) og URL i konsollen
   next();
-}
 
-function onServerReady() {
-  console.log('Webserver running on port', port);
+  //Sender requesten videre til næste middleware eller endpoint
+  //bruges til at se hvad der sker på serveren (debugging)
 }
+//Når serveren er klar
+function onServerReady()
+//Funktion der køres, når serveren er startet
+ {
+  console.log('Webserver running on port', port);
+  //Skriver i konsollen hvilken port serveren kører på
+}
+//Serveren startes på en port, alle requests logges i konsollen, 
+// og der vises en besked når serveren er klar.
+
+// -- endpoint ---
+//Alt med server.get(...) eller server.post(...) er et endpoint
+// Et endpoint er en URL + en handling
+//server.get henter data.
+//server.post sender eller gemmer data.
+//Begge er endpoints på serveren.
