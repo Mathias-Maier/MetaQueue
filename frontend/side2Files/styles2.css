@@ -92,6 +92,10 @@ body {
   background: #f0feff;
 }
 
+#qrCode {
+    min-width: 12ch;
+}
+
 /* QR-kode helt øverst til højre */
 .qr {
   position: fixed;

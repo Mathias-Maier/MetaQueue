@@ -64,6 +64,8 @@ window.addEventListener("DOMContentLoaded", async () =>
     //Opdaterer HTML med festens navn og kode
   }
   
+const qrDiv =document.getElementById("qrCode");
+qrDiv.innerHTML = qr.encodeQR("https://metaqueue.onrender.com/", "svg")
 
   //Opret unik memberId hvis bruger ikke har én
   let memberId = localStorage.getItem("memberId");
