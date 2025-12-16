@@ -335,7 +335,8 @@ async function loadQueue(genres = [], artists = [])
   //hvis der er sange, og viser en besked hvis køen er tom.
 }
 
-// Start polling for updates from server every 4 seconds (so all clients stay in sync)
+//Tjekker serveren hver 4. sekund for at se, om sangkøen er ændret.
+// Holder alle brugere synkroniseret med den delte kø.
 setInterval(() => {
   loadQueue(); // GET stored queue and update UI when changed
 }, 4000);
@@ -345,13 +346,25 @@ function loadSong(index) {
   clearInterval(interval);
   currentIndex = index;
   if (!playQueue[currentIndex]) return;
+  //Starter afspilning af sangen på position index.
+  // Stopper evt. tidligere “progress timer” (interval).
+  // Gemmer, hvilken sang der spilles lige nu (currentIndex).
+  // Hvis der ikke findes nogen sang på den index → stop.
 
+
+  //Finder sangen fra køen.
+  // Viser artist og titel i HTML-elementerne.
   const song = playQueue[currentIndex];
   const artistEl = document.getElementById("artist");
   const titleEl = document.getElementById("title");
   if (artistEl) artistEl.textContent = song.artist;
   if (titleEl) titleEl.textContent = song.title;
 
+
+  //Henter sangens længde i sekunder.
+  // Starter tiden fra 0.
+  // Finder HTML-elementer til fremdriftsbjælke og tid.
+  // Initialiserer fremdriftsbjælken og viser starttid / resterende tid.
   const durationSec = song.duration;
   let elapsedSec = 0;
 
@@ -363,6 +376,10 @@ function loadSong(index) {
   if (remainingEl) remainingEl.textContent = "-" + formatTime(durationSec);
   if (progressFill) progressFill.style.width = "0%";
 
+  //Starter et interval hver 1. sekund:
+  // Øger elapsedSec med 1.
+  // Hvis sangen er færdig → går til næste sang (eller starter forfra).
+  // Opdaterer fremdriftsbjælken og viser opdateret tid (forløbet / tilbageværende).
   interval = setInterval(() => {
     elapsedSec++;
     if (elapsedSec > durationSec) {
@@ -372,7 +389,6 @@ function loadSong(index) {
       loadSong(currentIndex);
       return;
     }
-
     const pct = (elapsedSec / durationSec) * 100;
     if (progressFill) progressFill.style.width = pct + "%";
     if (elapsedEl) elapsedEl.textContent = formatTime(elapsedSec);
@@ -380,26 +396,42 @@ function loadSong(index) {
   }, 1000);
 }
 
+
+//Konverterer sekunder til minutter:sekunder format.
+// Sørger for, at sekunder altid har 2 cifre (fx 3:05).
 function formatTime(sec) {
   const m = Math.floor(sec / 60);
   const s = sec % 60;
   return `${m}:${s < 10 ? "0" + s : s}`;
 }
+//Denne kode styrer afspilning af sange fra køen: den viser titel og artist,
+//  opdaterer en fremdriftsbar og tæller tiden, 
+// og går automatisk til næste sang, mens den hele tiden 
+// holder køen opdateret fra serveren.
 
-// Render the master queue for search/display
+
+// Finder HTML-elementet hvor køen skal vises (queueBox).
+// Starter med at rydde gamle elementer og vise en overskrift.
 function renderQueue(queue) {
   const queueBox = document.getElementById("queueBox");
   if (!queueBox) return;
   queueBox.innerHTML = "<h3>QUEUE:</h3>";
 
+  //Hvis køen er tom → viser “No songs found” og stopper funktionen.
   if (!queue.length) {
     queueBox.innerHTML += "<p>No songs found.</p>";
     return;
   }
 
+  //Opretter en liste (ul) til at vise sangene.
   const list = document.createElement("ul");
   list.className = "queue-list";
 
+
+  //For hver sang i køen:
+  // Opretter et liste-element (li)
+  // Viser titel, artist og genre
+  // Tilføjer det til listen
   queue.forEach((song) => {
     const item = document.createElement("li");
     item.className = "queue-item";
@@ -408,12 +440,16 @@ function renderQueue(queue) {
   });
 
   queueBox.appendChild(list);
+  //Tilføjer hele listen med sange til queueBox i HTML.
 }
 
-// (removed auto-loadQueue on DOM load)
 
 // Mobile version open/close queue
 function toggleQueue() {
   const queue = document.getElementById('queueBox');
   queue.classList.toggle('open');
+  //Åbner eller lukker køen på mobile enheder ved at skifte CSS-klassen open.
 }
+//Denne kode viser sangkøen på siden og gør det muligt at åbne/lukke køen på mobil.
+// renderQueue laver listen med sangtitel, artist og genre.
+// toggleQueue styrer visningen af køen på små skærme.
