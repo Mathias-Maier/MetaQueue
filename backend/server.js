@@ -50,106 +50,68 @@ function generatePartyCode() {
   //Returnerer den færdige, unikke 6-tegns kode
 }
 
-<<<<<<< HEAD
 // --- Party endpoints ---
 //Opretter en ny fest med navn og unik kode, gemmer den midlertidigt,
 //  og sender koden og medlemstallet tilbage til brugeren.
-server.post('/api/party', (req, res) => {
-  const { partyName } = req.body;
-  if (!partyName) return res.status(400).json({ error: 'Party name required' });
-//Gemmer festen midlertidigt med:
-  const partyCode = generatePartyCode();
-  parties.set(partyCode, {
-    name: partyName, //navnet
-    createdAt: new Date(),//tidspunktet den blev oprettet
-    members: new Set() //ingen medlemmer endnu
-=======
-// Party endpoints
 server.post("/api/party", (req, res) => {
   const { partyName } = req.body;
   if (!partyName) return res.status(400).json({ error: "Party name required" });
-
+  //Gemmer festen midlertidigt med:
   const partyCode = generatePartyCode();
   parties.set(partyCode, {
-    name: partyName,
-    createdAt: new Date(),
-    members: new Set(),
->>>>>>> 03cb386 (update)
+    name: partyName, //navnet
+    createdAt: new Date(), //tidspunktet den blev oprettet
+    members: new Set(), //ingen medlemmer endnu
   });
 
   res.json({ partyCode, partyName, memberCount: 0 });
 });
 //Returnerer JSON” betyder, at serveren sender festens information tilbage
-//  i et standardformat, 
+//  i et standardformat,
 // som frontend kan bruge til at vise fx koden og navnet på siden.
 
-<<<<<<< HEAD
-
-
-
 //Hent oplysninger om en specifik fest baseret på dens kode.
-server.get('/api/party/:partyCode', (req, res) =>
+server.get("/api/party/:partyCode", (req, res) =>
   ////Læser koden fra URL’en, fx /api/party/A1B2C3 → partyCode = "A1B2C3"
- {
-=======
-server.get("/api/party/:partyCode", (req, res) => {
->>>>>>> 03cb386 (update)
-  const { partyCode } = req.params;
-  // Finder festen i parties-Map’en og toUpperCase() sikrer, 
-  // at små/STORE bogstaver ikke laver fejl
-  const party = parties.get(partyCode.toUpperCase());
+  {
+    const { partyCode } = req.params;
+    // Finder festen i parties-Map’en og toUpperCase() sikrer,
+    // at små/STORE bogstaver ikke laver fejl
+    const party = parties.get(partyCode.toUpperCase());
 
-<<<<<<< HEAD
-  if (!party) return res.status(404).json({ error: 'Party not found' });
-  //Hvis festen ikke findes → sender serveren 404 fejl tilbage
-=======
-  if (!party) return res.status(404).json({ error: "Party not found" });
->>>>>>> 03cb386 (update)
+    if (!party) return res.status(404).json({ error: "Party not found" });
+    //Hvis festen ikke findes → sender serveren 404 fejl tilbage
 
-  res.json({
-    partyCode,
-    partyName: party.name,
-<<<<<<< HEAD
-    memberCount: party.members ? party.members.size : 0
-    //Returnerer info om festen i JSON-format:
+    res.json({
+      partyCode,
+      partyName: party.name,
+      memberCount: party.members ? party.members.size : 0,
+      //Returnerer info om festen i JSON-format:
 
-//partyCode → festens kode
+      //partyCode → festens kode
 
-//partyName → navnet på festen
+      //partyName → navnet på festen
 
-//memberCount → antal medlemmer (0 hvis ingen endnu)
-=======
-    memberCount: party.members ? party.members.size : 0,
->>>>>>> 03cb386 (update)
-  });
-});
-//Finder festen ud fra koden og returnerer 
+      //memberCount → antal medlemmer (0 hvis ingen endnu)
+    });
+  }
+);
+//Finder festen ud fra koden og returnerer
 // festens navn og antal medlemmer i JSON-format.
 //jekker at festen findes, og giver frontend opdateret info.
 
-<<<<<<< HEAD
-
 //Tilføjer en bruger til festen og opdaterer medlemstallet.
 //
-server.post('/api/party/:partyCode/join', (req, res) => {
-=======
 server.post("/api/party/:partyCode/join", (req, res) => {
->>>>>>> 03cb386 (update)
   const { partyCode } = req.params;
   //Læser partyCode fra URL’en
   const { memberId } = req.body;
   //Læser memberId fra request body (unik bruger-id)
   const party = parties.get(partyCode.toUpperCase());
-<<<<<<< HEAD
   //Finder festen i parties
   //toUpperCase() sikrer, at koden ikke er case-sensitiv
-  if (!party) return res.status(404).json({ error: 'Party not found' });
-//Hvis festen ikke findes → sender 404 fejl
-=======
-
   if (!party) return res.status(404).json({ error: "Party not found" });
-
->>>>>>> 03cb386 (update)
+  //Hvis festen ikke findes → sender 404 fejl
   if (!party.members) party.members = new Set();
   party.members.add(memberId);
   //Hvis members ikke findes, oprettes et nyt tomt sæt
@@ -159,84 +121,55 @@ server.post("/api/party/:partyCode/join", (req, res) => {
   res.json({ memberCount: party.members.size });
 });
 
-<<<<<<< HEAD
 //Returnerer det opdaterede antal medlemmer som JSON
 //Returnerer hvor mange medlemmer der er i festen, og tjekker at festen findes.
-server.get('/api/party/:partyCode/count', (req, res) => {
-=======
 server.get("/api/party/:partyCode/count", (req, res) => {
->>>>>>> 03cb386 (update)
   const { partyCode } = req.params;
   //Henter koden fra URL’en, fx /api/party/A1B2C3/count
   const party = parties.get(partyCode.toUpperCase());
   //Ser efter festen i parties Map’en
   // toUpperCase() sikrer, at små/STORE bogstaver ikke laver fejl
 
-<<<<<<< HEAD
-  if (!party) return res.status(404).json({ error: 'Party not found' });
-  //Hvis festen ikke findes → returnerer serveren 404 fejl
-=======
   if (!party) return res.status(404).json({ error: "Party not found" });
->>>>>>> 03cb386 (update)
+  //Hvis festen ikke findes → returnerer serveren 404 fejl
 
   res.json({ memberCount: party.members ? party.members.size : 0 });
-  //Sender JSON med antal medlemmer tilbage 
+  //Sender JSON med antal medlemmer tilbage
   // Hvis ingen medlemmer endnu → 0
-
 });
 
-<<<<<<< HEAD
 // --- Artist suggestions ---
 // Hente artist-navne fra databasen baseret
 //  på brugerens søgning (autocomplete/suggestions).
-server.get('/api/suggestions', async (req, res) =>
- {
-=======
-// Artist suggestions
 server.get("/api/suggestions", async (req, res) => {
->>>>>>> 03cb386 (update)
   const query = req.query.query;
   if (!query || query.length < 2) return res.json([]);
   //Læser søgetekst fra URL’en, fx /api/suggestions?query=dr
-//Hvis søgetekst er tom eller mindre end 2 tegn → returnerer en tom liste
+  //Hvis søgetekst er tom eller mindre end 2 tegn → returnerer en tom liste
 
   try {
     const result = await db.query(
       "SELECT DISTINCT artist FROM songs WHERE artist ILIKE $1 LIMIT 10",
       [`%${query}%`]
     );
-<<<<<<< HEAD
     //Søger i songs-tabellen i databasen
     //ILIKE = case-insensitiv søgning
     //%${query}% = matcher søgeteksten hvor som helst i artist-navnet
     //DISTINCT = kun unikke artist-navne
     //LIMIT 10 = maks 10 forslag
-    res.json(result.rows.map(row => row.artist));
-    //Sender JSON tilbage med en liste af artist-navne, fx:
-  } catch (err) {
-    console.error('Error fetching suggestions:', err);
-    res.status(500).json({ error: 'Database error' });
-    //Hvis der opstår fejl i databasen → logges og sender 500 fejl
-=======
     res.json(result.rows.map((row) => row.artist));
+    //Sender JSON tilbage med en liste af artist-navne, fx:
   } catch (err) {
     console.error("Error fetching suggestions:", err);
     res.status(500).json({ error: "Database error" });
->>>>>>> 03cb386 (update)
+    //Hvis der opstår fejl i databasen → logges og sender 500 fejl
   }
-  //Henter op til 10 unikke artist-navne fra databasen, 
+  //Henter op til 10 unikke artist-navne fra databasen,
   // der matcher brugerens søgning, og sender dem tilbage som JSON.
 });
 
-<<<<<<< HEAD
 // --- Save user selections ---
-server.post('/api/party/:partyCode/selections', async (req, res) => 
-  {
-
-=======
-// Save user selections
 server.post("/api/party/:partyCode/selections", async (req, res) => {
->>>>>>> 03cb386 (update)
   const { partyCode } = req.params;
   //Læser festens kode fra URL’en
   const { memberId, genres, artists } = req.body;
@@ -263,39 +196,25 @@ server.post("/api/party/:partyCode/selections", async (req, res) => {
         [partyCode.toUpperCase(), memberId, artist]
       );
     }
-<<<<<<< HEAD
-//For hver artist valgt → indsæt i databasen
-    res.json({ success: true, message: 'Selections saved' });
-    //Sender JSON tilbage til frontend, så den ved, at valgene blev gemt
-  } catch (err) {
-    console.error('Error saving selections:', err);
-    res.status(500).json({ error: 'Failed to save selections' });
-    ////Hvis der sker en fejl med databasen → logges og sender 500 fejl tilbage
-=======
-
+    //For hver artist valgt → indsæt i databasen
     res.json({ success: true, message: "Selections saved" });
+    //Sender JSON tilbage til frontend, så den ved, at valgene blev gemt
   } catch (err) {
     console.error("Error saving selections:", err);
     res.status(500).json({ error: "Failed to save selections" });
->>>>>>> 03cb386 (update)
+    ////Hvis der sker en fejl med databasen → logges og sender 500 fejl tilbage
   }
-  //Gemmer brugerens valgte genres og artists for en fest i databasen, 
+  //Gemmer brugerens valgte genres og artists for en fest i databasen,
   // overskriver tidligere valg, og sender succes-besked tilbage.
 });
 
-<<<<<<< HEAD
-
 // Hente en brugers tidligere gemte musikvalg (genres og artists) for en bestemt fest.
-server.get('/api/party/:partyCode/selections', async (req, res) => {
-=======
-// ✅ --- NEW ENDPOINT: Load previous selections ---
 server.get("/api/party/:partyCode/selections", async (req, res) => {
->>>>>>> 03cb386 (update)
   const { partyCode } = req.params;
   const { memberId } = req.query;
   //Læser festens kode fra URL’en
-//Læser brugerens id (memberId) fra query string, 
-// fx /api/party/A1B2C3/selections?memberId=user123
+  //Læser brugerens id (memberId) fra query string,
+  // fx /api/party/A1B2C3/selections?memberId=user123
 
   try {
     const result = await db.query(
@@ -320,26 +239,18 @@ server.get("/api/party/:partyCode/selections", async (req, res) => {
     res.json({ genres, artists });
     //Sender JSON tilbage til frontend fx
     // { "genres": [1,3,5], "artists": ["Drake", "Adele"] }
-
   } catch (err) {
     console.error("Error fetching previous selections:", err);
     res.status(500).json({ error: "Failed to load selections" });
     //Hvis databasen fejler → logges og sender 500 fejl tilbage
   }
-  ////Henter brugerens tidligere valgte genres og 
-// artists for en fest og returnerer dem som JSON.
+  ////Henter brugerens tidligere valgte genres og
+  // artists for en fest og returnerer dem som JSON.
 });
-
-<<<<<<< HEAD
-
 
 // Hente statistikker over hvor mange brugere der
 //  har valgt hver genre, fx til at lave et pie chart.
-server.get('/api/party/:partyCode/preferences', async (req, res) => {
-=======
-// --- Get preferences (pie chart) ---
 server.get("/api/party/:partyCode/preferences", async (req, res) => {
->>>>>>> 03cb386 (update)
   const { partyCode } = req.params;
   //Læser festens kode fra URL’en
 
@@ -351,8 +262,8 @@ server.get("/api/party/:partyCode/preferences", async (req, res) => {
        GROUP BY genre_id`,
       [partyCode.toUpperCase()]
       //Tæller hvor mange gange hver genre er valgt for festen
-     //GROUP BY genre_id → grupperer efter genre
-    //COUNT(*) → hvor mange brugere har valgt hver genre
+      //GROUP BY genre_id → grupperer efter genre
+      //COUNT(*) → hvor mange brugere har valgt hver genre
     );
     res.json({ genres: result.rows });
     //Sender resultatet tilbage som JSON, fx:
@@ -372,33 +283,21 @@ server.get("/api/songs", async (req, res) => {
 
     res.json(result.rows);
   } catch (err) {
-<<<<<<< HEAD
-    console.error('Error fetching songs:', err);
-    res.status(500).json({ error: 'Database error' });
-    //Hvis databasen fejler → logges og sender 500 fejl tilbage
-=======
     console.error("Error fetching songs:", err);
     res.status(500).json({ error: "Database error" });
->>>>>>> 03cb386 (update)
+    //Hvis databasen fejler → logges og sender 500 fejl tilbage
   }
-  //Henter hvor mange brugere der har valgt hver genre 
+  //Henter hvor mange brugere der har valgt hver genre
   // i festen og sender det som JSON til fx et pie chart.
 });
 
-<<<<<<< HEAD
-//Generere en spillekø for festen baseret på brugerens valgte genres og artists, 
+//Generere en spillekø for festen baseret på brugerens valgte genres og artists,
 // og gemme den server-side, så alle kan se samme shuffle.
-server.post('/api/party/:partyCode/queue', async (req, res) => {
-=======
-// --- Generate queue ---
-// POST: generate a new queue (store it server-side so it's shared)
-// GET: return stored queue for the party (shared shuffle)
 server.post("/api/party/:partyCode/queue", async (req, res) => {
->>>>>>> 03cb386 (update)
   const { partyCode } = req.params;
   const { genres = [], artists = [] } = req.body;
-  //partyCode fra URL 
-  // genres og artists fra request body (valgfri arrays fordi brugeren kan 
+  //partyCode fra URL
+  // genres og artists fra request body (valgfri arrays fordi brugeren kan
   // vælge noget, men behøver ikke.)
 
   if (genres.length === 0 && artists.length === 0) {
@@ -431,21 +330,13 @@ server.post("/api/party/:partyCode/queue", async (req, res) => {
       genreMap[row.genre_id] = row.name.toUpperCase();
     });
 
-<<<<<<< HEAD
-    songs.forEach(song => {
-      song.genre = genreMap[song.genre_id] || 'UNKNOWN';
+    songs.forEach((song) => {
+      song.genre = genreMap[song.genre_id] || "UNKNOWN";
       //Henter alle sange og finder ud af, hvilken genre hver sang hører til.
     });
 
     //Filtrer sange efter valg
-    const filtered = songs.filter(song => {
-=======
-    songs.forEach((song) => {
-      song.genre = genreMap[song.genre_id] || "UNKNOWN";
-    });
-
     const filtered = songs.filter((song) => {
->>>>>>> 03cb386 (update)
       const genreMatch = genres.length === 0 || genres.includes(song.genre_id);
       const artistMatch =
         artists.length === 0 ||
@@ -491,18 +382,11 @@ server.post("/api/party/:partyCode/queue", async (req, res) => {
     //Fjern dubletter
     queue = queue.filter(
       (song, index, self) =>
-<<<<<<< HEAD
-        index === self.findIndex(s => s.track_id === song.track_id)
+        index === self.findIndex((s) => s.track_id === song.track_id)
       //Sørger for, at samme sang ikke er med to gange
     );
-   //Opret masterQueue og playQueue
-    const masterQueue = queue.map(song => ({
-=======
-        index === self.findIndex((s) => s.track_id === song.track_id)
-    );
-
+    //Opret masterQueue og playQueue
     const masterQueue = queue.map((song) => ({
->>>>>>> 03cb386 (update)
       id: song.track_id,
       title: song.title,
       artist: song.artist,
@@ -523,88 +407,72 @@ server.post("/api/party/:partyCode/queue", async (req, res) => {
       party.queueUpdatedAt = new Date();
       //Gem køerne server side, så alle brugere ser samme shuffle
     }
-<<<<<<< HEAD
     //Returner resultat
-    res.json({ masterQueue, playQueue, updatedAt: party ? party.queueUpdatedAt : new Date() });
-// Sender køerne og tidspunkt for sidste opdatering tilbage
-  } catch (err) {
-    console.error('Queue generation error:', err);
-    res.status(500).json({ error: 'Failed to generate queue' });
-    //Hvis databasen fejler  logges og sender 500 fejl tilbage
-=======
-
     res.json({
       masterQueue,
       playQueue,
       updatedAt: party ? party.queueUpdatedAt : new Date(),
     });
+    // Sender køerne og tidspunkt for sidste opdatering tilbage
   } catch (err) {
     console.error("Queue generation error:", err);
     res.status(500).json({ error: "Failed to generate queue" });
->>>>>>> 03cb386 (update)
+    //Hvis databasen fejler  logges og sender 500 fejl tilbage
   }
   //Genererer en spillekø baseret på brugervalgt genre og artist, gemmer den på serveren
   //og returnerer master- og shuffle-kø til frontend.
 });
 
-<<<<<<< HEAD
 // Hent gemt kø (shared shuffle)
-server.get('/api/party/:partyCode/queue', (req, res) =>
+server.get("/api/party/:partyCode/queue", (req, res) =>
   //Endpoint som frontend kalder for at få den fælles musik kø
-   {
-=======
-// GET stored queue (shared shuffle)
-server.get("/api/party/:partyCode/queue", (req, res) => {
->>>>>>> 03cb386 (update)
-  const { partyCode } = req.params;
-  //Læser festens kode fra URL’en
-  const party = parties.get(partyCode.toUpperCase());
-<<<<<<< HEAD
-  //Finder festen i serverens hukommelse
-  if (!party) return res.status(404).json({ error: 'Party not found' });
-  //Hvis festen ikke findes, sendes en fejl
-=======
-  if (!party) return res.status(404).json({ error: "Party not found" });
->>>>>>> 03cb386 (update)
+  {
+    const { partyCode } = req.params;
+    //Læser festens kode fra URL’en
+    const party = parties.get(partyCode.toUpperCase());
+    //Finder festen i serverens hukommelse
+    if (!party) return res.status(404).json({ error: "Party not found" });
+    //Hvis festen ikke findes, sendes en fejl
 
-  //Henter den gemte kø
-  const masterQueue = party.masterQueue || [];
-  const playQueue = party.playQueue || [];
-  const updatedAt = party.queueUpdatedAt || null;
-  //masterQueue = original rækkefølge
-  // playQueue = blandet rækkefølge
-  // updatedAt = hvornår køen sidst blev lavet
+    //Henter den gemte kø
+    const masterQueue = party.masterQueue || [];
+    const playQueue = party.playQueue || [];
+    const updatedAt = party.queueUpdatedAt || null;
+    //masterQueue = original rækkefølge
+    // playQueue = blandet rækkefølge
+    // updatedAt = hvornår køen sidst blev lavet
 
-  res.json({ masterQueue, playQueue, updatedAt });
-  //Sender køen tilbage til frontend som JSON
-});
+    res.json({ masterQueue, playQueue, updatedAt });
+    //Sender køen tilbage til frontend som JSON
+  }
+);
 
 // små hjælpefunktioner, der gør koden nemmere at læse og genbruge.
 //Funktion der vælger et antal tilfældige elementer fra et array
-function getRandomSubset(arr, count)
-//En funktion der får en liste (arr) og et antal (count)
- {
+function getRandomSubset(arr, count) {
+  //En funktion der får en liste (arr) og et antal (count)
   return [...arr].sort(() => Math.random() - 0.5).slice(0, count);
   //Den blander listen tilfældigt og tager kun det antal, vi har bedt om
-  //En hjælpefunktion der bruges til at udvælge et bestemt antal 
+  //En hjælpefunktion der bruges til at udvælge et bestemt antal
   // tilfældige sange fra en liste.
 }
 //Den blander rækkefølgen i en liste, så elementerne kommer i tilfældig orden (shuffle).
-function shuffleArray(arr) 
-//Funktion der tager en liste (fx sange)
-{
-  for (let i = arr.length - 1; i > 0; i--)
-    //Starter fra slutningen af listen og går baglæns
-   {
+function shuffleArray(arr) {
+  //Funktion der tager en liste (fx sange)
+  for (
+    let i = arr.length - 1;
+    i > 0;
+    i--
+  ) //Starter fra slutningen af listen og går baglæns
+  {
     const j = Math.floor(Math.random() * (i + 1));
     //Vælger et tilfældigt index i listen
     [arr[i], arr[j]] = [arr[j], arr[i]];
     //Bytter plads på to elementer i listen
-
   }
   //Returnerer listen i tilfældig rækkefølge
   return arr;
-  //En hjælpefunktion der bruges til at lave shuffle-play 
+  //En hjælpefunktion der bruges til at lave shuffle-play
   // ved at blande rækkefølgen af elementer i et array.
 }
 
@@ -614,29 +482,22 @@ server.listen(port, onServerReady);
 //  Når serveren er klar, kaldes onServerReady()
 
 // Logging af requests
-function onEachRequest(req, res, next) 
-//Denne funktion kører ved hver request til serveren
-{
+function onEachRequest(req, res, next) {
+  //Denne funktion kører ved hver request til serveren
   console.log(new Date(), req.method, req.url);
   //Logger dato, request-type (GET/POST) og URL i konsollen
   next();
 
-<<<<<<< HEAD
   //Sender requesten videre til næste middleware eller endpoint
   //bruges til at se hvad der sker på serveren (debugging)
-=======
-function onServerReady() {
-  console.log("Webserver running on port", port);
->>>>>>> 03cb386 (update)
 }
 //Når serveren er klar
-function onServerReady()
-//Funktion der køres, når serveren er startet
- {
-  console.log('Webserver running on port', port);
+function onServerReady() {
+  //Funktion der køres, når serveren er startet
+  console.log("Webserver running on port", port);
   //Skriver i konsollen hvilken port serveren kører på
 }
-//Serveren startes på en port, alle requests logges i konsollen, 
+//Serveren startes på en port, alle requests logges i konsollen,
 // og der vises en besked når serveren er klar.
 
 // -- endpoint ---
