@@ -154,7 +154,11 @@ async function updatePieChart()
     const res = await fetch(`/api/party/${partyCode}/preferences`);
     const data = await res.json();
     if (!data.genres || data.genres.length === 0) return;
+    //Kalder /preferences endpoint for at få hvor mange har valgt hvilke genrer
+    // Stopper hvis der ingen data er
 
+
+    //Lav labels og counts
     const genreNames = {
       1: "Hip-Hop",
       2: "Pop",
@@ -168,7 +172,8 @@ async function updatePieChart()
 
     const labels = data.genres.map((g) => genreNames[g.genre_id] || "Unknown");
     const counts = data.genres.map((g) => parseInt(g.count));
-
+//Omformer genre_id til menneskeligt navn (Hip-Hop, Pop osv.)
+// Gemmer antal valg per genre
     const ctx = document.getElementById("genreChart");
     if (!ctx) return;
 
