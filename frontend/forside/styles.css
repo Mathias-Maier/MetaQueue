@@ -23,7 +23,7 @@ h1 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 30px;
-  align-items: center; /* center .left and .right vertically */
+  align-items: center; /* center .left og .right vertikalt */
 }
 
 .logo {
@@ -38,7 +38,7 @@ h1 {
   margin-bottom: 10px;
 }
 
-/* Center content inside the left column */
+/* Center content inde i left column */
 .left {
   display: flex;
   flex-direction: column;
@@ -70,11 +70,11 @@ h1 {
   color: #333;
 }
 
-/* Center the image inside the right column */
+/* Centrer billedet inde i right column */
 .right {
   display: flex;
   justify-content: center;
-  align-items: center; /* vertical centering to match the boxes */
+  align-items: center; /* vertikal centrering for at matche boksene */
 }
 
 /* Keep the image responsive but not overpowering */
@@ -90,7 +90,7 @@ h1 {
   line-height: 1;
 }
 
-/* 📱 PERFECT MOBILE OPTIMIZATION FOR YOUR DESIGN */
+/*  PERFECT MOBILE OPTIMIZATION FOR YOUR DESIGN */
 @media (max-width: 768px) {
   /* Stop body fra at tvinge centreret layout på mobilen */
   body {
