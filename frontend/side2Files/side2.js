@@ -36,48 +36,51 @@ function closePopup() {
 
 // --- Party setup ---
 //Når siden er færdig med at loade
-window.addEventListener("DOMContentLoaded", async () =>
-  //Koden starter når HTML’en er klar
-  // Vi bruger async fordi vi laver fetch kald til serveren
-   {
-    //Hent info fra localStorage
+// Koden starter når HTML’en er klar
+// Vi bruger async fordi vi laver fetch-kald til serveren
+window.addEventListener("DOMContentLoaded", async () => {
+
+  // Hent info fra localStorage
   const partyName = localStorage.getItem("partyName");
   const partyCode = localStorage.getItem("partyCode");
-  //Gemte data fra forsiden (oprettet/tilmeldt fest)
   // partyName = navn på festen
   // partyCode = kode for festen
 
-  //Finder HTML-elementer hvor vi vil vise navn, kode og medlemstal
+  // Finder HTML-elementer hvor vi vil vise navn, kode og medlemstal
   const welcomeDiv = document.getElementById("partyWelcome");
   const codeDisplay = document.getElementById("partyCodeDisplay");
   const memberCountDisplay = document.getElementById("memberCount");
 
-//Vis festens navn og kode
+  // Vis festens navn
   if (welcomeDiv) {
     welcomeDiv.textContent = partyName
       ? `WELCOME TO PARTY: ${partyName}`
       : "WELCOME TO PARTY";
   }
+
+  // Vis festens kode
   if (codeDisplay && partyCode) {
     codeDisplay.textContent = `PARTY CODE: ${partyCode}`;
     codeDisplay.style.display = "block";
-    //Opdaterer HTML med festens navn og kode
   }
-  
-const qrDiv =document.getElementById("qrCode");
-qrDiv.innerHTML = qr.encodeQR("https://metaqueue.onrender.com/", "svg")
 
-  //Opret unik memberId hvis bruger ikke har én
+  // Generér QR-kode
+  const qrDiv = document.getElementById("qrCode");
+  if (qrDiv) {
+    qrDiv.innerHTML = qr.encodeQR(
+      "https://metaqueue.onrender.com/",
+      "svg"
+    );
+  }
+
+  // Opret unik memberId hvis brugeren ikke allerede har én
   let memberId = localStorage.getItem("memberId");
   if (!memberId) {
     memberId = "member_" + Math.random().toString(36).substring(2, 15);
     localStorage.setItem("memberId", memberId);
-    //Hver deltager får et unikt id
-    //Gemmes i browseren, så vi kan kende brugeren næste gang
   }
 
-
-  //Tilmeld medlemmet til festen
+  // Tilmeld medlemmet til festen
   if (partyCode) {
     try {
       const joinRes = await fetch(`/api/party/${partyCode}/join`, {
@@ -85,15 +88,15 @@ qrDiv.innerHTML = qr.encodeQR("https://metaqueue.onrender.com/", "svg")
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ memberId }),
       });
+
       const joinData = await joinRes.json();
 
+      // Vis medlemstal
       if (memberCountDisplay && joinData.memberCount !== undefined) {
         memberCountDisplay.textContent = joinData.memberCount;
-        //Sender memberId til serveren for at tilføje brugeren
-        //Serveren svarer med opdateret antal medlemmer
-        //Vises i HTML
       }
-       //Opdater medlemstal live
+
+      // Opdater medlemstal live hver 3. sekund
       setInterval(async () => {
         try {
           const countRes = await fetch(`/api/party/${partyCode}/count`);
@@ -105,38 +108,27 @@ qrDiv.innerHTML = qr.encodeQR("https://metaqueue.onrender.com/", "svg")
           console.error("Error fetching member count:", err);
         }
       }, 3000);
-      //Henter medlemstal hver 3. sekund
-      // Holder medlemstallet opdateret live på siden
 
       // Hent tidligere gemte musikvalg
       try {
-        const selRes = await fetch(`/api/party/${partyCode}/selections?memberId=${memberId}`);
+        const selRes = await fetch(
+          `/api/party/${partyCode}/selections?memberId=${memberId}`
+        );
         const selData = await selRes.json();
         const genres = selData.genres || [];
         const artists = selData.artists || [];
         await loadQueue(genres, artists);
-        //Spørger serveren hvilke genrer og artister brugeren tidligere valgte
-        // Bruges til at indlæse musikkøen, så det ser korrekt ud med det samme
-
-        //Fejl-håndtering
-        //inner catch
       } catch (err) {
         console.error("Error loading saved selections / queue:", err);
-        //Forsøger at hente tidligere gemte musikvalg fra serveren
-        // Hvis der sker en fejl (f.eks. server ikke svarer),
-        //  bliver det logget i konsollen, men det stopper ikke resten af koden
       }
-      // outer try catch
+
     } catch (err) {
       console.error("Error joining party:", err);
-      //Forsøger at tilmelde brugeren til festen på serveren
-      // Hvis det fejler, f.eks. server offline, bliver fejlen logget i konsollen
     }
   }
-  //Når siden loader, hentes festens navn og kode fra browseren. 
-  // Brugeren får et unikt memberId og tilmeldes festen på serveren. Medlemstal vises live, 
-  // og tidligere musikvalg hentes, så køen kan vises korrekt.
+
 });
+
 
 // Pie chart setup 
 //Variable & Function
